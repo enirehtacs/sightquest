@@ -22,7 +22,7 @@ type Props = {
 
 /** Floating pill: Explore · Search · + · Friends · Me. */
 export function BottomNav({ active, onNavigate, inline }: Props) {
-  const { c, scheme } = useTheme();
+  const { c } = useTheme();
   const insets = useSafeAreaInsets();
 
   const item = (s: (typeof SIDE)[number]) => {
@@ -82,9 +82,7 @@ export function BottomNav({ active, onNavigate, inline }: Props) {
           alignItems: 'center',
           justifyContent: 'center',
           opacity: pressed ? 0.85 : 1,
-          boxShadow: [
-            { offsetX: 0, offsetY: 6, blurRadius: 18, color: scheme === 'dark' ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0.12)' },
-          ],
+          boxShadow: [{ offsetX: 0, offsetY: 6, blurRadius: 18, color: c.fabShadow }],
         })}
       >
         <Icon name="logo" size={34} color="on" strokeWidth={1.4} />

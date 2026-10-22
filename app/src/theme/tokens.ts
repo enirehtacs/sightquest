@@ -1,65 +1,68 @@
-// Every colour in the app comes from here (docs/THEME.md). Components read
+// Every colour in the app comes from here (docs/THEME.md, "Trail marker" palette). Components read
 // them through useTheme(); never put a raw hex value in a component.
 
 export type Scheme = 'dark' | 'light';
 export type AppearancePref = 'system' | 'light' | 'dark';
 
 const dark = {
-  bg: '#131512',
-  sf: '#1C1F1B',
-  sf2: '#262A24',
-  ln: '#31362F',
-  tx: '#E6E8E1',
-  mu: '#9CA295',
-  ac: '#B9DE5C',
-  on: '#131512',
-  act: '#B9DE5C',
-  rt: '#B9DE5C',
-  cnt: '#31362F',
-  bd: '#3A4A3F',
-  sea: '#131A1D',
-  land: '#27312B',
+  bg: '#121611',
+  sf: '#1A2019',
+  sf2: '#242B22',
+  ln: '#30382E',
+  tx: '#EDEBDD',
+  mu: '#A1A592',
+  ac: '#F4C24A',
+  on: '#1E1603',
+  act: '#F6CC62',
+  rt: '#F4C24A',
+  cnt: '#2B3329',
+  bd: '#3D4A3B',
+  sea: '#10181B',
+  land: '#1F271E',
   ph1: '#3A4838',
   ph2: '#4A3F35',
   ph3: '#35434C',
   ph4: '#4A4652',
-  scrim: 'rgba(19,21,18,0.78)',
+  scrim: 'rgba(18,22,17,0.78)',
   ring: '#000000',
-  warn: '#F0B45A',
+  ok: '#9CCB6B',
+  warn: '#FF9A4D',
   danger: '#F08A7E',
   info: '#8FB9E6',
   // Badge tiers: icon colour only.
   bronze: '#C8895A',
   silver: '#B9C0C6',
   gold: '#E8C25A',
-  // Cards get no shadow in dark mode.
+  // Cards get no shadow in dark mode; the floating + button does.
   shadow: 'transparent',
+  fabShadow: 'rgba(0,0,0,0.35)',
 };
 
 export type Colors = typeof dark;
 
 const light: Colors = {
-  bg: '#F3F2EC',
+  bg: '#F5F2E6',
   sf: '#FFFFFF',
-  sf2: '#E9E8E1',
-  ln: '#DCDBD2',
-  tx: '#1B1D19',
-  mu: '#5D6257',
-  ac: '#C6E86E', // fill only, never text: use `act` for green text
-  on: '#1B1D19',
-  act: '#4F7212',
-  rt: '#5E8A0F',
-  cnt: '#D6D9CE',
-  bd: '#AFBDA5',
-  sea: '#D2E1EA',
-  land: '#F2F5EC',
+  sf2: '#ECE8D8',
+  ln: '#DFDAC6',
+  tx: '#1C1E16',
+  mu: '#5F6252',
+  ac: '#F4C24A', // fill only, never text: use `act` for yellow text
+  on: '#1E1603',
+  act: '#7E5900',
+  rt: '#A87A00',
+  cnt: '#E4E0CF',
+  bd: '#B9B49C',
+  sea: '#D6E2E4',
+  land: '#F3F1E6',
   ph1: '#C8D4C0',
   ph2: '#DCCFC0',
   ph3: '#C5D2DB',
   ph4: '#D3CEDA',
   scrim: 'rgba(255,255,255,0.86)',
-  ring: '#1B1D19',
-  warn: '#9A5F00',
+  ring: '#1C1E16',
+  ok: '#3F6E1A',
+  warn: '#A84A0C',
   danger: '#B33A2B',
   info: '#2B65A3',
   // Tiers darkened ~15% so they stay visible on white.
@@ -67,6 +70,7 @@ const light: Colors = {
   silver: '#9DA3A8',
   gold: '#C5A54D',
   shadow: 'rgba(0,0,0,0.06)',
+  fabShadow: 'rgba(0,0,0,0.12)',
 };
 
 export const palettes: Record<Scheme, Colors> = { dark, light };

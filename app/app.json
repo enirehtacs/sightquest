@@ -12,7 +12,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#131512",
+        "backgroundColor": "#121611",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -24,8 +24,8 @@
       "favicon": "./assets/images/favicon.png",
       "name": "Sightquest",
       "shortName": "Sightquest",
-      "themeColor": "#131512",
-      "backgroundColor": "#131512",
+      "themeColor": "#121611",
+      "backgroundColor": "#121611",
       "description": "Share the routes you actually took, day by day."
     },
     "plugins": [
@@ -33,11 +33,11 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#F3F2EC",
+          "backgroundColor": "#F5F2E6",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76,
           "dark": {
-            "backgroundColor": "#131512",
+            "backgroundColor": "#121611",
             "image": "./assets/images/splash-icon.png"
           }
         }

@@ -279,7 +279,7 @@ function IconGrid() {
 
 function Swatches() {
   const { c, scheme } = useTheme();
-  const keys = Object.keys(palettes[scheme]).filter((k) => k !== 'shadow') as (keyof Colors)[];
+  const keys = Object.keys(palettes[scheme]).filter((k) => k !== 'shadow' && k !== 'fabShadow') as (keyof Colors)[];
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
       {keys.map((k) => (

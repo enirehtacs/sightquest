@@ -20,9 +20,9 @@ Each phase ends with a "done when" checklist. Don't start the next phase until e
 - Web deploy: the Expo web build goes to Vercel or Netlify on every push to `main`.
 
 **Done when**
-- [ ] The app runs in Expo Go on Vivi's phone and in a browser.
-- [ ] The components page looks right in light and dark, and the toggle works instantly.
-- [ ] The web build is live at a URL.
+- [x] The app runs in Expo Go on Vivi's phone and in a browser.
+- [x] The components page looks right in light and dark, and the toggle works instantly.
+- [x] The web build is live at a URL: https://sightquest-app.vercel.app
 
 ## Phase 1 — Sign-up and profiles
 - Screens: Splash (with the globe), Welcome, Pledge + PledgeDone, Location, Me (Routes tab with seeded data), Edit profile, Creator profile, Settings (Account, Privacy, Appearance, Log out).

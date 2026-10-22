@@ -14,3 +14,5 @@ export { Tabs } from './Tabs';
 export { ToastProvider, useToast } from './Toast';
 export { Toggle } from './Toggle';
 export { Txt } from './Txt';
+export { RouteThumb } from './RouteThumb';
+export { CloseX, Popup } from './Popup';

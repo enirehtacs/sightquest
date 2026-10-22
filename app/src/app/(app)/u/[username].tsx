@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, Share, Text, View } from 'react-native';
 
 import { Button, Icon, MonoLabel, Screen, Sheet, Txt, useToast } from '@/components';
-import { CREATOR_SAMPLES, PREVIEW_CREATOR } from '@/data/seed';
+import { PREVIEW_CREATOR } from '@/data/seed';
 import { ProfileBody } from '@/features/profile/ProfileBody';
 import { useAuth } from '@/lib/auth';
 import {
@@ -17,6 +17,7 @@ import {
   unfollow,
   type PublicProfile,
 } from '@/lib/profiles';
+import { profileRoutes, type RouteCard } from '@/lib/routes';
 import { fonts, radius, useTheme } from '@/theme';
 
 /** Creator profile — design/prototype/Profile.dc.html (Me in visitor view). */
@@ -31,6 +32,7 @@ export default function CreatorProfile() {
   const [busy, setBusy] = useState(false);
   const [menu, setMenu] = useState(false);
   const [confirmBlock, setConfirmBlock] = useState(false);
+  const [routes, setRoutes] = useState<RouteCard[] | null>(null);
 
   useEffect(() => {
     if (!username) return;
@@ -40,6 +42,7 @@ export default function CreatorProfile() {
         const prof = preview ? (username === PREVIEW_CREATOR.username ? PREVIEW_CREATOR : null) : await getPublicProfile(username);
         if (!live) return;
         setP(prof);
+        if (prof) profileRoutes(prof.id).then((r) => live && setRoutes(r)).catch(() => live && setRoutes([]));
         if (prof && uid && !preview) {
           const f = await getFollow(uid, prof.id);
           if (!live) return;
@@ -148,8 +151,7 @@ export default function CreatorProfile() {
         bio={p.bio}
         avatarUrl={p.avatar_url}
         links={p.links}
-        sample
-        atlas={CREATOR_SAMPLES[p.username] ?? null}
+        routes={routes}
         actions={
           <View style={{ flexDirection: 'row', gap: 8 }}>
             <Pressable

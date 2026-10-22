@@ -81,6 +81,17 @@ export const ICONS = {
   navigate: ['M21 3L3 10.5l7.5 3 3 7.5z'],
   fit: ['M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5'],
   offline: ['M2 8.5a15 15 0 0120 0M5 12a10 10 0 0114 0M8.5 15.5a5 5 0 017 0', 'M3 3l18 18'],
+  sun: [{ c: [12, 12, 4] }, 'M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'],
+
+  // Spot kinds (Route → Spots, copied from Route.dc.html)
+  spotFood: ['M4 3v7a2 2 0 002 2v9M8 3v7M6 3v7M17 21V3c-2 0-3 2-3 5v6h3'],
+  spotViewpoint: ['M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0'],
+  spotStay: ['M3 18V7M3 13h18v5M21 13a3 3 0 00-3-3h-8v3M5.0 10.5a1.5 1.5 0 1 0 3.0 0a1.5 1.5 0 1 0 -3.0 0'],
+  spotHike: ['M3 20l6-10 4 6 3-4 5 8z'],
+  spotCafe: ['M4 9h13v5a5 5 0 01-5 5H9a5 5 0 01-5-5zM17 10h1a2.5 2.5 0 010 5h-1M8 3v3M12 3v3'],
+  spotCulture: ['M3 21h18M5 21V10M19 21V10M9 21v-6h6v6M2 10l10-6 10 6z'],
+  spotBeach: ['M3 20c3-2 6-2 9 0s6 2 9 0', 'M12 17V7M12 7c-3 0-5 1.5-6 4h12c-1-2.5-3-4-6-4z'],
+  spotOther: ['M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z', { c: [12, 9.5, 2.5] }],
 
   // Social links (profiles show only the ones the user added)
   tiktok: ['M14 3v11.5a4 4 0 11-4-4M14 3c.6 2.6 2.6 4.6 5.5 4.8'],

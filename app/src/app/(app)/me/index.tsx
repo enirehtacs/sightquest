@@ -1,18 +1,34 @@
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { Pressable, Share, View } from 'react-native';
 
 import { BottomNav, Button, Icon, Screen, Txt } from '@/components';
-import { MY_SAMPLE, MY_SAVED } from '@/data/seed';
 import { ProfileBody } from '@/features/profile/ProfileBody';
 import { useNav } from '@/features/nav/useNav';
 import { useAuth } from '@/lib/auth';
 import { placeLine, PROFILE_URL } from '@/lib/profiles';
+import { mySaves, profileRoutes, type RouteCard, type SavedRoute } from '@/lib/routes';
 import { fonts } from '@/theme';
 
 /** My profile — design/prototype/Me.dc.html (MeLight for light mode). */
 export default function Me() {
-  const { profile } = useAuth();
+  const { profile, uid } = useAuth();
   const nav = useNav();
+  const [routes, setRoutes] = useState<RouteCard[] | null>(null);
+  const [saved, setSaved] = useState<SavedRoute[] | null>(null);
+
+  // Refresh when you come back (after saving a route somewhere else).
+  useFocusEffect(
+    useCallback(() => {
+      if (!uid) return;
+      let live = true;
+      profileRoutes(uid).then((r) => live && setRoutes(r)).catch(() => live && setRoutes([]));
+      mySaves(uid).then((s) => live && setSaved(s)).catch(() => live && setSaved([]));
+      return () => {
+        live = false;
+      };
+    }, [uid]),
+  );
   if (!profile) return <Screen>{null}</Screen>;
   const username = profile.username ?? '';
 
@@ -37,9 +53,8 @@ export default function Me() {
         bio={profile.bio}
         avatarUrl={profile.avatar_url}
         links={profile.links}
-        sample
-        atlas={MY_SAMPLE}
-        saved={MY_SAVED}
+        routes={routes}
+        saved={saved}
         actions={
           <View style={{ flexDirection: 'row', gap: 8 }}>
             <View style={{ flex: 1 }}>

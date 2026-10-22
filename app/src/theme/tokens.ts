@@ -33,6 +33,9 @@ const dark = {
   bronze: '#C8895A',
   silver: '#B9C0C6',
   gold: '#E8C25A',
+  // Spotify's own green, only for the "Play on Spotify" button (their brand rules).
+  spotify: '#1DB954',
+  onSpotify: '#0B1F12',
   // Cards get no shadow in dark mode; the floating + button does.
   shadow: 'transparent',
   fabShadow: 'rgba(0,0,0,0.35)',
@@ -69,6 +72,8 @@ const light: Colors = {
   bronze: '#AA754D',
   silver: '#9DA3A8',
   gold: '#C5A54D',
+  spotify: '#1DB954',
+  onSpotify: '#0B1F12',
   shadow: 'rgba(0,0,0,0.06)',
   fabShadow: 'rgba(0,0,0,0.12)',
 };

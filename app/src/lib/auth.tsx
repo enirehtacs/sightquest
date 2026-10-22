@@ -1,9 +1,9 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { router } from 'expo-router';
-import { Platform } from 'react-native';
 
 import { PREVIEW_PROFILE } from '@/data/seed';
+import { leavePreview, PREVIEW_REQUESTED } from './preview';
 import { getMyProfile, hasPledged, type MyProfile } from './profiles';
 import { supabase } from './supabase';
 
@@ -29,22 +29,8 @@ type AuthValue = {
 
 const AuthContext = createContext<AuthValue | null>(null);
 
-const PREVIEW_KEY = 'sq.preview';
-
-function detectPreview(): boolean {
-  if (!__DEV__ || Platform.OS !== 'web' || typeof window === 'undefined') return false;
-  const host = window.location.hostname;
-  if (host !== 'localhost' && host !== '127.0.0.1') return false;
-  try {
-    if (/[?&]preview\b/.test(window.location.search)) window.sessionStorage.setItem(PREVIEW_KEY, '1');
-    return window.sessionStorage.getItem(PREVIEW_KEY) === '1';
-  } catch {
-    return false;
-  }
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [preview] = useState(detectPreview);
+  const preview = PREVIEW_REQUESTED;
   const [ready, setReady] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   // What we loaded, and for whom. Only shown while that person is signed in.
@@ -113,11 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setPledged,
       refreshProfile: load,
       signOut: async () => {
-        if (preview) {
-          try {
-            window.sessionStorage.removeItem(PREVIEW_KEY);
-          } catch {}
-        }
+        if (preview) leavePreview();
         await supabase.auth.signOut();
       },
       preview: preview && !session,

@@ -36,8 +36,9 @@ export async function previewSnapshot(): Promise<PreviewSnapshot | null> {
   if (!PREVIEW_REQUESTED) return null;
   const { data } = await supabase.auth.getSession();
   if (data.session) return null;
-  if (!__DEV__) return null;
-  return require('@/data/preview.json') as PreviewSnapshot;
+  // Written as `if (__DEV__)` so release builds drop the snapshot entirely.
+  if (__DEV__) return require('@/data/preview.json') as PreviewSnapshot;
+  return null;
 }
 
 // Shapes are the same as the real queries (see lib/routes.ts).

@@ -1,0 +1,5 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--tx); }
+body { font-family: var(--font-archivo), system-ui, sans-serif; min-width: 1280px; }
+.mono { font-family: var(--font-mono), ui-monospace, monospace; font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--mu); }
+a { color: var(--act); }

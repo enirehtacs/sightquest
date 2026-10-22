@@ -1,3 +1,4 @@
+import { View } from 'react-native';
 import Svg, { Circle, Ellipse, Path, Rect } from 'react-native-svg';
 
 import { useTheme, type Colors } from '@/theme';
@@ -125,7 +126,7 @@ export function Icon({ name, size = 24, color = 'tx', strokeWidth = 1.8, filled,
   const stroke = c[color];
   const fill = filled ? stroke : 'none';
   const els = ICONS[name] as El[];
-  return (
+  const svg = (
     <Svg
       width={size}
       height={size}
@@ -135,8 +136,6 @@ export function Icon({ name, size = 24, color = 'tx', strokeWidth = 1.8, filled,
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
-      accessible={!!accessibilityLabel}
-      accessibilityLabel={accessibilityLabel}
     >
       {els.map((el, i) => {
         if (typeof el === 'string') return <Path key={i} d={el} fill={fill} />;
@@ -155,5 +154,12 @@ export function Icon({ name, size = 24, color = 'tx', strokeWidth = 1.8, filled,
         return <Rect key={i} x={el.r[0]} y={el.r[1]} width={el.r[2]} height={el.r[3]} rx={el.r[4]} />;
       })}
     </Svg>
+  );
+  // Decorative by default; a labelled icon is announced as an image.
+  if (!accessibilityLabel) return svg;
+  return (
+    <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel}>
+      {svg}
+    </View>
   );
 }

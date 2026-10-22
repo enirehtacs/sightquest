@@ -197,7 +197,7 @@ function Gallery() {
       </Section>
 
       <Section label="Card">
-        <Card onPress={() => toast('Opens the route in Phase 2')} accessibilityLabel="Laos by slow boat">
+        <Card>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <MonoLabel size={10} bold color="act">● Building now</MonoLabel>
             <View style={{ flexDirection: 'row' }}>

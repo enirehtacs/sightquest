@@ -42,7 +42,7 @@ function ToastPill({ text }: { text: string }) {
   }, [fade, text]);
   return (
     // Sits above the floating BottomNav.
-    <View pointerEvents="none" style={{ position: 'absolute', left: 0, right: 0, bottom: insets.bottom + 92, alignItems: 'center' }}>
+    <View pointerEvents="none" style={{ position: 'absolute', left: 0, right: 0, bottom: insets.bottom + 92, alignItems: 'center', zIndex: 100, elevation: 100 }}>
       <Animated.View
         accessibilityRole="alert"
         accessibilityLiveRegion="polite"

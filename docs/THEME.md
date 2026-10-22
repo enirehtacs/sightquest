@@ -4,38 +4,42 @@ Put every colour in `app/theme/tokens.ts` (and `admin/` imports the same values)
 
 Appearance setting: **System (default) / Light / Dark**. Store it on the device, and in `profiles.appearance` so it follows the user across devices. Switching modes must be instant, with no reload.
 
-## Colour tokens
+## Colour tokens — "Trail marker" palette
+Forest-dark surfaces with signpost yellow. (This replaced the original green-on-black palette, which looked too close to Spotify. The prototype files still show the old green; **these tokens win**.)
+
 | Token | Use | Dark | Light |
 |---|---|---|---|
-| `bg` | Screen background | `#131512` | `#F3F2EC` |
-| `sf` | Cards, sheets | `#1C1F1B` | `#FFFFFF` |
-| `sf2` | Inputs, chips, nested surfaces | `#262A24` | `#E9E8E1` |
-| `ln` | Borders, dividers | `#31362F` | `#DCDBD2` |
-| `tx` | Main text | `#E6E8E1` | `#1B1D19` |
-| `mu` | Secondary text, labels | `#9CA295` | `#5D6257` |
-| `ac` | Accent fill (primary buttons, earned ring, active chip) | `#B9DE5C` | `#C6E86E` |
-| `on` | Text/icons on top of `ac` | `#131512` | `#1B1D19` |
-| `act` | Accent as text or icons on `bg`/`sf` (links, green icons) | `#B9DE5C` | `#4F7212` |
-| `rt` | Route line on maps | `#B9DE5C` | `#5E8A0F` |
-| `cnt` | Map contour lines, inactive dots | `#31362F` | `#D6D9CE` |
-| `bd` | Map borders | `#3A4A3F` | `#AFBDA5` |
-| `sea` | Map water | `#131A1D` | `#D2E1EA` |
-| `land` | Map land | `#27312B` | `#F2F5EC` |
-| `ph1`–`ph4` | Photo placeholders while images load | `#3A4838` `#4A3F35` `#35434C` `#4A4652` | `#C8D4C0` `#DCCFC0` `#C5D2DB` `#D3CEDA` |
-| `scrim` | Behind sheets and popups | `rgba(19,21,18,0.78)` | `rgba(255,255,255,0.86)` |
-| `ring` | Avatar outline | `#000000` | `#1B1D19` |
-| `warn` | Heads up, deadlines | `#F0B45A` | `#9A5F00` |
+| `bg` | Screen background | `#121611` | `#F5F2E6` |
+| `sf` | Cards, sheets | `#1A2019` | `#FFFFFF` |
+| `sf2` | Inputs, chips, nested surfaces | `#242B22` | `#ECE8D8` |
+| `ln` | Borders, dividers | `#30382E` | `#DFDAC6` |
+| `tx` | Main text | `#EDEBDD` | `#1C1E16` |
+| `mu` | Secondary text, labels | `#A1A592` | `#5F6252` |
+| `ac` | Accent fill (primary buttons, earned ring, active chip, SOWO pill) | `#F4C24A` | `#F4C24A` |
+| `on` | Text/icons on top of `ac` | `#1E1603` | `#1E1603` |
+| `act` | Accent as text/icons on `bg`/`sf` (links, Must-know icons, active nav) | `#F6CC62` | `#7E5900` |
+| `rt` | Route line on maps | `#F4C24A` | `#A87A00` |
+| `cnt` | Map contour lines, inactive dots | `#2B3329` | `#E4E0CF` |
+| `bd` | Map borders | `#3D4A3B` | `#B9B49C` |
+| `sea` | Map water | `#10181B` | `#D6E2E4` |
+| `land` | Map land | `#1F271E` | `#F3F1E6` |
+| `ph1`–`ph4` | Photo placeholders | `#3A4838` `#4A3F35` `#35434C` `#4A4652` | `#C8D4C0` `#DCCFC0` `#C5D2DB` `#D3CEDA` |
+| `scrim` | Behind sheets/popups | `rgba(18,22,17,0.78)` | `rgba(255,255,255,0.86)` |
+| `ring` | Avatar outline | `#000000` | `#1C1E16` |
+| `ok` | "All good", "Sorted", success | `#9CCB6B` | `#3F6E1A` |
+| `warn` | Heads up, deadlines (orange so it never clashes with the yellow accent) | `#FF9A4D` | `#A84A0C` |
 | `danger` | Delete, hide, flagged | `#F08A7E` | `#B33A2B` |
-| `info` | Info chips, links in admin | `#8FB9E6` | `#2B65A3` |
+| `info` | Info chips, admin links | `#8FB9E6` | `#2B65A3` |
 
 Contrast rules:
-- In light mode, green **text** always uses `act` (`#4F7212`), never `ac`. The light `ac` is a fill colour only.
-- The light `warn`, `danger` and `info` values are new (they aren't in the prototype). They're darkened to pass 4.5:1 contrast on the light background.
+- In light mode, yellow **text** always uses `act` (`#7E5900`), never `ac`. The yellow `ac` is a fill only, always with `on` text on top (10.8:1).
+- All text tokens pass 4.5:1 on `bg` and `sf` in both modes. The light route line `rt` passes 3:1 on `land`.
 - Badge tiers are icon colour only:
   - bronze `#C8895A`
   - silver `#B9C0C6`
   - gold `#E8C25A`
-  - In light mode, darken each by about 15% so the icon stays visible on white.
+  - In light mode, darken each by about 15% so it shows on white.
+  - The earned ring uses `ac`.
 
 ## Type
 - **Archivo** (variable, width 62–125, weight 100–900) for everything. Headings use a slightly condensed width (~85) and weight 700–800.
@@ -53,7 +57,7 @@ Contrast rules:
 
 ## Icons
 - Simple line icons, 1.6–1.8 stroke, rounded caps. Copy the SVG paths from the prototype files where they exist (Must-know icons, nav icons, the backpack Explore icon).
-- Must-know category icons are always green (`act`).
+- Must-know category icons always use `act`.
 - Bottom nav: Explore (backpack), Search, + (new route), Friends, Me.
 
 ## Motion

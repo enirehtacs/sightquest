@@ -39,8 +39,8 @@ Each phase ends with a "done when" checklist. Don't start the next phase until e
 - Mapbox dark and light styles.
 
 **Done when**
-- [ ] Every Explore section and the Search filters return real query results.
-- [ ] The visibility RLS is tested with 3 users: owner, follower, stranger.
+- [x] Every Explore section and the Search filters return real query results. *(`supabase/tests/explore_search.js`: Recommended, Easy wins, Best in {month}, Hidden gems, Building now, the search bar and every filter return real seed routes; 28 checks pass against the live database, 2026-10-23.)*
+- [x] The visibility RLS is tested with 3 users: owner, follower, stranger. *(`supabase/tests/routes_rls.js`: public / followers / private / draft routes, child tables, live delay, private dates, saves, co-builders and blocks; 52 checks pass against the live database.)*
 
 ## Phase 3 — Building routes
 - Screens: New route, Day-by-day builder, Add moment, Spots & posts (no Pro gating yet), Must-know editor, Finish-your-route checklist, Mark complete (with the SOWO question), Build from photos.

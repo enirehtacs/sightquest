@@ -29,7 +29,7 @@ Each phase ends with a "done when" checklist. Don't start the next phase until e
 - Auth: Apple, Google, email. Tables: `pledges`, `follows`, `blocks`, username rules.
 
 **Done when**
-- [ ] A new account goes Splash → Welcome → Pledge → Location → Explore. *(Every screen in that flow was clicked through in a local preview, and the sign-up trigger, pledge row and redirects are tested. Still needs one real sign-up: do step 1 of `docs/AUTH_SETUP.md`, then sign up on the live site.)*
+- [x] A new account goes Splash → Welcome → Pledge → Location → Explore. *(Vivi signed up with Google on the live site on 2026-10-23; profile and pledge rows created.)*
 - [x] The username 30/14-day rules are enforced by the database, not just the UI. *(`supabase/tests/username_rules.js`: all checks pass against the live database.)*
 - [x] Social icons show only the links that were added. *(Me shows 2 of 5, @nomadgoblin all 5, a profile with none shows no row.)*
 

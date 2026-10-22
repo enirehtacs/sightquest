@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Notifications</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 24px 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Main.dc.html" aria-label="Back" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="flex: 1; margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">Notifications</h1><a href="Settings.dc.html" aria-label="Notification settings" style="width: 44px; height: 44px; margin-right: -10px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"></path></svg></a>
+</div>
+<div style="display: flex; gap: 8px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+</sc-for>
+</div>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu); margin-top: 6px">{{g.title}}</span>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{g.items}}" as="n" hint-placeholder-count="4">
+<a href="{{n.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--ln); color: var(--tx); text-decoration: none">
+<span style="{{n.iconStyle}}">{{n.icon}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px; line-height: 1.45">{{n.text}}</span>
+<sc-if value="{{n.hasQuote}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; line-height: 1.4; color: var(--mu); padding-left: 10px; border-left: 2px solid var(--ln)">{{n.quote}}</span></sc-if>
+<sc-if value="{{n.hasActions}}" hint-placeholder-val="{{ false }}"><span style="display: flex; gap: 8px; margin-top: 4px"><span style="height: 34px; padding: 0 16px; border-radius: 999px; background: var(--ac); color: var(--on); font-size: 13px; font-weight: 700; display: flex; align-items: center">Build together</span><span style="height: 34px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--ln); font-size: 13px; font-weight: 600; display: flex; align-items: center">Not now</span></span></sc-if>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">{{n.when}}</span>
+</span>
+<sc-if value="{{n.unread}}" hint-placeholder-val="{{ false }}"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--ac); flex: none; margin: 6px 4px 0 0"></span></sc-if>
+</a>
+</sc-for>
+</div>
+</sc-for>
+<sc-if value="{{hasOlder}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{showOlder}}" style="height: 46px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">{{olderLabel}}</button></sc-if>
+<span style="font-size: 12px; line-height: 1.45; color: var(--mu); text-align: center; padding-top: 8px">Sightquest has no private messages. Questions and tips live on the route, where everyone can learn from them.</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1700}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { tab: 'All', older: false }; }
+renderVals() {
+var self = this;
+var s = this.state;
+var P = this.props;
+function chip(on) { return 'min-height: 40px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'); }
+var V = {};
+
+var N = [
+['new', 'routes', '✓', 'var(--ac)', '<b>@maya.goes</b> said yes! You are now building Laos by slow boat together. It is on your Explore page.', '', 'Live.dc.html', 'JUST NOW', true, false],
+['new', 'routes', '+', 'var(--ac)', '<b>@maya.goes</b> added Day 13 to Vietnam, south to north', '', 'Live.dc.html', '12 MIN', true, false],
+['new', 'comments', '↩', 'var(--info)', '<b>@nomadgoblin</b> replied to your question on Ha Giang, the long way', 'Late Oct is gorgeous, buckwheat flowers everywhere. Pack a fleece.', 'Comments.dc.html', '2H', true, false],
+['new', 'routes', '↗', 'var(--ac)', '<b>3 people</b> stole Bac Ha loop, the scenic way', '', 'Route.dc.html', '5H', true, false],
+['new', 'quests', '★', 'var(--ac)', 'Your night train story is <b>featured on Explore</b>', '', 'Quest.dc.html', '1D', false, false],
+['earlier', 'routes', '⚠', 'var(--warn)', 'New report on a route you saved: <b>Landslide near Ma Pi Leng</b>, one lane open', '', 'Route.dc.html', '1D', false, false],
+['earlier', 'routes', '⇄', 'var(--info)', '<b>@maya.goes</b> wants to build Laos by slow boat with you', '', 'Inbox.dc.html', '2D', false, true],
+['earlier', 'comments', '?', 'var(--info)', '<b>@jun.walks</b> asked a question on Vietnam, south to north', 'Is the Hai Van pass ok on a rented scooter?', 'Comments.dc.html', '3D', false, false],
+['earlier', 'routes', '●', 'var(--mu)', '<b>@saltandsole</b> posted a new route: Laos by slow boat', '', 'Route.dc.html', '3D', false, false],
+['earlier', 'routes', '◆', 'var(--ac)', 'Badge unlocked: <b>First train ride</b>', '', 'Me.dc.html', '4D', false, false],
+['earlier', 'routes', '$', 'var(--mu)', 'Your Pro trial ends in 7 days', '', 'Subscription.dc.html', '5D', false, false],
+['earlier', 'comments', '♥', '#F0A6C8', '<b>@leafandlantern</b> said they loved Vietnam, south to north', '', 'Comments.dc.html', '6D', false, false],
+['earlier', 'routes', '↗', 'var(--ac)', '<b>2 people</b> stole Vietnam, south to north', '', 'Route.dc.html', '1W', false, false],
+['earlier', 'quests', '★', 'var(--ac)', 'New sidequest: <b>Take a night train</b>', '', 'Quest.dc.html', '1W', false, false],
+['earlier', 'comments', '↩', 'var(--info)', '<b>@saltandsole</b> replied on Laos by slow boat', '', 'Comments.dc.html', '1W', false, false],
+['earlier', 'routes', '●', 'var(--mu)', '<b>@twowheelsnorth</b> posted a new route: Northern Laos by moto', '', 'Route.dc.html', '2W', false, false],
+['earlier', 'quests', '◆', 'var(--ac)', 'Badge unlocked: <b>Early bird</b>', '', 'Me.dc.html', '2W', false, false],
+['earlier', 'routes', '⚠', 'var(--warn)', 'Report sorted on Ha Giang: <b>road works past Meo Vac</b>', '', 'Reports.dc.html', '3W', false, false],
+['earlier', 'comments', '?', 'var(--info)', '<b>@kellykayaks</b> asked a question on Bac Ha loop', '', 'Comments.dc.html', '3W', false, false]
+];
+var tabMap = { 'All': null, 'Comments': 'comments', 'Your routes': 'routes' };
+V.tabs = ['All', 'Comments', 'Your routes'].map(function (t) { return { label: t, pick: function () { self.setState({ tab: t }); }, style: chip(s.tab === t) }; });
+function strip(h) { return h.replace(/<\/?b>/g, ''); }
+var f = tabMap[s.tab];
+var shown = N.filter(function (n) { return !f || n[1] === f; });
+V.hasOlder = !s.older && shown.length > 10;
+V.olderLabel = 'See older notifications (' + (shown.length - 10) + ')';
+V.showOlder = function () { self.setState({ older: true }); };
+if (!s.older) shown = shown.slice(0, 10);
+V.groups = [['new', 'NEW'], ['earlier', 'EARLIER']].map(function (g) { return { title: g[1], items: shown.filter(function (n) { return n[0] === g[0]; }).map(function (n) { return {
+icon: n[2], text: strip(n[4]), quote: n[5], hasQuote: !!n[5], href: n[6], when: n[7], unread: n[8], hasActions: n[9],
+iconStyle: 'width: 36px; height: 36px; border-radius: 12px; background: var(--sf); border: 1px solid var(--ln); color: ' + n[3] + '; display: flex; align-items: center; justify-content: center; flex: none; font-size: 15px; font-weight: 800; box-sizing: border-box;' }; }) }; }).filter(function (g) { return g.items.length; });
+
+V.rootStyle = 'width: 390px; height: 1700px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); --bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --warn: #F0B45A; --danger: #F08A7E; --map: #253126; --cnt: #34453A; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000;';
+return V;
+}
+}
+</script>
+</body>
+</html>

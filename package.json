@@ -1,0 +1,14 @@
+{
+  "name": "sightquest",
+  "private": true,
+  "scripts": {
+    "app": "npm --prefix app run start",
+    "web": "npm --prefix app run web",
+    "admin": "npm --prefix admin run dev",
+    "db:push": "supabase db push",
+    "db:link": "supabase link"
+  },
+  "devDependencies": {
+    "supabase": "^2.121.0"
+  }
+}

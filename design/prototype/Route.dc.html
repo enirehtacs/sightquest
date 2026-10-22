@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Route</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="{{mapBoxStyle}}">
+<div onPointerDown="{{mDown}}" onPointerMove="{{mMove}}" onPointerUp="{{mUp}}" onPointerLeave="{{mUp}}" style="position: absolute; inset: 0; touch-action: none; cursor: grab">
+<svg width="390" height="{{mapH}}" viewBox="{{vb}}" preserveAspectRatio="xMidYMid slice" style="display: block; pointer-events: none"><rect x="-300" y="-300" width="1000" height="1000" style="fill: var(--nb)"></rect><path d="{{seaPath}}" style="fill: var(--sea)"></path><path d="{{vnPath}}" stroke-width="{{swB}}" stroke-linejoin="round" style="fill: var(--land); stroke: var(--bd)"></path><text x="150" y="-2" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">CHINA</text><text x="128" y="96" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">LAOS</text><text x="220" y="60" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">GULF OF TONKIN</text><polyline points="160,48 157,42 154,36 151,30 150,26 153,22 155,19 158,17 161,13 158,11 156,8 159,10 162,13 165,15" fill="none" stroke-width="{{sw4}}" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><circle cx="160" cy="48" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="160" y="48" dx="{{dR}}" dy="{{lblDy}}" text-anchor="start" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: 0.85">Hanoi</text><circle cx="196" cy="44" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="196" y="44" dx="{{dR}}" dy="{{lblDy}}" text-anchor="start" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: 0.85">Ha Long Bay</text><circle cx="124" cy="30" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="124" y="30" dx="{{dL}}" dy="{{lblDy}}" text-anchor="end" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: 0.85">Sapa</text><circle cx="154" cy="20" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="154" y="20" dx="{{dL}}" dy="{{lblDy}}" text-anchor="end" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: 0.85">Quan Ba</text><circle cx="158" cy="17" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="158" y="17" dx="{{dR}}" dy="{{lblDy}}" text-anchor="start" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: 0.85">Yen Minh</text><circle cx="160" cy="48" r="{{r5}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><circle cx="150" cy="26" r="{{rMk}}" stroke-width="{{swDot}}" style="fill: var(--sf); stroke: var(--ring)"></circle><text x="150" y="26" dy="{{mkDy}}" text-anchor="middle" font-size="{{fsMk}}" font-family="JetBrains Mono, monospace" font-weight="600" style="fill: var(--tx)">1</text><circle cx="161" cy="13" r="{{rMk}}" stroke-width="{{swDot}}" style="fill: var(--sf); stroke: var(--ring)"></circle><text x="161" y="13" dy="{{mkDy}}" text-anchor="middle" font-size="{{fsMk}}" font-family="JetBrains Mono, monospace" font-weight="600" style="fill: var(--tx)">2</text><circle cx="156" cy="8" r="{{rMk}}" stroke-width="{{swDot}}" style="fill: var(--sf); stroke: var(--ring)"></circle><text x="156" y="8" dy="{{mkDy}}" text-anchor="middle" font-size="{{fsMk}}" font-family="JetBrains Mono, monospace" font-weight="600" style="fill: var(--tx)">3</text><circle cx="165" cy="15" r="{{rMk}}" stroke-width="{{swDot}}" style="fill: var(--ac); stroke: var(--ring)"></circle><text x="165" y="15" dy="{{mkDy}}" text-anchor="middle" font-size="{{fsMk}}" font-family="JetBrains Mono, monospace" font-weight="600" style="fill: var(--on)">4</text></svg>
+</div>
+<a href="Main.dc.html" aria-label="Back" style="position: absolute; top: 14px; left: 14px; width: 44px; height: 44px; border-radius: 999px; background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<button type="button" aria-label="Save route" onClick="{{toggleSave}}" style="position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border-radius: 999px; background: var(--scrim); color: var(--tx); border: 0; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z" style="{{saveFill}}"></path></svg></button>
+<div role="radiogroup" aria-label="Map layer" style="position: absolute; left: 14px; bottom: 36px; display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--scrim); border: 1px solid var(--ln); z-index: 3">
+<sc-for list="{{layers}}" as="ly" hint-placeholder-count="2"><button type="button" role="radio" aria-checked="{{ly.on}}" onClick="{{ly.pick}}" style="{{ly.style}}">{{ly.label}}</button></sc-for>
+</div>
+<sc-if value="{{showPins}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; pointer-events: none; z-index: 2">
+<sc-for list="{{pins}}" as="pn" hint-placeholder-count="5"><button type="button" onClick="{{pn.open}}" aria-label="{{pn.aria}}" style="{{pn.style}}"><span style="{{pn.badge}}">{{pn.n}}</span></button></sc-for>
+</div>
+</sc-if>
+
+<div style="position: absolute; right: 14px; bottom: 36px; display: flex; flex-direction: column; gap: 8px">
+<button type="button" aria-label="Zoom in" onClick="{{zoomIn}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+<button type="button" aria-label="Zoom out" onClick="{{zoomOut}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path></svg></button>
+<button type="button" aria-label="Fit the whole route" onClick="{{fit}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--act); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></button>
+</div>
+</div>
+
+<div style="{{sheetStyle}}">
+<button type="button" aria-label="Drag to resize the map" onPointerDown="{{hDown}}" onPointerMove="{{hMove}}" onPointerUp="{{hUp}}" style="align-self: stretch; height: 30px; margin: -10px 0 -8px 0; border: 0; background: transparent; cursor: ns-resize; touch-action: none; display: flex; align-items: center; justify-content: center"><span style="width: 44px; height: 5px; border-radius: 999px; background: var(--mu); opacity: 0.6"></span></button>
+<sc-if value="{{shared}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 16px; background: var(--sf); border: 1px solid var(--act)">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" style="stroke: var(--act); flex: none"><circle cx="12" cy="12" r="10"></circle><path d="M2.3 10.4c3.4-2.6 6.6 1.8 9.8-.6s5.8-2.8 9.6.2"></path><path d="M2.2 14c3.4-2.2 6.8 1.8 10.2-.3s5.4-2.1 9.4.4"></path><path d="M4.6 18c2.8-1.5 5.8 1.2 8.6-.2s4.2-1.3 6.4.2"></path></svg>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 15px; font-weight: 700">You're in</span><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">@nomadgoblin shared this route with you. The full itinerary is unlocked.</span></span>
+</div>
+</sc-if>
+<h1 style="margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">Ha Giang, the long way</h1>
+<div style="display: flex; align-items: center; gap: 10px">
+<a href="Profile.dc.html" style="display: flex; align-items: center; gap: 10px; color: var(--tx); text-decoration: none; flex: 1">
+<div style="width: 38px; height: 38px; border-radius: 999px; background: var(--ph2)"></div>
+<div><div style="font-size: 15px; font-weight: 700">@nomadgoblin</div><div style="font-size: 13px; color: var(--mu)">Hanoi → Lung Cu · Mar 2026</div></div>
+</a>
+<a href="Profile.dc.html" style="height: 40px; padding: 0 14px; border-radius: 999px; background: var(--tx); color: var(--bg); text-decoration: none; display: flex; align-items: center; font-size: 14px; font-weight: 700">Follow</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">9</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">DAYS</div></div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">$$<span style="color: var(--mu); opacity: 0.45">$$$</span></div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">BUDGET</div></div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 8px 10px"><div style="font-size: 13px; font-weight: 700; line-height: 1.6; color: var(--act); letter-spacing: 1px">●●●<span style="color: var(--mu); opacity: .45">●●</span></div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">UP FOR IT</div></div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">Mar ☀</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">WENT</div></div>
+</div>
+<div style="display: flex; gap: 8px">
+<button type="button" onClick="{{toggleOff}}" aria-pressed="{{offPressed}}" style="{{offStyle}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg><span style="font-size: 14px; font-weight: 700; white-space: nowrap">{{offLabel}}</span></button>
+<button type="button" onClick="{{openSowo}}" style="flex: 1; font-family: inherit; cursor: pointer; text-align: left; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 0 12px; height: 52px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln); color: var(--tx); box-sizing: border-box"><span style="width: 26px; height: 26px; border-radius: 999px; background: var(--sf2); color: var(--act); display: flex; align-items: center; justify-content: center; flex: none; font-size: 13px; font-weight: 800">♀</span><span style="display: flex; flex-direction: column; gap: 1px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">SOWO 88%</span><span style="font-size: 11px; color: var(--act); white-space: nowrap">✓ Approved</span></span></button>
+<button type="button" onClick="{{openMusic}}" aria-label="Trip tunes" style="flex: none; width: 52px; height: 52px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln); color: var(--act); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg></button>
+</div>
+</div>
+
+<div role="tablist" aria-label="Route sections" style="margin: 14px 16px 0 16px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--ln)">
+<sc-for list="{{tabs}}" as="tb" hint-placeholder-count="5">
+<button type="button" role="tab" aria-selected="{{tb.sel}}" onClick="{{tb.pick}}" style="{{tb.style}}">{{tb.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{t_moments}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 14px 16px 0 16px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{moms}}" as="m" hint-placeholder-count="6">
+<button type="button" onClick="{{m.open}}" aria-label="{{m.aria}}" style="{{m.tile}}"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600">{{m.label}}</span></button>
+</sc-for>
+</div>
+<a href="Diary.dc.html" style="height: 42px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-top: 10px">See all 12 moments</a>
+</div>
+
+</sc-if>
+<sc-if value="{{t_posts}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 14px 16px 0 16px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{posts}}" as="p" hint-placeholder-count="6">
+<button type="button" onClick="{{p.open}}" aria-label="{{p.aria}}" style="min-width: 0; padding: 0; border: 0; background: transparent; color: var(--tx); font-family: inherit; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 6px">
+<span style="{{p.tile}}">
+<span style="position: absolute; top: 8px; left: 8px; height: 20px; padding: 0 7px; border-radius: 999px; background: var(--scrim); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; display: flex; align-items: center">{{p.platU}}</span>
+<span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center"><span style="width: 38px; height: 38px; border-radius: 999px; background: var(--scrim); display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg></span></span>
+<span style="position: absolute; left: 8px; bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600">▶ {{p.views}}</span>
+</span>
+<span style="font-size: 12px; line-height: 1.35; font-weight: 600">{{p.cap}}</span>
+</button>
+</sc-for>
+</div>
+<button type="button" onClick="{{togglePosts}}" style="width: 100%; height: 42px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-top: 10px">{{postsBtn}}</button>
+</div>
+
+</sc-if>
+<sc-if value="{{t_recs}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 14px 16px 0 16px">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{recs}}" as="r" hint-placeholder-count="6">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--mu)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="color: var(--act); flex: none"><path d="{{r.i}}"></path></svg>{{r.tag}}</span>
+<span style="font-size: 14px; font-weight: 700; line-height: 1.3">{{r.n}}</span>
+<span style="font-size: 12px; line-height: 1.35; color: var(--mu)">{{r.where}} · {{r.note}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+</sc-if>
+<sc-if value="{{t_must}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 14px 16px 0 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{must}}" as="mk" hint-placeholder-count="6">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--mu)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="color: var(--act); flex: none"><path d="{{mk.i}}"></path></svg>{{mk.cat}}</span>
+<span style="font-size: 14px; font-weight: 700; line-height: 1.3">{{mk.v}}</span>
+<span style="font-size: 12px; line-height: 1.35; color: var(--mu)">{{mk.note}}</span>
+</div>
+</sc-for>
+</div>
+<button type="button" onClick="{{toggleMust}}" style="height: 42px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">{{mustBtn}}</button>
+</div>
+
+</sc-if>
+<sc-if value="{{t_legs}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 4px 16px 0 16px">
+<div style="display: flex; gap: 10px; align-items: flex-start; margin: 10px 0 4px 0; padding: 10px 12px; border-radius: 14px; background: var(--sf)"><span style="color: var(--act); flex: none">☀</span><span style="font-size: 13px; line-height: 1.45; color: var(--mu)"><b style="color: var(--tx)">Went in March.</b> Mostly sunny, misty mornings, cold nights up north. Go before the June rains.</span></div>
+<div style="display: flex; flex-direction: column">
+<div style="display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--ln)">
+<span style="flex: none; width: 54px; height: 26px; border-radius: 999px; background: var(--sf2); color: var(--act); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center">BUS</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px"><div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 600">Hanoi → Ha Giang</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mu)">7h</span></div><div style="font-size: 14px; line-height: 1.4; color: var(--mu)">Sleeper bus. Bring socks, the AC has a personality.</div></div>
+</div>
+<div style="display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--ln)">
+<span style="flex: none; width: 54px; height: 26px; border-radius: 999px; background: var(--sf2); color: var(--act); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center">MOTO</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px"><div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 600">Ha Giang → Dong Van</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mu)">2d</span></div><div style="font-size: 14px; line-height: 1.4; color: var(--mu)">Ma Pi Leng at 7am, before the tour groups. Or hire an easy rider and just enjoy it.</div><a href="Reports.dc.html" style="position: relative; display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border-radius: 12px; background: rgba(240,180,90,.12); border: 1px solid rgba(240,180,90,.45); color: var(--tx); text-decoration: none"><span style="color: #F0B45A; font-size: 14px; line-height: 1.3; flex: none">⚠</span><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0; padding-right: 34px"><span style="font-size: 13px; font-weight: 700; line-height: 1.3">Landslide near Ma Pi Leng · one lane open</span><span style="font-size: 12px; color: var(--mu)">Reported 3 Oct by @saltandsole · 4 confirmed</span></span><span style="position: absolute; top: 8px; right: 8px; height: 22px; padding: 0 7px; border-radius: 999px; background: #F0B45A; color: #131512; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; display: flex; align-items: center">+2</span></a><button type="button" onClick="{{openP0}}" style="align-self: flex-start; height: 30px; padding: 0 12px; border-radius: 999px; border: 0; background: var(--sf2); color: var(--tx); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg>Day 3 · TikTok · 48.2k</button></div>
+</div>
+<div style="display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--ln)">
+<span style="flex: none; width: 54px; height: 26px; border-radius: 999px; background: var(--sf2); color: var(--act); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center">WALK</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px"><div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 600">Dong Van → Lung Cu</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mu)">1d</span></div><div style="font-size: 14px; line-height: 1.4; color: var(--mu)">Ask the homestay auntie for the ridge path. Trust her, not the map.</div></div>
+</div>
+<div style="display: flex; gap: 12px; padding: 12px 0">
+<span style="flex: none; width: 54px; height: 26px; border-radius: 999px; background: var(--sf2); color: var(--act); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center">BOAT</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px"><div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 600">Nho Que river</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mu)">2h</span></div><div style="font-size: 14px; line-height: 1.4; color: var(--mu)">Best boat ride of the trip. Swim if the boatman says yes.</div><button type="button" onClick="{{openP2}}" style="align-self: flex-start; height: 30px; padding: 0 12px; border-radius: 999px; border: 0; background: var(--sf2); color: var(--tx); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg>Day 6 · TikTok · 9.8k</button></div>
+</div>
+</div>
+</div>
+
+<div style="padding: 10px 16px 0 16px; display: flex; gap: 8px"><a href="Reports.dc.html" style="flex: 1; display: flex; align-items: center; gap: 10px; height: 48px; padding: 0 14px; border-radius: 14px; background: var(--sf); border: 1px solid var(--ln); color: var(--tx); text-decoration: none; box-sizing: border-box"><span style="width: 8px; height: 8px; border-radius: 999px; background: #F0B45A; flex: none"></span><span style="flex: 1; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 14px; font-weight: 700">Updates · 5</span><span style="font-size: 12px; color: var(--mu)">Latest 3 days ago · 3 heads-ups</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--mu)"><path d="M9 5l7 7-7 7"></path></svg></a><a href="Report.dc.html" style="flex: none; display: flex; align-items: center; height: 48px; padding: 0 14px; border-radius: 14px; border: 1px dashed var(--ln); color: var(--act); text-decoration: none; font-size: 14px; font-weight: 700; box-sizing: border-box">+ Update</a></div>
+
+</sc-if>
+<div style="margin-top: 22px; padding: 16px 16px 0 16px; border-top: 8px solid var(--sf); display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><div style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Campfire <span style="color: var(--mu); font-weight: 600">· 12</span></h2><span style="font-size: 12px; color: var(--mu)">Ask the creator and people who went</span></div><a href="Comments.dc.html" style="font-size: 14px; font-weight: 600; color: var(--act)">See all</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 10px"><span style="width: 32px; height: 32px; border-radius: 999px; background: var(--ph3); flex: none"></span><div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: var(--mu)"><b style="color: var(--tx)">@jun.walks</b> · 2d</span><span style="font-size: 14px; line-height: 1.45">Is the loop ok in late October or too cold up at Lung Cu?</span>
+<div style="display: flex; gap: 10px; margin-top: 4px; padding: 10px 12px; border-radius: 14px; background: var(--sf)"><span style="width: 26px; height: 26px; border-radius: 999px; background: var(--ph2); flex: none"></span><div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; color: var(--mu); display: flex; align-items: center; gap: 6px"><b style="color: var(--tx)">@nomadgoblin</b><span style="background: var(--ac); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 999px">CREATOR</span></span><span style="font-size: 14px; line-height: 1.45">Late Oct is gorgeous, buckwheat flowers! Nights get to ~10°, so pack a fleece.</span></div></div>
+</div></div>
+<div style="display: flex; gap: 10px"><span style="width: 32px; height: 32px; border-radius: 999px; background: var(--ph4); flex: none"></span><div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: var(--mu)"><b style="color: var(--tx)">@leafandlantern</b> · 1w · <span style="color: #F0A6C8">BEEN HERE</span></span><span style="font-size: 14px; line-height: 1.45">Did this in Feb with my sister and loved every km. Thanks for putting it up, Day 4 was exactly as you said.</span></div></div>
+</div>
+<a href="Comments.dc.html" style="display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 16px; border-radius: 999px; background: var(--sf); border: 1px solid var(--ln); color: var(--mu); text-decoration: none; font-size: 14px">Ask, share a tip or say you loved it…</a>
+</div>
+
+
+<sc-if value="{{music}}" hint-placeholder-val="{{ false }}">
+<div onClick="{{closeMusic}}" style="position: absolute; inset: 0; z-index: 30; background: rgba(0,0,0,.6)"></div>
+<div role="dialog" aria-label="Trip tunes" style="position: absolute; left: 16px; right: 16px; top: 280px; z-index: 31; background: var(--sf); border: 1px solid var(--ln); border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--act)">TRIP TUNES</span><button type="button" onClick="{{closeMusic}}" aria-label="Close" style="width: 32px; height: 32px; border-radius: 999px; border: 0; background: var(--sf2); color: var(--tx); cursor: pointer">✕</button></div>
+<div style="display: flex; gap: 12px; align-items: center">
+<div style="width: 76px; height: 76px; border-radius: 12px; background: linear-gradient(135deg, #3A4838, #35434C); flex: none; display: flex; align-items: center; justify-content: center; color: var(--act)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 17px; font-weight: 800; line-height: 1.2">Ha Giang on two wheels</span><span style="font-size: 13px; color: var(--mu)">Playlist · 24 songs · 1h 32m</span><span style="font-size: 12px; color: #1DB954; font-weight: 700">● Spotify</span></div>
+</div>
+<div style="display: flex; gap: 10px; padding: 10px 12px; border-radius: 14px; background: var(--sf2)"><span style="width: 24px; height: 24px; border-radius: 999px; background: var(--ph2); flex: none"></span><span style="font-size: 14px; line-height: 1.45; font-style: italic">"On loop through every pass. Track 2 is Dong Van at night, I can still smell the woodsmoke."</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu); width: 16px">1</span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Mountain Switchbacks</span><span style="font-size: 12px; color: var(--mu)">The Low Passes</span></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">3:41</span></div>
+<div style="display: flex; align-items: center; gap: 10px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu); width: 16px">2</span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Rice Wine at Dusk</span><span style="font-size: 12px; color: var(--mu)">Hoa &amp; the Mist</span></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">4:12</span></div>
+<div style="display: flex; align-items: center; gap: 10px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu); width: 16px">3</span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Northbound</span><span style="font-size: 12px; color: var(--mu)">Kite Theory</span></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">3:05</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; color: var(--mu)"><span style="width: 16px; font-size: 14px; letter-spacing: 1px">···</span><span style="font-size: 13px">+ 21 more songs</span></div>
+<a href="https://open.spotify.com/" style="height: 48px; border-radius: 999px; background: #1DB954; color: #0B1F12; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 800">▶ Play on Spotify</a>
+</div>
+</sc-if>
+<sc-if value="{{sowo}}" hint-placeholder-val="{{ false }}">
+<div onClick="{{closeSowo}}" style="position: absolute; inset: 0; z-index: 30; background: rgba(0,0,0,.6)"></div>
+<div role="dialog" aria-label="SOWO score" style="position: absolute; left: 16px; right: 16px; top: 300px; z-index: 31">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 700">SOWO score</span><span style="font-size: 12px; color: var(--mu)">Solo women rate the route</span></span><button type="button" onClick="{{closeSowo}}" aria-label="Close" style="width: 32px; height: 32px; border-radius: 999px; border: 0; background: var(--sf2); color: var(--tx); cursor: pointer; flex: none; order: 3">✕</button><span style="background: var(--ac); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 5px 9px; border-radius: 999px; white-space: nowrap">✓ SOWO APPROVED</span></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="font-size: 32px; font-weight: 800; font-stretch: 110%; line-height: 1">88%</span><div style="flex: 1; display: flex; flex-direction: column; gap: 6px"><div style="height: 8px; border-radius: 999px; background: var(--sf2); position: relative; overflow: hidden"><div style="width: 88%; height: 100%; background: var(--ac)"></div><span style="position: absolute; left: 80%; top: 0; bottom: 0; width: 2px; background: var(--bg)"></span></div><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">16 RATINGS · APPROVED FROM 80%</span></div></div>
+<span style="font-size: 14px; line-height: 1.45">88% of women who did this route solo felt comfortable.</span>
+<span style="font-size: 12px; line-height: 1.4; color: var(--mu)">Shared experiences, not a safety guarantee.</span>
+</div>
+</div>
+</sc-if>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px 20px 16px; background: var(--bg); border-top: 1px solid var(--ln); display: flex; gap: 10px">
+<button type="button" onClick="{{openReel}}" style="border: 0; font-family: inherit; cursor: pointer; flex: 2; height: 48px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"></path></svg>Play route</button>
+<a href="Steal.dc.html" style="flex: 1.3; height: 48px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 16px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11v11"></path><path d="M19 4L9 14"></path><path d="M14 20H5V11"></path></svg>Steal it</a>
+</div>
+<sc-if value="{{reel}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; top: 0; left: 0; width: 390px; height: 844px">
+<dc-import name="Playback" trip="hagiang" embedded="true" on-close="{{closeReel}}" hint-size="390px,844px"></dc-import>
+</div>
+</sc-if>
+<sc-if value="{{mv}}" hint-placeholder-val="{{ false }}">
+<div style="{{mvOverlay}}">
+<div role="dialog" aria-modal="true" aria-label="Moments" style="width: 100%; background: var(--sf); border-radius: 24px; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 700">{{mvPlace}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--act)">{{mvWhen}}</span></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">{{mvPos}}</span>
+<button type="button" aria-label="Close" onClick="{{mvClose}}" style="width: 44px; height: 44px; margin-right: -8px; border: 0; background: transparent; color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div onPointerDown="{{swDown}}" onPointerUp="{{swUp}}" style="{{mvPhoto}}">
+<span style="position: absolute; top: 10px; left: 10px; background: var(--scrim); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 999px">{{mvTag}}</span>
+<span style="position: absolute; left: 10px; bottom: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; opacity: 0.8">[PHOTO] SWIPE FOR MORE</span>
+<button type="button" aria-label="Previous moment" onClick="{{mvPrev}}" style="position: absolute; left: 8px; top: 50%; margin-top: -22px; width: 44px; height: 44px; border-radius: 999px; border: 0; background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<button type="button" aria-label="Next moment" onClick="{{mvNext}}" style="position: absolute; right: 8px; top: 50%; margin-top: -22px; width: 44px; height: 44px; border-radius: 999px; border: 0; background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></button>
+</div>
+<div style="display: flex; justify-content: center; gap: 6px">
+<sc-for list="{{mvDots}}" as="d" hint-placeholder-count="5"><span style="{{d.style}}"></span></sc-for>
+</div>
+<span style="font-size: 15px; line-height: 1.45">{{mvText}}</span>
+<a href="Diary.dc.html" style="height: 46px; border-radius: 999px; border: 1px solid var(--ln); background: var(--bg); color: var(--tx); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--act)"><path d="M4 5l5-2 6 2 5-2v16l-5 2-6-2-5 2z"></path><path d="M9 3v16M15 5v16"></path></svg>See it on the map diary</a>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{modal}}" hint-placeholder-val="{{ false }}">
+<div style="{{overlayStyle}}">
+<div role="dialog" aria-modal="true" aria-labelledby="post-title" style="width: 100%; background: var(--sf); border-radius: 24px; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="width: 34px; height: 34px; border-radius: 999px; background: var(--ph2); flex: none"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">{{mHandle}}</span><span style="font-size: 12px; color: var(--mu)">{{mWhere}}</span></div>
+<span style="height: 22px; padding: 0 8px; border-radius: 999px; background: var(--sf2); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; display: flex; align-items: center">{{mPlatU}}</span>
+<button type="button" aria-label="Close" onClick="{{closePost}}" style="width: 44px; height: 44px; margin-right: -8px; border: 0; background: transparent; color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="{{mPreview}}">
+<span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center"><span style="width: 64px; height: 64px; border-radius: 999px; background: var(--scrim); display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg></span></span>
+<span style="position: absolute; top: 10px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; opacity: 0.8">PREVIEW</span>
+<span style="position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 700">{{mHandle}}</span><span style="font-size: 13px; line-height: 1.35">{{mCap}}</span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span id="post-title" style="font-size: 16px; font-weight: 700">{{mCap}}</span>
+<span style="font-size: 13px; color: var(--mu)">{{mStats}}</span>
+</div>
+<a href="{{mUrl}}" target="_blank" rel="noopener" style="height: 48px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 700">Watch on {{mPlat}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"></path></svg></a>
+<span style="font-size: 12px; line-height: 1.4; color: var(--mu); text-align: center">Opens {{mPlat}}. Views and likes go to {{mHandle}}.</span>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"shared":{"editor":"boolean","default":false},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":1710}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.vnPath = 'M100 30 L112 16 L140 10 L156 5 L170 9 L196 12 L214 24 L210 38 L200 46 L186 54 L178 66 L190 78 L208 90 L222 98 L234 106 L244 114 L252 124 L262 140 L272 158 L278 176 L282 198 L280 214 L274 232 L268 256 L254 276 L236 290 L222 300 L204 312 L184 326 L172 320 L170 300 L186 290 L200 276 L210 256 L214 236 L222 212 L230 186 L236 162 L232 140 L220 124 L204 110 L188 100 L174 88 L156 78 L136 72 L118 62 L104 50 Z';
+this.seaPath = 'M214 -300 L214 24 L214 24 L210 38 L200 46 L186 54 L178 66 L190 78 L208 90 L222 98 L234 106 L244 114 L252 124 L262 140 L272 158 L278 176 L282 198 L280 214 L274 232 L268 256 L254 276 L236 290 L222 300 L204 312 L184 326 L184 326 L184 400 L800 400 L800 -300 Z M-300 300 L170 300 L172 320 L184 326 L184 700 L-300 700 Z';
+this.state = { mapH: 270, zoom: 5.5, cx: 157, cy: 28, post: -1, mom: -1, off: false, mustAll: false, tab: 'legs', sowo: false, layer: 'route' };
+this.moms = [
+{ place: 'Ha Giang', d: 2, t: '6:30am', tag: 'FOOD', ph: 'ph2', label: 'PHO AT 6AM', txt: 'Pho on a plastic stool by the bus station. Best wake-up call there is.' },
+{ place: 'Quan Ba', d: 2, t: '5:20pm', tag: 'VIEWPOINT', ph: 'ph1', label: "HEAVEN'S GATE", txt: "Heaven's Gate at golden hour. The twin hills below look exactly how the locals describe them." },
+{ place: 'Dong Van', d: 3, t: '7:10am', tag: 'VIEWPOINT', ph: 'ph4', label: 'PASS AT DAWN', txt: 'Ma Pi Leng Pass before the tour groups. Had the whole road to myself.' },
+{ place: 'Dong Van', d: 4, t: '7:30pm', tag: 'FOOD', ph: 'ph2', label: 'RICE WINE', txt: 'Homestay dinner. Too much rice wine and a toast every four minutes.' },
+{ place: 'Nho Que river', d: 6, t: '2:00pm', tag: 'BOAT', ph: 'ph3', label: 'NHO QUE', txt: 'Boat through the canyon. Water that colour should not be legal.' },
+{ place: 'Lung Cu', d: 8, t: '5:45am', tag: 'VIEWPOINT', ph: 'ph1', label: 'FLAG TOWER', txt: 'Northernmost point. Climbed up in the dark, China on the other side of the hill.' }
+];
+this.posts = [
+{ plat: 'TikTok', handle: '@nomadgoblin', cap: 'Ma Pi Leng at 7am, before the tour groups', views: '48.2k', where: 'Day 3 · Ma Pi Leng', likes: '3.9k likes', ph: 'ph1', url: 'https://www.tiktok.com/' },
+{ plat: 'Instagram', handle: '@nomadgoblin', cap: 'The whole Ha Giang loop in 60 seconds', views: '21.7k', where: 'Whole route', likes: '2.4k likes', ph: 'ph2', url: 'https://www.instagram.com/' },
+{ plat: 'TikTok', handle: '@nomadgoblin', cap: 'Swimming the Nho Que canyon', views: '9.8k', where: 'Day 6 · Nho Que river', likes: '812 likes', ph: 'ph3', url: 'https://www.tiktok.com/' },
+{ plat: 'Instagram', handle: '@nomadgoblin', cap: 'Homestay dinner, rice wine roulette', views: '6.1k', where: 'Day 4 · Dong Van', likes: '540 likes', ph: 'ph2', url: 'https://www.instagram.com/' },
+{ plat: 'TikTok', handle: '@nomadgoblin', cap: 'Sunrise at Lung Cu flag tower', views: '14.3k', where: 'Day 8 · Lung Cu', likes: '1.2k likes', ph: 'ph4', url: 'https://www.tiktok.com/' },
+{ plat: 'TikTok', handle: '@nomadgoblin', cap: 'Easy rider day, zero regrets', views: '4.4k', where: 'Day 5 · Meo Vac', likes: '390 likes', ph: 'ph3', url: 'https://www.tiktok.com/' },
+{ plat: 'Instagram', handle: '@nomadgoblin', cap: 'Sunday market at Dong Van', views: '8.9k', where: 'Day 4 · Dong Van', likes: '702 likes', ph: 'ph2', url: 'https://www.instagram.com/' },
+{ plat: 'Instagram', handle: '@nomadgoblin', cap: 'What 9 days on a moto does to your hair', views: '31.5k', where: 'Whole route', likes: '3.1k likes', ph: 'ph1', url: 'https://www.instagram.com/' }
+];
+}
+renderVals() {
+var self = this;
+var s = this.state;
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --land: #27312B; --nb: #1B201C; --sea: #131A1D; --bd: #46564A; --ring: #000000;',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --sf2: #E9E8E1; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212; --info: #CFE2F5; --rt: #5E8A0F; --ph1: #C8D4C0; --ph2: #DCCFC0; --ph3: #C5D2DB; --ph4: #D3CEDA; --scrim: rgba(255,255,255,0.86); --land: #F2F5EC; --nb: #E1E4D8; --sea: #D2E1EA; --bd: #AFBDA5; --ring: #1B1D19;'
+};
+var t = this.props.theme === 'light' ? 'light' : 'dark';
+var MUST = [
+['M6 3h12v18H6zM9 17h6M9 10a3 3 0 1 0 6 0a3 3 0 1 0 -6 0', 'VISA & ENTRY', 'e-Visa, 90 days', 'Apply online 1 week before'],
+['M3 7h18v3a2 2 0 000 4v3H3v-3a2 2 0 000-4zM14 7v10', 'PERMITS & FEES', 'Ha Giang permit', 'About 250k VND, your homestay sorts it'],
+['M3 5h18v14H3zM14 10h4M14 14h3M6 16c.5-1.5 1.6-2.4 3-2.4s2.5.9 3 2.4M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0', 'LICENCE & WHEELS', 'IDP + VN licence', 'Police checkpoints on the loop. No licence? Hire an easy rider'],
+['M3 6h18v12H3zM9.4 12a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0 -5.2 0M6.5 9v.01M17.5 15v.01', 'CASH & CARDS', 'Mostly cash', 'ATMs in Ha Giang and Dong Van only'],
+['M7 2h10v20H7zM11 18h2', 'SIM & SIGNAL', 'Viettel SIM', 'Best signal up north. Patchy on passes'],
+['M4 5h16v16H4zM4 10h16M8 3v4M16 3v4', 'BOOK AHEAD?', 'Weekends only', 'Walk-ins fine Mon to Thu'],
+['M8 3L5 21M16 3l3 18M12 5v2M12 11v2M12 17v2', 'ROADS & TRAILS', 'Mixed', 'Smooth main loop, rough near Du Gia'],
+['M12 3c-3 4.5-6 7.5-6 11a6 6 0 0012 0c0-3.5-3-6.5-6-11z', 'WATER & HEALTH', 'Bottled only', 'Clinic in Dong Van, hospital in Ha Giang'],
+['M12 3L2 21h20zM12 10v5M12 18v.01', 'SCAMS & FINES', 'Fake fines', 'Ask for a written receipt'],
+['M8.5 3L3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.4 1.6-1.8 2.6-3.5 2.6S8.9 4.6 8.5 3z', 'DRESS CODE', 'Cover up at sacred places', 'Ask before taking photos at Hmong markets'],
+['M5.5 10a4.5 4.5 0 014.5-4.5h4a4.5 4.5 0 014.5 4.5v9a2 2 0 01-2 2h-9a2 2 0 01-2-2zM9.5 5.5V4.5a2.5 2.5 0 015 0v1M8.5 21v-4a1.5 1.5 0 011.5-1.5h4a1.5 1.5 0 011.5 1.5v4', 'PACK THIS', 'Waterproof + warm layer', 'Nights drop to 8°. Bring snacks for the passes'],
+['M4.9 10.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M8.4 6.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M12.4 6.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M15.9 10.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M8 17c0-2.6 1.9-4.6 4-4.6s4 2 4 4.6c0 2-1.6 3-4 3s-4-1-4-3z', 'WILDLIFE', 'Stray dogs', 'Carry a stick on village walks'],
+['M12 5v14M5 12h14', 'TET HOLIDAY', 'Avoid Tet week', 'Most homestays shut ~5 days (added by creator)']
+];
+var z = s.zoom, mh = s.mapH, vw = 390 / z, vh = mh / z, k = 1 / z;
+var MAXH = 620, MINH = 220;
+return {
+rootStyle: 'width: 390px; height: ' + (this.props.shared === 'true' || this.props.shared === true ? 1780 : 1710) + 'px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[t],
+mapH: mh,
+tabs: [['legs', 'Itinerary'], ['must', 'Must-know'], ['recs', 'Spots'], ['moments', 'Moments'], ['posts', 'Posts']].map(function (t) { var on = s.tab === t[0]; return { label: t[1], sel: on ? 'true' : 'false', pick: function () { self.setState({ tab: t[0] }); }, style: 'flex: none; height: 44px; padding: 0; border: 0; border-bottom: 2px solid ' + (on ? 'var(--act)' : 'transparent') + '; margin-bottom: -1px; background: transparent; font-family: inherit; font-size: 14px; font-weight: ' + (on ? 700 : 600) + '; color: ' + (on ? 'var(--tx)' : 'var(--mu)') + '; cursor: pointer;' }; }),
+t_moments: s.tab === 'moments', t_posts: s.tab === 'posts', t_recs: s.tab === 'recs', t_must: s.tab === 'must', t_legs: s.tab === 'legs',
+layers: [['route', 'Route'], ['moments', 'Moments · 12']].map(function (l) { var on = (s.layer || 'route') === l[0]; return { label: l[1], on: on ? 'true' : 'false', pick: function () { self.setState({ layer: l[0] }); }, style: 'height: 36px; padding: 0 12px; border: 0; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; ' + (on ? 'background: var(--ac); color: var(--on);' : 'background: transparent; color: var(--tx);') }; }),
+showPins: s.layer === 'moments',
+pins: (function () { var PL = { 'Ha Giang': [150, 26], 'Quan Ba': [154, 20], 'Dong Van': [161, 13], 'Nho Que river': [165, 15], 'Lung Cu': [156, 8] }; var groups = {}; self.moms.forEach(function (m, i) { if (!groups[m.place]) groups[m.place] = { first: i, n: 0, ph: m.ph }; groups[m.place].n++; }); var x0 = s.cx - vw / 2, y0 = s.cy - vh / 2; return Object.keys(groups).map(function (p) { var g = groups[p], c = PL[p] || [158, 20], sx = (c[0] - x0) * z, sy = (c[1] - y0) * z; return { n: g.n > 1 ? g.n : '', aria: 'Moments at ' + p, open: function () { self.setState({ mom: g.first }); },
+style: 'position: absolute; left: ' + (sx - 18) + 'px; top: ' + (sy - 18) + 'px; width: 36px; height: 36px; border-radius: 12px; border: 2px solid var(--ac); background: var(--' + g.ph + '); box-shadow: 0 0 0 2px #000, 0 4px 10px rgba(0,0,0,.5); padding: 0; cursor: pointer; pointer-events: auto;',
+badge: 'position: absolute; top: -8px; right: -8px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 999px; background: var(--ac); color: var(--on); font-size: 11px; font-weight: 800; display: ' + (g.n > 1 ? 'flex' : 'none') + '; align-items: center; justify-content: center;' }; }); })(),
+toggleSave: function () { self.setState({ saved: !s.saved }); }, saveFill: s.saved ? 'fill: var(--act); stroke: var(--act)' : '',
+music: !!s.music, openMusic: function () { self.setState({ music: true }); }, closeMusic: function () { self.setState({ music: false }); },
+sowo: !!s.sowo, openSowo: function () { self.setState({ sowo: true }); }, closeSowo: function () { self.setState({ sowo: false }); },
+must: (s.mustAll ? MUST : MUST.slice(0, 6)).map(function (m) { return { i: m[0], cat: m[1], v: m[2], note: m[3] }; }),
+mustBtn: s.mustAll ? 'Show less' : 'See all 13 must-knows',
+toggleMust: function () { self.setState({ mustAll: !s.mustAll }); },
+toggleOff: function () { self.setState({ off: !s.off }); },
+offPressed: s.off ? 'true' : 'false',
+offLabel: s.off ? 'Offline ✓' : 'Save offline',
+offSub: s.off ? 'Map + all days · 38 MB' : 'For when there\'s no signal',
+offStyle: 'flex: none; display: flex; align-items: center; gap: 8px; padding: 0 14px; height: 52px; border-radius: 16px; font-family: inherit; cursor: pointer; box-sizing: border-box; ' + (s.off ? 'background: var(--ac); color: var(--on); border: 1px solid var(--ac);' : 'background: var(--sf); color: var(--tx); border: 1px solid var(--ln);'),
+shared: this.props.shared === 'true' || this.props.shared === true,
+reel: !!s.reel,
+openReel: function () { self.setState({ reel: true }); },
+closeReel: function () { self.setState({ reel: false }); },
+moms: this.moms.map(function (m, i) { return { label: m.label, aria: 'Open moment: ' + m.label.toLowerCase(), tile: 'width: 100%; height: 130px; border-radius: 16px; border: 0; padding: 10px; box-sizing: border-box; display: flex; align-items: flex-end; text-align: left; color: var(--tx); cursor: pointer; background: var(--' + m.ph + ');', open: function () { self.setState({ mom: i }); } }; }),
+mv: s.mom >= 0,
+mvOverlay: 'position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: flex-start; padding: ' + (mh + 260) + 'px 16px 0 16px; box-sizing: border-box;',
+mvPlace: s.mom >= 0 ? this.moms[s.mom].place : '',
+mvWhen: s.mom >= 0 ? 'DAY ' + this.moms[s.mom].d + ' · ' + this.moms[s.mom].t.toUpperCase() : '',
+mvPos: s.mom >= 0 ? (s.mom + 1) + ' / ' + this.moms.length : '',
+mvTag: s.mom >= 0 ? this.moms[s.mom].tag : '',
+mvText: s.mom >= 0 ? this.moms[s.mom].txt : '',
+mvPhoto: 'position: relative; height: 300px; border-radius: 16px; overflow: hidden; touch-action: pan-y; cursor: grab; background: var(--' + (s.mom >= 0 ? this.moms[s.mom].ph : 'ph1') + ');',
+mvDots: this.moms.map(function (_, i) { return { style: 'width: ' + (i === s.mom ? 20 : 8) + 'px; height: 8px; border-radius: 999px; background: ' + (i === s.mom ? 'var(--act)' : 'var(--ln)') + ';' }; }),
+mvNext: function () { self.setState({ mom: (s.mom + 1) % self.moms.length }); },
+mvPrev: function () { self.setState({ mom: (s.mom - 1 + self.moms.length) % self.moms.length }); },
+mvClose: function () { self.setState({ mom: -1 }); },
+swDown: function (e) { self.sx = e.clientX; },
+swUp: function (e) { if (self.sx == null) return; var dx = e.clientX - self.sx; self.sx = null; if (dx < -40) self.setState({ mom: (s.mom + 1) % self.moms.length }); else if (dx > 40) self.setState({ mom: (s.mom - 1 + self.moms.length) % self.moms.length }); },
+postsBtn: s.postsAll ? 'Show less' : 'See all ' + this.posts.length + ' posts',
+togglePosts: function () { self.setState({ postsAll: !s.postsAll }); },
+posts: (s.postsAll ? this.posts : this.posts.slice(0, 6)).map(function (p, i) { return { platU: p.plat.toUpperCase(), cap: p.cap, views: p.views, aria: 'Preview ' + p.plat + ' post: ' + p.cap, tile: 'position: relative; display: block; width: 100%; height: 150px; border-radius: 14px; overflow: hidden; background: var(--' + p.ph + ');', open: function () { self.setState({ post: i }); } }; }),
+recs: [
+{ i: 'M4 3v7a2 2 0 002 2v9M8 3v7M6 3v7M17 21V3c-2 0-3 2-3 5v6h3', tag: 'FOOD', n: 'Thang co stall', where: 'Dong Van', note: 'Sunday market only. Brave, but go.' },
+{ i: 'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0', tag: 'VIEWPOINT', n: 'Ma Pi Leng skywalk', where: 'Ma Pi Leng', note: '7am, before the tour groups.' },
+{ i: 'M3 18V7M3 13h18v5M21 13a3 3 0 00-3-3h-8v3M5.0 10.5a1.5 1.5 0 1 0 3.0 0a1.5 1.5 0 1 0 -3.0 0', tag: 'ACCOMMODATION', n: "Auntie Hoa's homestay", where: 'Lung Cu', note: 'Ask her for the ridge path.' },
+{ i: 'M3 20l6-10 4 6 3-4 5 8z', tag: 'HIKE', n: 'Du Gia waterfall', where: 'Yen Minh', note: 'About 1h each way. Swim.' },
+{ i: 'M4 9h13v5a5 5 0 01-5 5H9a5 5 0 01-5-5zM17 10h1a2.5 2.5 0 010 5h-1M8 3v3M12 3v3', tag: 'CAFE', n: 'Old Quarter coffee', where: 'Dong Van', note: 'Egg coffee by the stone houses.' },
+{ i: 'M3 21h18M5 21V10M19 21V10M9 21v-6h6v6M2 10l10-6 10 6z', tag: 'CULTURE', n: 'Vuong family palace', where: 'Sa Phin', note: 'Hmong king\'s house. 30 min stop.' }
+],
+modal: s.post >= 0,
+overlayStyle: 'position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: flex-start; padding: ' + (mh + 420) + 'px 16px 0 16px; box-sizing: border-box;',
+mHandle: s.post >= 0 ? this.posts[s.post].handle : '',
+mWhere: s.post >= 0 ? this.posts[s.post].where : '',
+mPlat: s.post >= 0 ? this.posts[s.post].plat : '',
+mPlatU: s.post >= 0 ? this.posts[s.post].plat.toUpperCase() : '',
+mCap: s.post >= 0 ? this.posts[s.post].cap : '',
+mStats: s.post >= 0 ? this.posts[s.post].views + ' views · ' + this.posts[s.post].likes + ' on ' + this.posts[s.post].plat : '',
+mUrl: s.post >= 0 ? this.posts[s.post].url : '#',
+mPreview: 'position: relative; height: 360px; border-radius: 16px; overflow: hidden; background: var(--' + (s.post >= 0 ? this.posts[s.post].ph : 'ph1') + ');',
+closePost: function () { self.setState({ post: -1 }); },
+openP0: function () { self.setState({ post: 0 }); },
+openP2: function () { self.setState({ post: 2 }); },
+vb: (s.cx - vw / 2).toFixed(2) + ' ' + (s.cy - vh / 2).toFixed(2) + ' ' + vw.toFixed(2) + ' ' + vh.toFixed(2),
+vnPath: this.vnPath, seaPath: this.seaPath,
+swB: (1.2 * k).toFixed(3), sw4: (4 * k).toFixed(3), swDot: (1.6 * k).toFixed(3),
+r5: (5 * k).toFixed(3), rDot: (3.5 * k).toFixed(3), rMk: (11 * k).toFixed(3),
+fsC: (11 * k).toFixed(3), fsR: (10 * k).toFixed(3), fsMk: (11 * k).toFixed(3), mkDy: (4 * k).toFixed(3),
+dR: (6 * k).toFixed(3), dL: (-6 * k).toFixed(3), lblDy: (-5 * k).toFixed(3),
+mapBoxStyle: 'user-select: none; -webkit-user-select: none; position: absolute; top: 0; left: 0; width: 390px; height: ' + mh + 'px; overflow: hidden; background: var(--sea);',
+sheetStyle: 'margin-top: ' + (mh - 22) + 'px; position: relative; background: var(--bg); border-radius: 24px 24px 0 0; padding: 14px 16px 0 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -8px 24px rgba(0,0,0,0.18);',
+zoomIn: function () { self.setState({ zoom: Math.min(14, +(z * 1.5).toFixed(2)) }); },
+zoomOut: function () { self.setState({ zoom: Math.max(1, +(z / 1.5).toFixed(2)) }); },
+fit: function () { self.setState({ zoom: 5.5, cx: 157, cy: 28 }); },
+mDown: function (e) { if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} } self.pan = { sx: e.clientX, sy: e.clientY, cx: s.cx, cy: s.cy }; },
+mMove: function (e) { if (!self.pan) return; var r = e.currentTarget.getBoundingClientRect(); var ppu = r.width / vw; self.setState({ cx: Math.max(60, Math.min(340, self.pan.cx - (e.clientX - self.pan.sx) / ppu)), cy: Math.max(-20, Math.min(340, self.pan.cy - (e.clientY - self.pan.sy) / ppu)) }); },
+mUp: function () { self.pan = null; },
+hDown: function (e) { if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} } var r = e.currentTarget.getBoundingClientRect(); self.hd = { sy: e.clientY, h: mh, sc: r.width / 358 || 1, moved: false }; },
+hMove: function (e) { if (!self.hd) return; var dy = (e.clientY - self.hd.sy) / self.hd.sc; if (Math.abs(dy) > 4) self.hd.moved = true; self.setState({ mapH: Math.round(Math.max(MINH, Math.min(MAXH, self.hd.h + dy))) }); },
+hUp: function () { if (!self.hd) return; var moved = self.hd.moved; self.hd = null; if (!moved) self.setState({ mapH: mh < 440 ? MAXH : 270 }); }
+};
+}
+}
+</script>
+</body>
+</html>

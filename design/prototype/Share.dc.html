@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Share route</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 0 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Live.dc.html" aria-label="Back" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; flex: 1">Share route</h1>
+</div>
+<div role="tablist" aria-label="What to share" style="display: flex; gap: 4px; background: var(--sf2); border-radius: 999px; padding: 4px">
+<sc-for list="{{kinds}}" as="k" hint-placeholder-count="2">
+<button type="button" role="tab" aria-selected="{{k.selected}}" onClick="{{k.pick}}" style="{{k.style}}">{{k.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{isImage}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+
+<div style="display: flex; gap: 8px">
+<div role="radiogroup" aria-label="Image size" style="flex: 1; display: flex; gap: 2px; background: var(--sf2); border-radius: 999px; padding: 3px">
+<sc-for list="{{formats}}" as="o" hint-placeholder-count="2">
+<button type="button" role="radio" aria-checked="{{o.checked}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+<div role="radiogroup" aria-label="Card colour" style="flex: 1; display: flex; gap: 2px; background: var(--sf2); border-radius: 999px; padding: 3px">
+<sc-for list="{{looks}}" as="o" hint-placeholder-count="2">
+<button type="button" role="radio" aria-checked="{{o.checked}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; justify-content: center; padding: 4px 0">
+<div role="img" aria-label="Share image of Vietnam, south to north by @vivi.wanders" style="{{cardStyle}}">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<div style="display: flex; align-items: center; gap: 6px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" style="stroke: var(--cA)"><circle cx="12" cy="12" r="10"></circle><path d="M2.3 10.4c3.4-2.6 6.6 1.8 9.8-.6s5.8-2.8 9.6.2"></path><path d="M2.2 14c3.4-2.2 6.8 1.8 10.2-.3s5.4-2.1 9.4.4"></path><path d="M4.6 18c2.8-1.5 5.8 1.2 8.6-.2s4.2-1.3 6.4.2"></path><path d="M5.2 6.1c2.4-1 4.6.8 7-.2s3.6-1 6 .2"></path></svg>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 1px">SIGHTQUEST</span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; color: var(--cM)">ROUTE</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<div style="font-size: 21px; line-height: 1.15; font-weight: 800; font-stretch: 110%">Vietnam, south to north</div>
+<div style="font-size: 12px; color: var(--cM)">Ho Chi Minh City → Ha Giang · Sep–Oct 2026</div>
+</div>
+<div style="{{mapBox}}">
+<svg width="268" height="{{mapH}}" viewBox="92 0 236 330" preserveAspectRatio="xMidYMid meet" style="display: block">
+<path d="{{seaPath}}" style="fill: var(--cSea)"></path>
+<path d="{{vnPath}}" stroke-width="{{swB}}" stroke-linejoin="round" style="fill: var(--cLand); stroke: var(--cBd)"></path>
+<polyline points="220,282 262,262 240,238 276,206 272,166 246,124 222,106 196,86 168,62 160,48 150,26" fill="none" stroke-width="{{swR}}" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--cR)"></polyline>
+<circle cx="220" cy="282" r="{{s0r}}" stroke-width="{{swD}}" style="{{s0dot}}"></circle><text x="220" y="282" dx="{{s0dx}}" dy="{{s0dy}}" text-anchor="{{s0anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s0label}}">Ho Chi Minh City</text>
+<circle cx="262" cy="262" r="{{s1r}}" stroke-width="{{swD}}" style="{{s1dot}}"></circle><text x="262" y="262" dx="{{s1dx}}" dy="{{s1dy}}" text-anchor="{{s1anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s1label}}">Mui Ne</text>
+<circle cx="240" cy="238" r="{{s2r}}" stroke-width="{{swD}}" style="{{s2dot}}"></circle><text x="240" y="238" dx="{{s2dx}}" dy="{{s2dy}}" text-anchor="{{s2anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s2label}}">Da Lat</text>
+<circle cx="276" cy="206" r="{{s3r}}" stroke-width="{{swD}}" style="{{s3dot}}"></circle><text x="276" y="206" dx="{{s3dx}}" dy="{{s3dy}}" text-anchor="{{s3anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s3label}}">Nha Trang</text>
+<circle cx="272" cy="166" r="{{s4r}}" stroke-width="{{swD}}" style="{{s4dot}}"></circle><text x="272" y="166" dx="{{s4dx}}" dy="{{s4dy}}" text-anchor="{{s4anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s4label}}">Quy Nhon</text>
+<circle cx="246" cy="124" r="{{s5r}}" stroke-width="{{swD}}" style="{{s5dot}}"></circle><text x="246" y="124" dx="{{s5dx}}" dy="{{s5dy}}" text-anchor="{{s5anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s5label}}">Hoi An</text>
+<circle cx="222" cy="106" r="{{s6r}}" stroke-width="{{swD}}" style="{{s6dot}}"></circle><text x="222" y="106" dx="{{s6dx}}" dy="{{s6dy}}" text-anchor="{{s6anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s6label}}">Hue</text>
+<circle cx="196" cy="86" r="{{s7r}}" stroke-width="{{swD}}" style="{{s7dot}}"></circle><text x="196" y="86" dx="{{s7dx}}" dy="{{s7dy}}" text-anchor="{{s7anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s7label}}">Phong Nha</text>
+<circle cx="168" cy="62" r="{{s8r}}" stroke-width="{{swD}}" style="{{s8dot}}"></circle><text x="168" y="62" dx="{{s8dx}}" dy="{{s8dy}}" text-anchor="{{s8anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s8label}}">Ninh Binh</text>
+<circle cx="160" cy="48" r="{{s9r}}" stroke-width="{{swD}}" style="{{s9dot}}"></circle><text x="160" y="48" dx="{{s9dx}}" dy="{{s9dy}}" text-anchor="{{s9anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s9label}}">Hanoi</text>
+<circle cx="150" cy="26" r="{{s10r}}" stroke-width="{{swD}}" style="{{s10dot}}"></circle><text x="150" y="26" dx="{{s10dx}}" dy="{{s10dy}}" text-anchor="{{s10anchor}}" font-size="{{fs}}" font-family="Archivo, sans-serif" font-weight="700" style="{{s10label}}">Ha Giang</text>
+
+</svg>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
+<div><div style="font-size: 17px; font-weight: 800">29</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--cM)">DAYS</div></div>
+<div><div style="font-size: 17px; font-weight: 800">1,840</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--cM)">KM</div></div>
+<div><div style="font-size: 17px; font-weight: 800">11</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--cM)">STOPS</div></div>
+<div><div style="font-size: 17px; font-weight: 800">6</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--cM)">WAYS TO GET AROUND</div></div>
+</div>
+<sc-if value="{{isStory}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 10px; background: var(--cS2)">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--cM); flex: none"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg>
+<span style="font-size: 10px; color: var(--cM)">The full itinerary and tips are in the app</span>
+</div>
+</sc-if>
+<div style="display: flex; align-items: center; gap: 10px; padding-top: 8px; border-top: 1px solid var(--cLn)">
+<div style="width: 30px; height: 30px; border-radius: 999px; background: #4A3F35; border: 2px solid var(--cA); box-sizing: border-box; flex: none"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
+<span style="font-size: 12px; font-weight: 800">@vivi.wanders</span>
+<span style="font-size: 10px; line-height: 1.3; color: var(--cM)">Add @vivi.wanders on Sightquest to view the full itinerary</span>
+</div>
+<svg width="46" height="46" viewBox="-1 -1 23 23" style="flex: none; border-radius: 6px"><rect x="-1" y="-1" width="23" height="23" fill="#FFFFFF"></rect><path d="{{qr}}" fill="#131512"></path></svg>
+</div>
+</div>
+</div>
+
+<p style="margin: 0; font-size: 13px; line-height: 1.45; color: var(--mu); text-align: center">The image shows your line, place names and trip stats. The full itinerary and tips stay in the app, so people add you to see the rest.</p>
+
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">SHARE TO</span>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 14px; column-gap: 4px">
+<sc-for list="{{actions}}" as="a" hint-placeholder-count="10">
+<button type="button" onClick="{{a.go}}" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 0; border: 0; background: transparent; color: var(--tx); font-family: inherit; cursor: pointer">
+<span style="{{a.circle}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{a.icon}}"></path></svg></span>
+<span style="font-size: 11px; color: var(--mu); white-space: nowrap">{{a.label}}</span>
+</button>
+</sc-for>
+</div>
+
+<sc-if value="{{toast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="align-self: center; display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--tx); color: var(--bg); font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"></path></svg>{{toastText}}</div>
+</sc-if>
+
+<a href="RouteShared.dc.html" style="align-self: center; font-size: 13px; font-weight: 600; color: var(--act)">Preview what a friend sees after downloading</a>
+</div>
+</sc-if>
+</div>
+<sc-if value="{{isReel}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top: 12px; width: 390px; height: 844px; position: relative">
+<dc-import name="Playback" trip="vietnam" embedded="true" hint-size="390px,844px"></dc-import>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tab":{"editor":"enum","options":["Image","Reel"],"default":"Image"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":1080}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { kind: props.tab || 'Image', format: 'Story', look: props.theme === 'light' ? 'Light card' : 'Dark card', toast: '' };
+this.vnPath = 'M100 30 L112 16 L140 10 L156 5 L170 9 L196 12 L214 24 L210 38 L200 46 L186 54 L178 66 L190 78 L208 90 L222 98 L234 106 L244 114 L252 124 L262 140 L272 158 L278 176 L282 198 L280 214 L274 232 L268 256 L254 276 L236 290 L222 300 L204 312 L184 326 L172 320 L170 300 L186 290 L200 276 L210 256 L214 236 L222 212 L230 186 L236 162 L232 140 L220 124 L204 110 L188 100 L174 88 L156 78 L136 72 L118 62 L104 50 Z';
+this.seaPath = 'M214 -300 L214 24 L210 38 L200 46 L186 54 L178 66 L190 78 L208 90 L222 98 L234 106 L244 114 L252 124 L262 140 L272 158 L278 176 L282 198 L280 214 L274 232 L268 256 L254 276 L236 290 L222 300 L204 312 L184 326 L184 400 L800 400 L800 -300 Z M-300 300 L170 300 L172 320 L184 326 L184 700 L-300 700 Z';
+var N = 21, cells = [], seed = 7;
+function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+function finder(x0, y0) { for (var y = 0; y < 7; y++) for (var x = 0; x < 7; x++) { if (x === 0 || y === 0 || x === 6 || y === 6 || (x > 1 && x < 5 && y > 1 && y < 5)) cells.push([x0 + x, y0 + y]); } }
+finder(0, 0); finder(14, 0); finder(0, 14);
+for (var yy = 0; yy < N; yy++) for (var xx = 0; xx < N; xx++) {
+var inF = (xx < 8 && yy < 8) || (xx > 12 && yy < 8) || (xx < 8 && yy > 12);
+if (!inF && rnd() > 0.52) cells.push([xx, yy]);
+}
+this.qr = cells.map(function (c) { return 'M' + c[0] + ' ' + c[1] + 'h1v1h-1z'; }).join('');
+}
+renderVals() {
+var self = this;
+var s = this.state;
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C;',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --sf2: #E9E8E1; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212;'
+};
+var C = {
+'Dark card': '--cBg: #131512; --cT: #E6E8E1; --cM: #9CA295; --cA: #B9DE5C; --cR: #B9DE5C; --cS2: #1F231E; --cLn: #31362F; --cSea: #131A1D; --cLand: #27312B; --cBd: #46564A; --cRing: #000000;',
+'Light card': '--cBg: #FBFAF6; --cT: #1B1D19; --cM: #5D6257; --cA: #4F7212; --cR: #5E8A0F; --cS2: #EEEDE6; --cLn: #DCDBD2; --cSea: #D2E1EA; --cLand: #F2F5EC; --cBd: #AFBDA5; --cRing: #1B1D19;'
+};
+var t = this.props.theme === 'light' ? 'light' : 'dark';
+var out = {};
+var story = s.format === 'Story';
+var mapH = story ? 268 : 150;
+var sc = Math.min(268 / 236, mapH / 330);
+var stops = [
+{ n: 'Ho Chi Minh City', x: 220, y: 282, side: 'L', major: true, end: 'start' },
+{ n: 'Mui Ne', x: 262, y: 262, side: 'R' },
+{ n: 'Da Lat', x: 240, y: 238, side: 'L', major: true },
+{ n: 'Nha Trang', x: 276, y: 206, side: 'R' },
+{ n: 'Quy Nhon', x: 272, y: 166, side: 'R' },
+{ n: 'Hoi An', x: 246, y: 124, side: 'R', major: true },
+{ n: 'Hue', x: 222, y: 106, side: 'L', major: true },
+{ n: 'Phong Nha', x: 196, y: 86, side: 'L' },
+{ n: 'Ninh Binh', x: 168, y: 62, side: 'L' },
+{ n: 'Hanoi', x: 160, y: 48, side: 'R', major: true },
+{ n: 'Ha Giang', x: 150, y: 26, side: 'L', major: true, end: 'end' }
+].map(function (p) {
+var show = story || p.major;
+var isEnd = !!p.end;
+return {
+n: p.n, x: p.x, y: p.y,
+r: ((isEnd ? 4.4 : 3) / sc).toFixed(2),
+dot: 'fill: ' + (isEnd ? 'var(--cA)' : 'var(--cT)') + '; stroke: var(--cRing);' + (show ? '' : ' opacity: 0.6;'),
+dx: ((p.side === 'L' ? -7 : 7) / sc).toFixed(2),
+dy: (3.5 / sc).toFixed(2),
+anchor: p.side === 'L' ? 'end' : 'start',
+label: 'fill: var(--cT); opacity: ' + (show ? 1 : 0) + ';'
+};
+});
+function seg(key, opts) {
+return opts.map(function (o) {
+var on = s[key] === o;
+return { label: o, checked: on ? 'true' : 'false', style: 'flex: 1; min-height: 38px; border: 0; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ' + (on ? 'background: var(--tx); color: var(--bg);' : 'background: transparent; color: var(--mu);'), pick: function () { var u = {}; u[key] = o; self.setState(u); } };
+});
+}
+function act(label, icon, toast, primary) {
+return {
+label: label, icon: icon,
+circle: 'width: 52px; height: 52px; border-radius: 999px; display: flex; align-items: center; justify-content: center; ' + (primary ? 'background: var(--ac); color: var(--on);' : 'background: var(--sf); border: 1px solid var(--ln); color: var(--tx); box-sizing: border-box;'),
+go: function () { self.setState({ toast: toast }); clearTimeout(self.tt); self.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2200); }
+};
+}
+stops.forEach(function (p, i) { ['r', 'dot', 'dx', 'dy', 'anchor', 'label'].forEach(function (k) { out['s' + i + k] = p[k]; }); });
+return Object.assign(out, {
+rootStyle: 'width: 390px; height: 1080px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[t],
+kinds: ['Image', 'Reel'].map(function (k) { var on = s.kind === k; return { label: k === 'Image' ? 'Image' : 'Reel video', selected: on ? 'true' : 'false', style: 'flex: 1; min-height: 42px; border: 0; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'background: var(--tx); color: var(--bg);' : 'background: transparent; color: var(--mu);'), pick: function () { self.setState({ kind: k }); } }; }),
+isImage: s.kind === 'Image', isReel: s.kind === 'Reel',
+formats: seg('format', ['Story', 'Post']),
+looks: seg('look', ['Dark card', 'Light card']),
+cardStyle: 'width: 300px; box-sizing: border-box; padding: 16px; border-radius: 22px; display: flex; flex-direction: column; gap: 10px; background: var(--cBg); color: var(--cT); box-shadow: 0 12px 32px rgba(0,0,0,0.35); border: 1px solid var(--cLn); ' + C[s.look],
+mapBox: 'height: ' + mapH + 'px; border-radius: 14px; overflow: hidden; background: var(--cSea);',
+mapH: mapH,
+isStory: story,
+vnPath: this.vnPath, seaPath: this.seaPath,
+swB: (1 / sc).toFixed(2), swR: (3.2 / sc).toFixed(2), swD: (1.4 / sc).toFixed(2), fs: (9.5 / sc).toFixed(2),
+qr: this.qr,
+actions: [
+act('IG Story', 'M4 4h16v16H4zM8 12a4 4 0 108 0 4 4 0 10-8 0M17 7v.01', 'Opening Instagram…'),
+act('TikTok', 'M14 3v11.5a4 4 0 11-4-4M14 3c.6 2.6 2.6 4.6 5.5 4.8', 'Opening TikTok…'),
+act('WhatsApp', 'M4 20l1.3-4A8 8 0 1112 20a8 8 0 01-4-1.1zM9 9c0 3 3 6 6 6l1-1.5-2-1-1 1c-1-.5-2-1.5-2.5-2.5l1-1-1-2z', 'Opening WhatsApp…'),
+act('Telegram', 'M3 11l18-7-3 16-6-4-3 3v-5l9-7-11 6z', 'Opening Telegram…'),
+act('Facebook', 'M14 8h3V4h-3a4 4 0 00-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z', 'Opening Facebook…'),
+act('X', 'M4 4l16 16M20 4L4 20', 'Opening X…'),
+act('Messages', 'M4 5h16v11H9l-5 4z', 'Opening Messages…'),
+act('Save image', 'M12 4v11M7 10l5 5 5-5M5 20h14', 'Saved to Photos'),
+act('Copy link', 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1', 'Link copied: sightquest.app/@vivi.wanders'),
+act('More', 'M6 12h.01M12 12h.01M18 12h.01', 'Opening share sheet…')
+],
+toast: !!s.toast,
+toastText: s.toast
+});
+}
+}
+</script>
+</body>
+</html>

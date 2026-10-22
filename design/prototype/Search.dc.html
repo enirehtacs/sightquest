@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Search</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0} .sq-chips::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+
+<sc-if value="{{isMap}}" hint-placeholder-val="{{ false }}">
+<div onPointerDown="{{mDown}}" onPointerMove="{{mMove}}" onPointerUp="{{mUp}}" onPointerLeave="{{mUp}}" onWheel="{{mWheel}}" style="position: absolute; inset: 0; background: var(--sea); overflow: hidden; touch-action: none; cursor: grab">
+<svg viewBox="{{vb}}" width="390" height="1100" style="position: absolute; inset: 0" aria-hidden="true">
+<g style="fill: var(--land); stroke: var(--coast); stroke-width: 1.2">
+<path vector-effect="non-scaling-stroke" d="M-20 -20 H410 V470 C380 478 352 452 330 470 C310 486 292 470 270 482 C250 492 236 476 214 486 C190 496 170 480 148 490 C120 502 98 486 70 494 C40 502 18 488 -20 496 Z"></path>
+<path vector-effect="non-scaling-stroke" d="M118 548 C140 528 186 522 226 528 C262 532 296 530 312 548 C322 562 300 584 268 590 C232 596 196 598 166 592 C138 586 108 572 118 548 Z"></path>
+<path vector-effect="non-scaling-stroke" d="M276 516 C286 508 304 510 308 518 C304 526 286 528 276 516 Z"></path>
+<path vector-effect="non-scaling-stroke" d="M150 752 C170 732 214 730 236 744 C250 756 240 784 214 794 C186 802 158 794 150 778 Z"></path>
+<path vector-effect="non-scaling-stroke" d="M276 742 C300 722 352 724 372 744 C384 762 364 786 330 790 C300 792 270 774 276 742 Z"></path>
+</g>
+<g fill="none" style="stroke: var(--road)" stroke-width="1.6" stroke-linecap="round"><path vector-effect="non-scaling-stroke" d="M200 470 L206 545"></path><path vector-effect="non-scaling-stroke" d="M206 440 C240 400 280 330 320 250"></path><path vector-effect="non-scaling-stroke" d="M200 440 C170 380 140 300 90 200"></path><path vector-effect="non-scaling-stroke" d="M140 562 C180 552 240 552 296 560"></path></g>
+<g style="fill: var(--mu); font-family: 'JetBrains Mono', monospace; font-size: {{lblFs}}px; font-weight: 600; letter-spacing: 1px"><text x="40" y="160">JOHOR</text><text x="40" y="176" style="fill: var(--mu); opacity: .6">MALAYSIA</text><text x="150" y="620">SINGAPORE</text><text x="166" y="820">BATAM</text><text x="306" y="818">BINTAN</text></g>
+</svg>
+<sc-for list="{{pins}}" as="p" hint-placeholder-count="6">
+<button type="button" onClick="{{p.pick}}" aria-label="{{p.title}}" style="{{p.style}}"><span style="{{p.dot}}"></span><span style="{{p.label}}">{{p.short}}</span></button>
+</sc-for>
+<sc-if value="{{showMe}}" hint-placeholder-val="{{ true }}">
+<div aria-label="You are here" style="{{meStyle}}"><span style="position: absolute; inset: -10px; border-radius: 999px; background: var(--info); opacity: .22"></span><span style="position: absolute; inset: 0; border-radius: 999px; background: var(--info); border: 3px solid #fff; box-sizing: border-box"></span></div>
+</sc-if>
+</div>
+
+<div style="position: absolute; right: 16px; top: 132px; z-index: 4; display: flex; flex-direction: column; gap: 8px">
+<button type="button" aria-label="Zoom in" onClick="{{zoomIn}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+<button type="button" aria-label="Zoom out" onClick="{{zoomOut}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path></svg></button>
+<button type="button" aria-label="Find my location" onClick="{{locate}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; margin-top: 6px; color: {{locColor}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L3 10.5l7.5 3 3 7.5z"></path></svg></button>
+</div>
+
+<sc-if value="{{toast}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 16px; right: 76px; top: 132px; z-index: 4; padding: 12px 14px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln); display: flex; flex-direction: column; gap: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.4)">
+<span style="font-size: 14px; font-weight: 700">Location is off</span>
+<span style="font-size: 13px; line-height: 1.4; color: var(--mu)">Turn it on to see where you are and what's close by.</span>
+<div style="display: flex; gap: 14px"><a href="Settings.dc.html" style="font-size: 14px; font-weight: 700; color: var(--act)">Open settings</a><button type="button" onClick="{{hideToast}}" style="border: 0; background: none; padding: 0; font-family: inherit; font-size: 14px; color: var(--mu); cursor: pointer">Not now</button></div>
+</div>
+</sc-if>
+
+<div onPointerDown="{{cDown}}" onPointerUp="{{cUp}}" style="position: absolute; left: 0; right: 0; bottom: 146px; z-index: 4; overflow: hidden; padding: 6px 0 14px 0; touch-action: pan-y">
+<div style="{{track}}">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="6">
+<div style="{{c.style}}">
+<div style="width: 64px; height: 64px; border-radius: 14px; background: {{c.ph}}; flex: none"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><div style="font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{c.title}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">{{c.meta}}</div><div style="font-size: 12px; color: var(--mu)">by {{c.by}}</div></div>
+<a href="Route.dc.html" aria-label="Open route" style="width: 40px; height: 40px; margin-right: 2px; border-radius: 999px; background: var(--sf2); color: var(--tx); display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></a>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<div style="position: relative; padding: 12px 16px 0 16px; display: flex; flex-direction: column; gap: 10px; {{topBg}}">
+<div style="display: flex; align-items: center; gap: 10px; height: 48px; padding: 0 14px; background: var(--sf); border: 1px solid var(--ln); border-radius: 999px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--tx); flex: none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<input aria-label="Search" placeholder="Places, routes, creators" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-family: Archivo, sans-serif; font-size: 16px; color: var(--tx)">
+</div>
+<div class="sq-chips" style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 2px 16px; scrollbar-width: none">
+<button type="button" onClick="{{openSheet}}" style="flex: none; height: 38px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--ac); background: var(--ac); color: var(--on); font-family: inherit; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filters · {{nOn}}</button>
+<sc-for list="{{quick}}" as="q" hint-placeholder-count="7">
+<button type="button" onClick="{{q.open}}" style="flex: none; height: 38px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); font-family: inherit; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px; cursor: pointer; white-space: nowrap">{{q.label}}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="color: var(--mu)"><path d="M6 9l6 6 6-6"></path></svg></button>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{isList}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 18px 16px 0 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 17px; font-weight: 800">Recently viewed</h2><button type="button" onClick="{{clearRecent}}" style="border: 0; background: none; padding: 0; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--act); cursor: pointer">Clear</button></div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{recent}}" as="r" hint-placeholder-count="3">
+<a href="Route.dc.html" style="display: flex; gap: 12px; align-items: center; padding: 8px 0; color: var(--tx); text-decoration: none; {{r.line}}">
+<div style="width: 44px; height: 44px; border-radius: 12px; background: {{r.ph}}; flex: none; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path></svg></div>
+<div style="flex: 1; min-width: 0"><div style="font-size: 15px; font-weight: 600; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.title}}</div><div style="font-size: 13px; color: var(--mu)">by {{r.by}}</div></div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">{{r.meta}}</span>
+</a>
+</sc-for>
+</div>
+</div>
+
+<div style="padding: 18px 16px 0 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 17px; font-weight: 800">Nearby routes</h2><span style="font-size: 13px; color: var(--mu)">Starting within 80 km of Singapore</span></div>
+<sc-for list="{{near}}" as="n" hint-placeholder-count="4">
+<a href="Route.dc.html" style="display: flex; flex-direction: column; gap: 8px; color: var(--tx); text-decoration: none">
+<div style="height: 150px; border-radius: 20px; background: {{n.ph}}; position: relative; overflow: hidden; border: 1px solid var(--ln)">
+<svg viewBox="0 0 358 150" width="100%" height="150" preserveAspectRatio="none" style="position: absolute; inset: 0"><path d="{{n.path}}" fill="none" stroke-width="3" stroke-linecap="round" style="stroke: var(--rt)"></path></svg>
+<span style="position: absolute; top: 10px; left: 10px; background: var(--scrim); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 999px">{{n.dist}}</span>
+<span style="position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border-radius: 999px; background: var(--scrim); display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></span>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 10px; align-items: baseline"><div style="font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{n.title}}</div><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--act); flex: none">{{n.eff}}</span></div>
+<div style="margin-top: -6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">{{n.meta}}</div>
+</a>
+</sc-for>
+</div>
+</sc-if>
+
+<button type="button" onClick="{{toggleMap}}" style="position: absolute; left: 50%; transform: translateX(-50%); bottom: 90px; z-index: 6; height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: var(--tx); color: var(--bg); font-family: inherit; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.4)">
+<sc-if value="{{isList}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"></path><path d="M9 4v14M15 6v14"></path></svg></sc-if>
+<sc-if value="{{isMap}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"></path></svg></sc-if>
+{{toggleLabel}}
+</button>
+
+<sc-if value="{{sheet}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 10; background: rgba(0,0,0,.55)">
+<div style="position: absolute; left: 0; right: 0; top: 60px; bottom: 0; background: var(--bg); border-radius: 24px 24px 0 0; border-top: 1px solid var(--ln); display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--ln)">
+<button type="button" onClick="{{closeSheet}}" aria-label="Close" style="width: 40px; height: 40px; margin-left: -10px; border: 0; background: none; color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<span style="font-size: 17px; font-weight: 800">Filters</span>
+<button type="button" onClick="{{resetFilters}}" style="border: 0; background: none; padding: 0; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--act); cursor: pointer">Reset</button>
+</div>
+<div style="flex: 1; overflow-y: auto; padding: 14px 16px 90px 16px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">Continent</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{continents}}" as="c" hint-placeholder-count="7">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">What's the vibe?</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{vibes}}" as="c" hint-placeholder-count="8">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">How much effort?</h2>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">UP TO {{effort}}/5</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{efforts}}" as="f" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{f.pressed}}" aria-label="{{f.aria}}" onClick="{{f.pick}}" style="{{f.style}}">{{f.n}}</button>
+</sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 16px; font-weight: 700; color: var(--act)">{{effortName}}</span><span style="font-size: 14px; color: var(--mu)">{{effortHint}}</span></div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">Terrain</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{terrain}}" as="c" hint-placeholder-count="8">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">Style</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{styles}}" as="c" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">Getting around</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{modes}}" as="c" hint-placeholder-count="8">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">How off the map</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{offbeat}}" as="c" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Travel length</h2><span style="font-size: 13px; color: var(--mu)">pick any</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{lengths}}" as="c" hint-placeholder-count="6">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="month" style="font-size: 16px; font-weight: 700">When</label>
+<div style="position: relative">
+<select id="month" style="width: 100%; height: 46px; border-radius: 16px; border: 1px solid var(--ln); background: var(--sf); padding: 0 48px 0 16px; font-family: Archivo, sans-serif; font-size: 15px; color: var(--tx); -webkit-appearance: none; appearance: none"><option>Any month</option><option>January</option><option>February</option><option selected>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 16px; top: 14px; color: var(--mu); pointer-events: none"><path d="M6 9l6 6 6-6"></path></svg>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Budget</h2><span style="font-size: 13px; color: var(--mu)">rated by creators</span></div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{prices}}" as="c" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{c.pressed}}" aria-label="{{c.aria}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 13px; color: var(--mu)">Routes from people who went in March show first, so the weather matches.</span>
+</div>
+
+</div>
+<div style="position: absolute; left: 16px; right: 16px; bottom: 24px">
+<button type="button" onClick="{{closeSheet}}" style="width: 100%; height: 48px; border: 0; border-radius: 999px; background: var(--ac); color: var(--on); font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Show {{count}} routes</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<nav aria-label="Main" style="position: absolute; left: 12px; right: 12px; bottom: 12px; height: 60px; z-index: 5; border-radius: 999px; background: var(--sf); border: 1px solid var(--ln); display: flex; justify-content: space-evenly; align-items: center; padding: 0 14px; box-sizing: border-box">
+<a href="Main.dc.html" aria-label="Explore" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 10a4.5 4.5 0 014.5-4.5h4a4.5 4.5 0 014.5 4.5v9a2 2 0 01-2 2h-9a2 2 0 01-2-2z"></path><path d="M9.5 5.5V4.5a2.5 2.5 0 015 0v1"></path><path d="M8.5 21v-4a1.5 1.5 0 011.5-1.5h4a1.5 1.5 0 011.5 1.5v4"></path></svg></a>
+<a href="Search.dc.html" aria-label="Search" aria-current="page" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--act)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg></a>
+<a href="Create.dc.html" aria-label="Build a route" style="flex: none; width: 66px; height: 66px; border-radius: 999px; background: var(--ac); color: var(--on); box-shadow: 0 6px 18px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><path d="M2.3 10.4c3.4-2.6 6.6 1.8 9.8-.6s5.8-2.8 9.6.2"></path><path d="M2.2 14c3.4-2.2 6.8 1.8 10.2-.3s5.4-2.1 9.4.4"></path><path d="M4.6 18c2.8-1.5 5.8 1.2 8.6-.2s4.2-1.3 6.4.2"></path><path d="M5.2 6.1c2.4-1 4.6.8 7-.2s3.6-1 6 .2"></path></svg></a>
+<a href="Following.dc.html" aria-label="Friends" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.8"></circle><ellipse cx="12" cy="12" rx="10" ry="4"></ellipse><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"></ellipse><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"></ellipse></svg></a>
+<a href="Me.dc.html" aria-label="My profile" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg></a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startOnMap":{"editor":"boolean","default":false},"location":{"editor":"enum","options":["on","off"],"default":"on"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":1100}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = {
+effort: 3,
+vibes: { Scenic: true, Foodie: true },
+terrain: { Mountains: true, Rivers: true },
+style: 'Mixed bag',
+modes: { Moto: true, Bus: true },
+offbeat: 'Few have been',
+price: { '$': true, '$$': true },
+cont: { 'Asia': true },
+len: { 'Short trip · 4–7 days': true, '1–2 weeks': true },
+map: !!props.startOnMap, sheet: false, sel: 0, z: 1, cx: 195, cy: 550, toast: false
+};
+}
+chip(on) {
+var base = 'min-height: 44px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ';
+return on ? base + 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : base + 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);';
+}
+renderVals() {
+var self = this;
+var s = this.state;
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --sf2: #262A24; --rt: #B9DE5C; --ring: #000; --sea: #142027; --land: #222A21; --coast: #34453A; --road: #3B4636; --scrim: rgba(19,21,18,0.78); --info: #8FB9E6; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --map: #253126;',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212;'
+};
+var t = this.props.theme === 'light' ? 'light' : 'dark';
+var names = ['Cruisy', 'Easygoing', 'Up for it', 'Big effort', 'Epic'];
+var hints = ['flip-flops ok', 'a bit of walking', 'some early alarms', 'proper legs needed', 'plan, train, go'];
+var efforts = [1, 2, 3, 4, 5].map(function (n) {
+var on = n <= s.effort;
+return {
+n: n,
+aria: 'Effort ' + n + ': ' + names[n - 1],
+pressed: n === s.effort ? 'true' : 'false',
+style: 'height: 46px; border-radius: 16px; font-family: \'JetBrains Mono\', monospace; font-size: 16px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'),
+pick: function () { self.setState({ effort: n }); }
+};
+});
+function multi(key, list) {
+return list.map(function (label) {
+var on = !!s[key][label];
+return { label: label, pressed: on ? 'true' : 'false', style: self.chip(on), pick: function () { var next = Object.assign({}, s[key]); next[label] = !on; var u = {}; u[key] = next; self.setState(u); } };
+});
+}
+function single(key, list) {
+return list.map(function (label) {
+var on = s[key] === label;
+return { label: label, pressed: on ? 'true' : 'false', style: self.chip(on), pick: function () { var u = {}; u[key] = label; self.setState(u); } };
+});
+}
+var picks = ['vibes', 'terrain', 'modes'].reduce(function (sum, k) { return sum + Object.keys(s[k]).filter(function (x) { return s[k][x]; }).length; }, 0);
+var P = [
+{ title: 'Kampong Glam to the sea', short: 'Kampong Glam', by: '@vivi.wanders', meta: '3 KM · 1D · $', x: 214, y: 552, ph: 'var(--ph2)' },
+{ title: 'Southern Ridges at sunrise', short: 'Southern Ridges', by: '@earlybirdsg', meta: '9 KM · 1D · $', x: 176, y: 572, ph: 'var(--ph1)' },
+{ title: 'Pulau Ubin by bike', short: 'Pulau Ubin', by: '@kampungkid', meta: '18 KM · 1D · $', x: 290, y: 517, ph: 'var(--map)' },
+{ title: 'Batam by ferry and bike', short: 'Batam', by: '@saltandsole', meta: '35 KM · 1D · $$', x: 196, y: 764, ph: 'var(--ph3)' },
+{ title: 'Bintan slow weekend', short: 'Bintan', by: '@islandhopper', meta: '55 KM · 2D · $$$', x: 326, y: 758, ph: 'var(--ph4)' },
+{ title: 'Kota Tinggi waterfalls', short: 'Kota Tinggi', by: '@jungle.jo', meta: '60 KM · 2D · $', x: 300, y: 300, ph: 'var(--ph1)' }
+];
+var z = s.z, ME = { x: 205, y: 566 };
+function sp(x, y) { return { x: (x - s.cx) * z + 195, y: (y - s.cy) * z + 550 }; }
+var locOn = this.props.location !== 'off';
+var pins = P.map(function (p, i) {
+var on = s.sel === i, q = sp(p.x, p.y), d = on ? 18 : 14;
+return { title: p.title, short: p.short,
+style: 'position: absolute; left: ' + (q.x - d / 2) + 'px; top: ' + (q.y - d / 2) + 'px; display: flex; align-items: center; gap: 6px; border: 0; background: none; padding: 0; cursor: pointer; font-family: inherit; z-index: ' + (on ? 3 : 2) + ';',
+dot: 'width: ' + d + 'px; height: ' + d + 'px; border-radius: 999px; background: ' + (on ? 'var(--ac)' : 'var(--tx)') + '; border: 3px solid #000; box-sizing: border-box; flex: none;',
+label: 'font-size: 12px; font-weight: 700; white-space: nowrap; color: ' + (on ? 'var(--act)' : 'var(--tx)') + '; text-shadow: 0 1px 3px #000, 0 0 2px #000;',
+pick: function () { go(i); } };
+});
+var me = sp(ME.x, ME.y);
+var CW = 300, GAP = 10;
+var cards = P.map(function (p, i) { return { title: p.title, meta: p.meta, by: p.by, ph: p.ph, style: 'flex: none; width: ' + CW + 'px; box-sizing: border-box; display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 20px; background: var(--sf); border: 1px solid ' + (s.sel === i ? 'var(--act)' : 'var(--ln)') + '; color: var(--tx); box-shadow: 0 8px 24px rgba(0,0,0,.4); opacity: ' + (s.sel === i ? 1 : 0.7) + ';' }; });
+function go(i) { i = Math.max(0, Math.min(P.length - 1, i)); self.setState({ sel: i, cx: P[i].x, cy: P[i].y + 60 / s.z }); }
+var quick = ['Continent', 'SOWO approved', 'Effort', 'Budget', 'When', 'Travel length', 'Vibe', 'Terrain', 'Getting around', 'Off the map'].map(function (l) { return { label: l, open: function () { self.setState({ sheet: true }); } }; });
+var recent = [
+{ title: 'Ha Giang, the long way', by: '@nomadgoblin', meta: '9D', ph: 'var(--map)' },
+{ title: 'Laos by slow boat', by: '@saltandsole', meta: '3D', ph: 'var(--ph3)' },
+{ title: 'Penang hawker crawl', by: '@makanmapper', meta: '2D', ph: 'var(--ph2)' }
+].map(function (r, i) { r.line = i ? 'border-top: 1px solid var(--ln);' : ''; return r; });
+var near = [
+{ title: 'Kampong Glam to the sea', meta: 'SINGAPORE · ANY TIME · 1D · $', dist: '3 KM AWAY', eff: '●○○○○', ph: 'var(--ph2)', path: 'M20 120 C80 100 100 40 170 60 S260 110 340 30' },
+{ title: 'Pulau Ubin by bike', meta: 'SINGAPORE · ANY TIME · 1D · $', dist: '18 KM AWAY', eff: '●●○○○', ph: 'var(--map)', path: 'M30 40 C90 60 120 120 190 100 S280 40 330 110' },
+{ title: 'Batam by ferry and bike', meta: 'INDONESIA · JUL · 1D · $$', dist: '35 KM AWAY', eff: '●●○○○', ph: 'var(--ph3)', path: 'M20 80 C70 30 140 30 180 80 S280 130 340 70' },
+{ title: 'Kota Tinggi waterfalls', meta: 'MALAYSIA · FEB · 2D · $', dist: '60 KM AWAY', eff: '●●●○○', ph: 'var(--ph1)', path: 'M40 130 C80 90 110 110 150 70 S240 20 320 40' }
+];
+var nOn = ['vibes', 'terrain', 'modes', 'price'].reduce(function (sum, k) { return sum + Object.keys(s[k]).filter(function (x) { return s[k][x]; }).length; }, 0) + 2;
+return {
+vb: (s.cx - 195 / z).toFixed(1) + ' ' + (s.cy - 550 / z).toFixed(1) + ' ' + (390 / z).toFixed(1) + ' ' + (1100 / z).toFixed(1),
+lblFs: (10 / z).toFixed(2),
+showMe: locOn, meStyle: 'position: absolute; left: ' + (me.x - 9) + 'px; top: ' + (me.y - 9) + 'px; width: 18px; height: 18px; z-index: 3; pointer-events: none;',
+locColor: locOn ? 'var(--info)' : 'var(--mu)',
+toast: !!s.toast, hideToast: function () { self.setState({ toast: false }); },
+zoomIn: function () { self.setState({ z: Math.min(4, +(s.z * 1.5).toFixed(2)) }); },
+zoomOut: function () { self.setState({ z: Math.max(1, +(s.z / 1.5).toFixed(2)) }); },
+locate: function () { if (!locOn) { self.setState({ toast: true }); return; } self.setState({ cx: ME.x, cy: ME.y, z: Math.max(s.z, 2.4) }); },
+mDown: function (e) { self.pan = { sx: e.clientX, sy: e.clientY, cx: s.cx, cy: s.cy, moved: false }; },
+mMove: function (e) { var p = self.pan; if (!p) return; var dx = e.clientX - p.sx, dy = e.clientY - p.sy; if (!p.moved && Math.abs(dx) + Math.abs(dy) < 5) return; p.moved = true; var r = e.currentTarget.getBoundingClientRect(); var k = (r.width / 390) * s.z; self.setState({ cx: Math.max(40, Math.min(350, p.cx - dx / k)), cy: Math.max(120, Math.min(980, p.cy - dy / k)) }); },
+mUp: function () { self.pan = null; },
+mWheel: function (e) { var nz = e.deltaY < 0 ? s.z * 1.15 : s.z / 1.15; self.setState({ z: Math.max(1, Math.min(4, +nz.toFixed(2))) }); },
+track: 'display: flex; gap: ' + GAP + 'px; transition: transform .3s ease; transform: translateX(' + ((390 - CW) / 2 - s.sel * (CW + GAP)) + 'px);',
+cards: cards,
+cDown: function (e) { self.cx0 = e.clientX; },
+cUp: function (e) { if (self.cx0 == null) return; var dx = e.clientX - self.cx0; self.cx0 = null; if (dx < -40) go(s.sel + 1); else if (dx > 40) go(s.sel - 1); },
+lengths: ['Weekend · 1–3 days', 'Short trip · 4–7 days', '1–2 weeks', '3–4 weeks', '1–3 months', '3 months+'].map(function (l) { var on = !!s.len[l]; return { label: l, pressed: on ? 'true' : 'false', style: self.chip(on), pick: function () { var n = Object.assign({}, s.len); n[l] = !on; self.setState({ len: n }); } }; }),
+clearRecent: function () { self.setState({ noRecent: true }); },
+resetFilters: function () { self.setState({ vibes: {}, terrain: {}, modes: {}, price: {}, len: {}, cont: {}, effort: 5 }); },
+pins: pins, quick: quick, recent: s.noRecent ? [] : recent, near: near, nOn: nOn,
+isMap: !!s.map, isList: !s.map, sheet: !!s.sheet,
+toggleMap: function () { self.setState({ map: !s.map }); }, toggleLabel: s.map ? 'List' : 'Map',
+openSheet: function () { self.setState({ sheet: true }); }, closeSheet: function () { self.setState({ sheet: false }); },
+topBg: s.map ? '' : 'background: var(--bg);',
+rootStyle: 'width: 390px; height: 1100px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[t],
+effort: s.effort,
+effortName: names[s.effort - 1],
+effortHint: hints[s.effort - 1],
+efforts: efforts,
+continents: multi('cont', ['Asia', 'Europe', 'Africa', 'North America', 'South America', 'Oceania', 'Antarctica']),
+vibes: multi('vibes', ['Chill', 'Scenic', 'Foodie', 'Social', 'Wild', 'Slow travel', 'Romantic', 'Solo-friendly', 'SOWO approved']),
+terrain: multi('terrain', ['Mountains', 'Beaches', 'Jungle', 'Desert', 'Islands', 'Snow', 'Rivers', 'Cities']),
+styles: single('style', ['Hikey', 'Citey', 'Road trip', 'Mixed bag']),
+modes: multi('modes', ['Walk', 'Bicycle', 'Bus', 'Train', 'Plane', 'Boat', 'Hitch', 'Moto', 'Horse']),
+offbeat: single('offbeat', ['Well-loved', 'Few have been', 'Hidden gem']),
+prices: ['$', '$$', '$$$', '$$$$', '$$$$$'].map(function (p, i) { var on = !!s.price[p]; return { label: p, aria: ['Shoestring', 'Budget', 'Mid-range', 'Comfortable', 'Splurge'][i], pressed: on ? 'true' : 'false', style: self.chip(on) + ' padding: 0 4px; font-family: JetBrains Mono, monospace; font-size: 12px;', pick: function () { var n = Object.assign({}, s.price); n[p] = !on; self.setState({ price: n }); } }; }),
+count: Math.max(4, 12 + s.effort * 7 - picks * 2)
+};
+}
+}
+</script>
+</body>
+</html>

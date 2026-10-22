@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Post an update</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 110px 16px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Reports.dc.html" aria-label="Back to updates" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="flex: 1; margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">Post an update</h1>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--mu)">Just been? Tell the next person what it's like now. Heads-ups stay on the route until others confirm they're sorted.</p>
+
+<div style="display: flex; gap: 6px; background: var(--sf2); border-radius: 999px; padding: 3px">
+<sc-for list="{{types}}" as="ty" hint-placeholder-count="2"><button type="button" onClick="{{ty.pick}}" style="{{ty.style}}">{{ty.label}}</button></sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">WHERE</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{places}}" as="p" hint-placeholder-count="5">
+<button type="button" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">WHAT CHANGED</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{kinds}}" as="k" hint-placeholder-count="8">
+<button type="button" onClick="{{k.pick}}" aria-pressed="{{k.pressed}}" style="{{k.style}}"><span style="font-size: 16px; flex: none">{{k.i}}</span><span style="text-align: left; line-height: 1.25">{{k.label}}</span></button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">CAN PEOPLE STILL GET THROUGH?</span>
+<div style="display: flex; gap: 6px">
+<sc-for list="{{pass}}" as="p" hint-placeholder-count="3">
+<button type="button" onClick="{{p.pick}}" style="{{p.style}}; flex: 1; padding: 0 6px">{{p.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<label style="display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">WHEN DID YOU SEE IT</span><input type="date" value="2026-10-03" style="height: 46px; border-radius: 14px; border: 1px solid var(--ln); background: var(--sf); padding: 0 16px; font-family: inherit; font-size: 15px; color: var(--tx); color-scheme: dark"></label>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="note" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">DETAILS</label>
+<input id="note" value="Landslide after heavy rain, one lane open. Workers say 2 weeks." style="height: 46px; border-radius: 14px; border: 1px solid var(--ln); background: var(--sf); padding: 0 16px; font-family: inherit; font-size: 15px; color: var(--tx)">
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">PHOTO (OPTIONAL)</span><div style="display: flex; gap: 8px">
+<div style="width: 84px; height: 84px; border-radius: 14px; background: var(--ph1); position: relative"><span style="position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 999px; background: var(--scrim); display: flex; align-items: center; justify-content: center; font-size: 12px">✕</span></div>
+<sc-if value="{{twoPics}}" hint-placeholder-val="{{ false }}"><div style="width: 84px; height: 84px; border-radius: 14px; background: var(--ph3)"></div></sc-if><button type="button" onClick="{{addPhoto}}" style="width: 84px; height: 84px; border-radius: 14px; border: 1px dashed var(--ln); background: transparent; color: var(--mu); font-family: inherit; font-size: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px"><span style="font-size: 20px">＋</span>Photo</button>
+</div></div>
+
+<div style="padding: 12px 14px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln); display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">HOW IT SHOWS ON THE ROUTE</span>
+<div style="display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border-radius: 12px; background: rgba(240,180,90,.12); border: 1px solid rgba(240,180,90,.45)"><span style="color: var(--warn)">⚠</span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 700">{{preview}}</span><span style="font-size: 12px; color: var(--mu)">Reported 3 Oct by you · Still true? Yes / Sorted</span></span></div>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 24px 16px; background: var(--bg); border-top: 1px solid var(--ln)">
+<a href="Route.dc.html" style="height: 50px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">Post update</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1240}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { type: 'bad', place: 'Ma Pi Leng Pass', kind: 'Landslide or flood', pass: 'Partly' }; }
+renderVals() {
+var self = this;
+var s = this.state;
+var P = this.props;
+function chip(on) { return 'min-height: 40px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'); }
+var V = {};
+
+var PL = ['Ma Pi Leng Pass', 'Dong Van', 'Nho Que boat pier', 'Du Gia waterfall', 'Other place'];
+V.types = [['bad', '⚠ Heads up'], ['good', '✓ All good']].map(function (t) { var on = s.type === t[0]; return { label: t[1], pick: function () { self.setState({ type: t[0] }); }, style: 'flex: 1; height: 38px; border: 0; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; ' + (on ? 'background: var(--tx); color: var(--bg);' : 'background: transparent; color: var(--mu);') }; });
+V.places = PL.map(function (p) { return { label: p, pick: function () { self.setState({ place: p }); }, style: chip(s.place === p) }; });
+var K = [['⛰', 'Landslide or flood'], ['⚠', 'Road or trail damaged'], ['⛔', 'Closed for good'], ['⏸', 'Closed for now'], ['$', 'Price changed'], ['⇄', 'Moved'], ['✦', 'Got busier / changed vibe'], ['…', 'Something else']];
+V.kinds = K.map(function (k) { var on = s.kind === k[1]; return { i: k[0], label: k[1], pressed: on ? 'true' : 'false', pick: function () { self.setState({ kind: k[1] }); },
+style: 'min-height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 14px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);') }; });
+var PS = ['Open', 'Partly', 'Closed'];
+V.pass = PS.map(function (p) { return { label: p, pick: function () { self.setState({ pass: p }); }, style: chip(s.pass === p) }; });
+V.twoPics = !!s.two; V.addPhoto = function () { self.setState({ two: true }); };
+V.preview = s.kind + ' · ' + s.place + (s.pass === 'Partly' ? ' · one lane open' : s.pass === 'Closed' ? ' · closed' : ' · still open');
+
+V.rootStyle = 'width: 390px; height: 1240px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); --bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --warn: #F0B45A; --danger: #F08A7E; --map: #253126; --cnt: #34453A; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000;';
+return V;
+}
+}
+</script>
+</body>
+</html>

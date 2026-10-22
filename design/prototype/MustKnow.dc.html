@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Must-know</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 110px 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Live.dc.html" aria-label="Back to your route" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="flex: 1; margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">Must-know</h1>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--mu)">The stuff people always ask before they go. Tap an answer, add a line if you want. Skip anything you don't know.</p>
+<div style="display: flex; align-items: center; gap: 10px"><div style="flex: 1; height: 6px; border-radius: 999px; background: var(--sf2); overflow: hidden"><div style="{{barStyle}}"></div></div><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--act)">{{filled}} OF {{total}}</span></div>
+
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="11">
+<div style="{{c.card}}">
+<button type="button" onClick="{{c.open}}" aria-expanded="{{c.expanded}}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 0 14px; border: 0; background: transparent; color: var(--tx); font-family: inherit; text-align: left; cursor: pointer">
+<span style="width: 30px; height: 30px; border-radius: 10px; background: var(--sf2); color: var(--act); display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{c.i}}"></path></svg></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 15px; font-weight: 700">{{c.name}}</span><span style="font-size: 12px; color: var(--mu); white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{c.summary}}</span></span>
+<span style="{{c.dot}}">{{c.mark}}</span>
+</button>
+<sc-if value="{{c.isOpen}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 0 14px 14px 14px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 12px; color: var(--mu)">{{c.q}}</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{c.opts}}" as="o" hint-placeholder-count="4">
+<button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+<input aria-label="{{c.name}} note" value="{{c.note}}" placeholder="{{c.ph}}" style="height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg); padding: 0 14px; font-family: inherit; font-size: 14px; color: var(--tx)">
+</div>
+</sc-if>
+</div>
+</sc-for>
+
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu); margin-top: 8px">YOUR OWN</span>
+<sc-for list="{{custom}}" as="u" hint-placeholder-count="1">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+<input aria-label="Category name" value="{{u.name}}" style="height: 40px; border-radius: 12px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 15px; font-weight: 700; color: var(--tx)">
+<input aria-label="What people should know" value="{{u.note}}" style="height: 40px; border-radius: 12px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx)">
+</div>
+</sc-for>
+<button type="button" onClick="{{addCustom}}" style="height: 48px; border-radius: 16px; border: 1px dashed var(--ln); background: transparent; color: var(--act); font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">+ Add your own (e.g. COVID rules, festival closures)</button>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 24px 16px; background: var(--bg); border-top: 1px solid var(--ln)">
+<a href="Live.dc.html" style="height: 50px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">Save must-know</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1360}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { open: 3, ans: { 0: { 'e-Visa': true }, 1: { 'Buy on the spot': true }, 2: { 'IDP': true }, 3: { 'Mostly cash': true }, 4: { 'Patchy': true }, 6: { 'Mixed': true }, 7: { 'Bottled only': true } }, notes: { 0: '90 days, apply a week before', 3: 'ATMs in Ha Giang and Dong Van only' }, custom: [{ name: 'Tet holiday', note: 'Most homestays shut for ~5 days. Avoid Tet week.' }] }; }
+renderVals() {
+var self = this;
+var s = this.state;
+var P = this.props;
+function chip(on) { return 'min-height: 40px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'); }
+var V = {};
+
+var CAT = [
+['M6 3h12v18H6zM9 17h6M9 10a3 3 0 1 0 6 0a3 3 0 1 0 -6 0', 'Visa & entry', 'How do people get in?', ['Visa-free', 'e-Visa', 'On arrival', 'Get before you fly'], 'How long you can stay, cost, tips'],
+['M3 7h18v3a2 2 0 000 4v3H3v-3a2 2 0 000-4zM14 7v10', 'Permits & fees', 'Any permits or entry fees?', ['None', 'Buy on the spot', 'Book ahead'], 'Which permit, roughly how much'],
+['M3 5h18v14H3zM14 10h4M14 14h3M6 16c.5-1.5 1.6-2.4 3-2.4s2.5.9 3 2.4M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0', 'Licence & wheels', 'What do you need to drive or ride?', ['Not needed', 'IDP', 'Local licence', 'Hire a driver'], 'Checkpoints, rental tips'],
+['M3 6h18v12H3zM9.4 12a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0 -5.2 0M6.5 9v.01M17.5 15v.01', 'Cash & cards', 'How do people pay?', ['Cash only', 'Mostly cash', 'Card ok'], 'Where the ATMs are'],
+['M7 2h10v20H7zM11 18h2', 'SIM & signal', 'Phone signal on the route?', ['Good everywhere', 'Patchy', 'None on parts'], 'Best network, where to buy'],
+['M4 5h16v16H4zM4 10h16M8 3v4M16 3v4', 'Book ahead?', 'Do stays and transport sell out?', ['Walk in', 'Weekends only', 'Book everything'], 'What sold out for you'],
+['M8 3L5 21M16 3l3 18M12 5v2M12 11v2M12 17v2', 'Roads & trails', 'What are the roads or trails like?', ['Smooth', 'Mixed', 'Rough', '4x4 only'], 'The worst stretch'],
+['M12 3c-3 4.5-6 7.5-6 11a6 6 0 0012 0c0-3.5-3-6.5-6-11z', 'Water & health', 'Can you drink the water?', ['Tap is fine', 'Filter or boil', 'Bottled only'], 'Nearest clinic, bugs, altitude'],
+['M12 3L2 21h20zM12 10v5M12 18v.01', 'Scams & fines', 'Anything to watch out for?', ['None seen', 'Watch out'], 'What happened, how to avoid it'],
+['M8.5 3L3 6l2 4.5 3-1.2V21h8V9.3l3 1.2L21 6l-5.5-3c-.4 1.6-1.8 2.6-3.5 2.6S8.9 4.6 8.5 3z', 'Dress code', 'What should people wear?', ['Relaxed', 'Cover up at sacred places', 'Conservative'], 'Shoulders, knees, shoes off indoors'],
+['M4.9 10.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M8.4 6.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M12.4 6.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M15.9 10.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M8 17c0-2.6 1.9-4.6 4-4.6s4 2 4 4.6c0 2-1.6 3-4 3s-4-1-4-3z', 'Wildlife', 'Any animals to watch for?', ['Nothing to worry about', 'Stray dogs', 'Monkeys', 'Snakes', 'Leeches', 'Bears'], 'What you saw and where'],
+['M5.5 10a4.5 4.5 0 014.5-4.5h4a4.5 4.5 0 014.5 4.5v9a2 2 0 01-2 2h-9a2 2 0 01-2-2zM9.5 5.5V4.5a2.5 2.5 0 015 0v1M8.5 21v-4a1.5 1.5 0 011.5-1.5h4a1.5 1.5 0 011.5 1.5v4', 'Pack this', 'What did you wish you had?', ['Waterproof layer', 'Warm layer', 'Sun protection', 'Bug protection', 'Headtorch', 'Bring snacks', 'Bring water'], 'Anything else']
+];
+var filled = 0;
+V.cats = CAT.map(function (c, i) {
+var a = s.ans[i] || {}; var picks = Object.keys(a).filter(function (k) { return a[k]; }); var done = picks.length > 0; if (done) filled++;
+var open = s.open === i, multi = i >= 10;
+return { i: c[0], name: c[1], q: c[2], ph: c[4], note: s.notes[i] || '', isOpen: open, expanded: open ? 'true' : 'false',
+summary: done ? picks.join(', ') + (s.notes[i] ? ' · ' + s.notes[i] : '') : 'Not filled · tap to add',
+mark: done ? '✓' : '+',
+dot: 'width: 26px; height: 26px; border-radius: 999px; display: flex; align-items: center; justify-content: center; flex: none; font-size: 13px; font-weight: 800; ' + (done ? 'background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); color: var(--mu); box-sizing: border-box;'),
+card: 'background: var(--sf); border: 1px solid ' + (open ? 'var(--act)' : 'var(--ln)') + '; border-radius: 16px; overflow: hidden;',
+open: function () { self.setState({ open: open ? -1 : i }); },
+opts: c[3].map(function (o) { var on = !!a[o]; return { label: o, pressed: on ? 'true' : 'false', style: chip(on), pick: function () { var na = multi ? Object.assign({}, a) : {}; na[o] = !on; var all = Object.assign({}, s.ans); all[i] = na; self.setState({ ans: all }); } }; }) };
+});
+V.filled = filled; V.total = CAT.length;
+V.barStyle = 'height: 100%; width: ' + Math.round(filled / CAT.length * 100) + '%; background: var(--ac);';
+V.custom = s.custom;
+V.addCustom = function () { self.setState({ custom: s.custom.concat([{ name: 'New category', note: '' }]) }); };
+
+V.rootStyle = 'width: 390px; height: 1360px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); --bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --warn: #F0B45A; --danger: #F08A7E; --map: #253126; --cnt: #34453A; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000;';
+return V;
+}
+}
+</script>
+</body>
+</html>

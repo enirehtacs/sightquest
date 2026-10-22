@@ -1,0 +1,20 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# dependencies & builds
+node_modules/
+.expo/
+dist/
+web-build/
+.next/
+out/
+*.tsbuildinfo
+
+# supabase local
+supabase/.temp/
+supabase/.branches/
+
+# os
+.DS_Store

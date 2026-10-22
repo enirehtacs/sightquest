@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Your atlas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: #131A1D; color: #E6E8E1; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent">
+<div onPointerDown="{{mDown}}" onPointerMove="{{mMove}}" onPointerUp="{{mUp}}" onPointerLeave="{{mLeave}}" style="position: absolute; inset: 0; touch-action: none; cursor: grab">
+<svg width="390" height="844" viewBox="{{vb}}" preserveAspectRatio="xMidYMid slice" style="display: block; pointer-events: none">
+<rect x="-400" y="-400" width="1200" height="1000" fill="#131A1D"></rect>
+<g fill="none" stroke="#1C262B" stroke-width="{{swGrid}}"><path d="M0 30 H360 M0 60 H360 M0 90 H360 M0 120 H360 M0 150 H360 M60 0 V180 M120 0 V180 M180 0 V180 M240 0 V180 M300 0 V180"></path></g>
+<path d="M12 24 L40 20 L85 18 L100 28 L120 35 L128 43 L114 46 L105 55 L99 65 L83 64 L83 72 L93 76 L100 82 L97 81 L88 75 L75 70 L68 60 L62 56 L56 50 L56 42 L45 32 L30 30 L15 28 Z M107 12 L140 7 L160 14 L140 28 L125 26 Z M100 81 L120 80 L130 90 L145 96 L140 112 L132 118 L122 128 L115 145 L106 140 L109 120 L110 108 L102 95 Z M171 53 L171 47 L179 44 L176 42 L182 39 L188 36 L190 33 L185 29 L195 21 L210 19 L240 20 L260 17 L290 13 L320 17 L350 20 L360 24 L350 30 L340 32 L320 36 L315 47 L309 55 L306 53 L302 50 L301 59 L297 66 L290 69 L288 74 L289 79 L285 81 L283 77 L280 77 L280 83 L283 88.5 L278 82 L277 74 L272 68 L268 68 L260 75 L257 82 L253 72 L247 65 L237 65 L232 62 L228 60 L236 65 L239 68 L232 74 L223 77 L215 62 L213 59 L215 54 L208 53 L206 49 L203 54 L200 50 L194 48 L198 50 L196 52 L192 46 L188 46 L183 47 L179 53 Z M163 69 L163 76 L172 85 L185 86 L189 86 L192 95 L193 108 L198 124 L206 124 L213 116 L220 105 L220 93 L231 79 L223 78 L217 68 L212 59 L200 58 L190 53 L175 54 L170 60 Z M174 40 L182 39 L178 34 L175 31 L174 34 Z M310 59 L315 56 L320 55 L322 50 L321 45 L319 50 L316 54 Z M275 85 L278 86 L284 92 L286 96 L284 95 L278 88 Z M285 96 L290 96.5 L295 98 L290 98.2 L286 97.2 Z M289 89 L297 83 L299 89 L296 94 L290 93 Z M300 72 L302 77 L306 83 L302 83 L301 77 Z M311 91 L330 96 L321 99 Z M294 112 L309 105 L317 102 L322 101 L333 115 L330 127 L321 128 L311 121 L295 124 Z M352 125 L358 128 L351 135 L347 136 Z M224 102 L230 105 L227 115 L224 112 Z M300.2 67.5 L301.9 64.9 L301 64.7 L300 66.5 Z M260 80.2 L261.8 82.5 L260.2 84 Z" fill="#27312B" stroke="#3A4A3F" stroke-width="{{swLand}}" stroke-linejoin="round"></path>
+<g style="opacity: {{r0op}}"><polyline points="286.7,79.2 288.1,79.1 288.4,78.1 289.2,77.8 289.2,76.2 288.3,74.1 287.6,73.5 286.3,72.4 286,69.7 285.8,69 285,67.2" fill="none" stroke="#B9DE5C" stroke-width="{{r0gw}}" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"></polyline><polyline points="286.7,79.2 288.1,79.1 288.4,78.1 289.2,77.8 289.2,76.2 288.3,74.1 287.6,73.5 286.3,72.4 286,69.7 285.8,69 285,67.2" fill="none" stroke="#B9DE5C" stroke-width="{{r0w}}" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="288.3" cy="74.1" r="{{m0r}}" fill="#B9DE5C" stroke="#000000" stroke-width="{{m0sw}}"></circle></g><g style="opacity: {{r1op}}"><polyline points="264,61.8 264.2,61.45 263.95,61.2 263.6,61.5" fill="none" stroke="#B9DE5C" stroke-width="{{r1gw}}" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"></polyline><polyline points="264,61.8 264.2,61.45 263.95,61.2 263.6,61.5" fill="none" stroke="#B9DE5C" stroke-width="{{r1w}}" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="263.95" cy="61.2" r="{{m1r}}" fill="#B9DE5C" stroke="#000000" stroke-width="{{m1sw}}"></circle></g><g style="opacity: {{r2op}}"><polyline points="286.8,96.2 287.6,96.9 290.4,97.8 292.7,97.25 294.4,98.2" fill="none" stroke="#B9DE5C" stroke-width="{{r2gw}}" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"></polyline><polyline points="286.8,96.2 287.6,96.9 290.4,97.8 292.7,97.25 294.4,98.2" fill="none" stroke="#B9DE5C" stroke-width="{{r2w}}" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="290.4" cy="97.8" r="{{m2r}}" fill="#B9DE5C" stroke="#000000" stroke-width="{{m2sw}}"></circle></g><g style="opacity: {{r3op}}"><polyline points="280.5,76.25 283.86,76.64 284.9,78.45 286.7,79.2" fill="none" stroke="#B9DE5C" stroke-width="{{r3gw}}" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"></polyline><polyline points="280.5,76.25 283.86,76.64 284.9,78.45 286.7,79.2" fill="none" stroke="#B9DE5C" stroke-width="{{r3w}}" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="284.9" cy="78.45" r="{{m3r}}" fill="#B9DE5C" stroke="#000000" stroke-width="{{m3sw}}"></circle></g><g style="opacity: {{r4op}}"><polyline points="280.1,69.7 281.2,70.1 282.13,70.11" fill="none" stroke="#B9DE5C" stroke-width="{{r4gw}}" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"></polyline><polyline points="280.1,69.7 281.2,70.1 282.13,70.11" fill="none" stroke="#B9DE5C" stroke-width="{{r4w}}" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="281.2" cy="70.1" r="{{m4r}}" fill="#B9DE5C" stroke="#000000" stroke-width="{{m4sw}}"></circle></g><g style="opacity: {{r5op}}"><polyline points="315.77,54.99 316.9,54.82 318.2,53.8 319.7,54.32" fill="none" stroke="#B9DE5C" stroke-width="{{r5gw}}" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"></polyline><polyline points="315.77,54.99 316.9,54.82 318.2,53.8 319.7,54.32" fill="none" stroke="#B9DE5C" stroke-width="{{r5w}}" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="318.2" cy="53.8" r="{{m5r}}" fill="#B9DE5C" stroke="#000000" stroke-width="{{m5sw}}"></circle></g><g style="opacity: {{r6op}}"><polyline points="301.56,64.97 301.6,66 301.15,67.25" fill="none" stroke="#B9DE5C" stroke-width="{{r6gw}}" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"></polyline><polyline points="301.56,64.97 301.6,66 301.15,67.25" fill="none" stroke="#B9DE5C" stroke-width="{{r6w}}" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="301.6" cy="66.0" r="{{m6r}}" fill="#B9DE5C" stroke="#000000" stroke-width="{{m6sw}}"></circle></g><g style="opacity: {{r7op}}"><polyline points="283.85,88.71 284.03,88.87 284.1,88.95" fill="none" stroke="#B9DE5C" stroke-width="{{r7gw}}" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"></polyline><polyline points="283.85,88.71 284.03,88.87 284.1,88.95" fill="none" stroke="#B9DE5C" stroke-width="{{r7w}}" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="284.03" cy="88.87" r="{{m7r}}" fill="#B9DE5C" stroke="#000000" stroke-width="{{m7sw}}"></circle></g>
+</svg>
+</div>
+
+<sc-for list="{{tags}}" as="g" hint-placeholder-count="4">
+<button type="button" onClick="{{g.open}}" style="{{g.style}}"><span style="font-size: 13px; font-weight: 700; white-space: nowrap">{{g.n}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #9CA295; white-space: nowrap">{{g.m}}</span></button>
+</sc-for>
+
+<div style="position: absolute; top: 12px; left: 12px; right: 12px; display: flex; align-items: center; gap: 8px">
+<a href="Me.dc.html" aria-label="Back to your profile" style="flex: none; width: 44px; height: 44px; border-radius: 999px; background: rgba(19,21,18,0.82); color: #E6E8E1; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<div style="flex: 1; min-width: 0; padding: 6px 14px; border-radius: 999px; background: rgba(19,21,18,0.82); display: flex; flex-direction: column">
+<span style="font-size: 15px; font-weight: 700">Your atlas</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #9CA295">8 TRIPS · 9 COUNTRIES · 1 LIVE</span>
+</div>
+</div>
+
+<div style="position: absolute; right: 12px; top: 76px; display: flex; flex-direction: column; gap: 8px">
+<button type="button" aria-label="Zoom in" onClick="{{zoomIn}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #31362F; background: rgba(19,21,18,0.82); color: #E6E8E1; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+<button type="button" aria-label="Zoom out" onClick="{{zoomOut}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #31362F; background: rgba(19,21,18,0.82); color: #E6E8E1; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path></svg></button>
+<button type="button" aria-label="Show the whole world" onClick="{{fit}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #31362F; background: rgba(19,21,18,0.82); color: #B9DE5C; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"></path></svg></button>
+</div>
+
+<sc-if value="{{noPop}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 12px; right: 12px; bottom: 20px; padding: 12px 14px; border-radius: 16px; background: rgba(19,21,18,0.9); border: 1px solid #31362F; display: flex; align-items: center; gap: 10px">
+<span style="width: 18px; height: 4px; border-radius: 999px; background: #B9DE5C; flex: none"></span>
+<span style="font-size: 13px; line-height: 1.4; color: #C9CDC2">{{hint}}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{pop}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 0; right: 0; bottom: 0; background: #131512; border-radius: 24px 24px 0 0; padding: 16px 16px 22px 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 -10px 30px rgba(0,0,0,0.45)">
+<div style="display: flex; align-items: flex-start; gap: 10px">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="display: flex; gap: 6px; align-items: center"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #B9DE5C">{{pWhen}}</span><sc-if value="{{pLive}}" hint-placeholder-val="{{ false }}"><span style="background: #B9DE5C; color: #131512; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 999px">LIVE</span></sc-if></span>
+<span style="font-size: 20px; line-height: 1.2; font-weight: 800">{{pTitle}}</span>
+</span>
+<button type="button" aria-label="Close" onClick="{{closePop}}" style="flex: none; width: 44px; height: 44px; margin: -8px -8px 0 0; border: 0; background: transparent; color: #E6E8E1; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+<div style="background: #1C1F1B; border: 1px solid #31362F; border-radius: 14px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">{{pDays}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #9CA295">DAYS</div></div>
+<div style="background: #1C1F1B; border: 1px solid #31362F; border-radius: 14px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">{{pKm}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #9CA295">KM</div></div>
+<div style="background: #1C1F1B; border: 1px solid #31362F; border-radius: 14px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">{{pPrice}}<span style="color: #9CA295; opacity: 0.45">{{pPriceOff}}</span></div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #9CA295">BUDGET</div></div>
+<div style="background: #1C1F1B; border: 1px solid #31362F; border-radius: 14px; padding: 8px 10px"><div style="font-size: 13px; font-weight: 700; padding-top: 3px; color: #B9DE5C; font-family: 'JetBrains Mono', monospace">{{pEff}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #9CA295">EFFORT</div></div>
+</div>
+<div style="display: flex; gap: 8px">
+<sc-for list="{{thumbs}}" as="h" hint-placeholder-count="3">
+<button type="button" onClick="{{h.open}}" aria-label="{{h.aria}}" style="{{h.style}}"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #E6E8E1">{{h.more}}</span></button>
+</sc-for>
+</div>
+<div style="display: flex; gap: 10px; padding: 10px 12px; border-radius: 14px; background: #1C1F1B; border: 1px solid #31362F">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #B9DE5C; padding-top: 2px; flex: none">BEST BIT</span>
+<span style="font-size: 14px; line-height: 1.45">{{pHi}}</span>
+</div>
+<div style="display: flex; gap: 10px">
+<a href="Diary.dc.html" style="flex: 1; height: 48px; border-radius: 999px; background: #B9DE5C; color: #131512; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5l5-2 6 2 5-2v16l-5 2-6-2-5 2z"></path><path d="M9 3v16M15 5v16"></path></svg>Open trip diary</a>
+
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{mvOn}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; padding: 0 16px">
+<div role="dialog" aria-modal="true" aria-label="Trip moments" style="width: 100%; background: #1C1F1B; border-radius: 24px; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 700">{{mvPlace}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #B9DE5C">{{mvWhen}}</span></span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9CA295">{{mvPos}}</span>
+<button type="button" aria-label="Close" onClick="{{mvClose}}" style="width: 44px; height: 44px; margin-right: -8px; border: 0; background: transparent; color: #E6E8E1; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div onPointerDown="{{swDown}}" onPointerUp="{{swUp}}" style="{{mvPhoto}}">
+<span style="position: absolute; left: 10px; bottom: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; opacity: 0.8">[PHOTO] SWIPE FOR MORE</span>
+<button type="button" aria-label="Previous moment" onClick="{{mvPrev}}" style="position: absolute; left: 8px; top: 50%; margin-top: -22px; width: 44px; height: 44px; border-radius: 999px; border: 0; background: rgba(19,21,18,0.82); color: #E6E8E1; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<button type="button" aria-label="Next moment" onClick="{{mvNext}}" style="position: absolute; right: 8px; top: 50%; margin-top: -22px; width: 44px; height: 44px; border-radius: 999px; border: 0; background: rgba(19,21,18,0.82); color: #E6E8E1; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></button>
+</div>
+<div style="display: flex; justify-content: center; gap: 6px">
+<sc-for list="{{mvDots}}" as="d" hint-placeholder-count="4"><span style="{{d.style}}"></span></sc-for>
+</div>
+<span style="font-size: 15px; line-height: 1.45">{{mvText}}</span>
+<a href="Diary.dc.html" style="height: 46px; border-radius: 999px; background: #B9DE5C; color: #131512; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5l5-2 6 2 5-2v16l-5 2-6-2-5 2z"></path><path d="M9 3v16M15 5v16"></path></svg>See it in the map diary</a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{toastOn}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: absolute; left: 24px; right: 24px; top: 240px; padding: 12px 14px; border-radius: 14px; background: #E6E8E1; color: #131512; font-size: 14px; line-height: 1.4; font-weight: 600; text-align: center">{{toast}}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.trips = [{"n": "Vietnam, south to north", "m": "Sep–Oct 2026", "d": 29, "km": "1,840", "price": 2, "eff": 3, "live": true, "hi": "Lantern night in Hoi An, and a sleeper bus I will never forget.", "mx": 288.3, "my": 74.1, "xy": [[286.7, 79.2], [288.1, 79.1], [288.4, 78.1], [289.2, 77.8], [289.2, 76.2], [288.3, 74.1], [287.6, 73.5], [286.3, 72.4], [286, 69.7], [285.8, 69], [285, 67.2]], "moms": [{"d": "Day 1", "p": "Ho Chi Minh City", "txt": "Street food on foot. Pace yourself.", "ph": "ph2"}, {"d": "Day 3", "p": "Mui Ne", "txt": "Sunrise jeep to the dunes. Sand everywhere after.", "ph": "ph1"}, {"d": "Day 9", "p": "Da Lat → Nha Trang", "txt": "Down the pass inside a cloud.", "ph": "ph4"}, {"d": "Day 12", "p": "Hoi An", "txt": "Lantern night on the river. Touristy, still magic.", "ph": "ph2"}]}, {"n": "Annapurna, no jeep", "m": "Oct 2025", "d": 14, "km": "160", "price": 2, "eff": 5, "live": false, "hi": "Thorong La at 5,416 m. Cried a little. Ate a lot of dal bhat.", "mx": 263.95, "my": 61.2, "xy": [[264.0, 61.8], [264.2, 61.45], [263.95, 61.2], [263.6, 61.5]], "moms": [{"d": "Day 2", "p": "Besisahar", "txt": "First tea house, first dal bhat, first of many.", "ph": "ph2"}, {"d": "Day 8", "p": "Manang", "txt": "Acclimatisation day. Did nothing, proudly.", "ph": "ph1"}, {"d": "Day 10", "p": "Thorong La", "txt": "5,416 m. Cried a little.", "ph": "ph4"}, {"d": "Day 13", "p": "Poon Hill", "txt": "Sunrise over Dhaulagiri with 200 strangers.", "ph": "ph3"}]}, {"n": "Java end to end", "m": "Jul 2025", "d": 21, "km": "1,150", "price": 1, "eff": 3, "live": false, "hi": "Sunrise over Bromo from the crater rim, wrapped in a hotel blanket.", "mx": 290.4, "my": 97.8, "xy": [[286.8, 96.2], [287.6, 96.9], [290.4, 97.8], [292.7, 97.25], [294.4, 98.2]], "moms": [{"d": "Day 1", "p": "Jakarta", "txt": "Arrived into the heat like walking into soup.", "ph": "ph3"}, {"d": "Day 6", "p": "Yogyakarta", "txt": "Borobudur at dawn, before the crowds.", "ph": "ph1"}, {"d": "Day 14", "p": "Bromo", "txt": "Sunrise from the crater rim in a hotel blanket.", "ph": "ph4"}, {"d": "Day 20", "p": "Ijen", "txt": "Blue fire at 3am. Gas mask chic.", "ph": "ph3"}]}, {"n": "Bangkok to Saigon", "m": "Jan 2025", "d": 16, "km": "1,020", "price": 2, "eff": 2, "live": false, "hi": "Three countries, one very patient border guard at Moc Bai.", "mx": 284.9, "my": 78.45, "xy": [[280.5, 76.25], [283.86, 76.64], [284.9, 78.45], [286.7, 79.2]], "moms": [{"d": "Day 1", "p": "Bangkok", "txt": "Boat noodles at the canal. Ordered three bowls.", "ph": "ph2"}, {"d": "Day 6", "p": "Siem Reap", "txt": "Angkor Wat at sunrise, then back to bed.", "ph": "ph1"}, {"d": "Day 11", "p": "Phnom Penh", "txt": "Riverside sunset with a cold drink.", "ph": "ph3"}, {"d": "Day 16", "p": "Saigon", "txt": "Crossed the border at Moc Bai. Very patient guard.", "ph": "ph4"}]}, {"n": "Laos by slow boat", "m": "Nov 2024", "d": 3, "km": "300", "price": 1, "eff": 1, "live": false, "hi": "Two days on the Mekong with a deck of cards and new friends.", "mx": 281.2, "my": 70.1, "xy": [[280.1, 69.7], [281.2, 70.1], [282.13, 70.11]], "moms": [{"d": "Day 1", "p": "Huay Xai", "txt": "Bought snacks for two days. Ate them in two hours.", "ph": "ph2"}, {"d": "Day 2", "p": "Pakbeng", "txt": "Overnight in a river village. Roosters at 4am.", "ph": "ph1"}, {"d": "Day 3", "p": "Luang Prabang", "txt": "Alms giving at dawn, quietly from the side.", "ph": "ph4"}]}, {"n": "Kyoto to Tokyo by train", "m": "Apr 2024", "d": 10, "km": "520", "price": 4, "eff": 2, "live": false, "hi": "Cherry blossoms in Kyoto, then the slowest local trains I could find.", "mx": 318.2, "my": 53.8, "xy": [[315.77, 54.99], [316.9, 54.82], [318.2, 53.8], [319.7, 54.32]], "moms": [{"d": "Day 1", "p": "Kyoto", "txt": "Cherry blossoms along the Philosopher's Path.", "ph": "ph2"}, {"d": "Day 4", "p": "Nagoya", "txt": "Miso katsu. No regrets.", "ph": "ph1"}, {"d": "Day 7", "p": "Matsumoto", "txt": "Crow castle in the rain.", "ph": "ph4"}, {"d": "Day 10", "p": "Tokyo", "txt": "Slowest local train I could find. Loved it.", "ph": "ph3"}]}, {"n": "Taiwan east coast", "m": "Dec 2023", "d": 6, "km": "310", "price": 2, "eff": 2, "live": false, "hi": "Taroko Gorge on a scooter, typhoon season permitting.", "mx": 301.6, "my": 66.0, "xy": [[301.56, 64.97], [301.6, 66.0], [301.15, 67.25]], "moms": [{"d": "Day 1", "p": "Taipei", "txt": "Night market dumplings, burned my mouth.", "ph": "ph2"}, {"d": "Day 3", "p": "Taroko Gorge", "txt": "Scooter through marble cliffs.", "ph": "ph1"}, {"d": "Day 6", "p": "Taitung", "txt": "Hot spring with my feet up.", "ph": "ph3"}]}, {"n": "Batam by bike", "m": "May 2023", "d": 1, "km": "45", "price": 1, "eff": 1, "live": false, "hi": "Ferry over from Singapore, cycled until the seafood called.", "mx": 284.03, "my": 88.87, "xy": [[283.85, 88.71], [284.03, 88.87], [284.1, 88.95]], "moms": [{"d": "Day 1", "p": "Batam", "txt": "Ferry over, cycled until the seafood called.", "ph": "ph3"}, {"d": "Day 1", "p": "Nongsa", "txt": "Sunset grilled fish on the beach.", "ph": "ph2"}]}];
+this.S0 = 390 / 360; this.ZMIN = 1; this.ZMAX = 9; this.TAGZ = 2.2;
+this.home = { z: 1.15, cx: 205, cy: 78 };
+this.state = { z: 1.15, cx: 205, cy: 78, open: -1, toast: '', mv: -1 };
+}
+say(msg) { var self = this; this.setState({ toast: msg }); clearTimeout(this.tt); this.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2400); }
+openTrip(i) {
+var t = this.trips[i], z = Math.max(this.state.z, 3), ppu = this.S0 * z;
+this.setState({ open: i, mv: -1, z: z, cx: t.mx, cy: t.my + 170 / ppu });
+}
+renderVals() {
+var self = this, s = this.state, z = s.z, ppu = this.S0 * z;
+var vw = 390 / ppu, vh = 844 / ppu, vbx = s.cx - vw / 2, vby = s.cy - vh / 2, k = 1 / ppu;
+function px(x, y) { return [(x - vbx) * ppu, (y - vby) * ppu]; }
+var out = {}, tags = [], placed = [];
+var order = this.trips.map(function (_, i) { return i; });
+this.trips.forEach(function (t, i) {
+var on = i === s.open;
+out['r' + i + 'w'] = ((on ? 3.6 : 2.6) * k).toFixed(3);
+out['r' + i + 'gw'] = ((on ? 12 : 8) * k).toFixed(3);
+out['r' + i + 'op'] = s.open >= 0 && !on ? 0.45 : 1;
+out['m' + i + 'r'] = ((on ? 6 : 4.5) * k).toFixed(3);
+out['m' + i + 'sw'] = (1.6 * k).toFixed(3);
+});
+if (z >= this.TAGZ) {
+order.forEach(function (i) {
+var t = self.trips[i], p = px(t.mx, t.my);
+if (p[0] < -40 || p[0] > 430 || p[1] < 60 || p[1] > 760) return;
+var w = Math.max(t.n.length * 7.1, t.m.length * 6.6) + 22, h = 40, cands = [[10, -h - 6], [10, 6], [-w - 10, -h - 6], [-w - 10, 6], [-w / 2, -h - 12], [-w / 2, 12], [14, -h / 2], [-w - 14, -h / 2]];
+self.lastC = self.lastC || {};
+var pref = self.lastC[i] || 0, tries = [pref].concat(cands.map(function (_, ci) { return ci; }).filter(function (ci) { return ci !== pref; }));
+for (var tc = 0; tc < tries.length; tc++) {
+var c = tries[tc];
+var b = { x: p[0] + cands[c][0], y: p[1] + cands[c][1], w: w, h: h };
+if (b.x < 8 || b.x + b.w > 382 || b.y < 70 || b.y + b.h > 770) continue;
+if (placed.some(function (q) { return b.x < q.x + q.w && q.x < b.x + b.w && b.y < q.y + q.h && q.y < b.y + b.h; })) continue;
+placed.push(b);
+self.lastC[i] = c;
+tags.push({ n: t.n, m: t.m + ' · ' + t.d + (t.d === 1 ? ' day' : ' days'), open: function () { self.openTrip(i); }, style: 'position: absolute; left: ' + b.x.toFixed(1) + 'px; top: ' + b.y.toFixed(1) + 'px; width: ' + b.w.toFixed(1) + 'px; height: ' + h + 'px; box-sizing: border-box; padding: 0 10px; border-radius: 12px; border: 1px solid ' + (i === s.open ? '#B9DE5C' : '#3A4A3F') + '; background: rgba(19,21,18,0.88); color: #E6E8E1; font-family: inherit; text-align: left; display: flex; flex-direction: column; justify-content: center; cursor: pointer; outline: none; box-shadow: 0 4px 12px rgba(0,0,0,0.35);' });
+break;
+}
+});
+}
+var T = s.open >= 0 ? this.trips[s.open] : null;
+var PH = { ph1: '#3A4838', ph2: '#4A3F35', ph3: '#35434C', ph4: '#4A4652' };
+var MV = T && s.mv >= 0 ? T.moms[s.mv] : null;
+var hint = z < this.TAGZ ? 'Your trips are the green lines. Zoom in or tap one to see it.' : (z >= this.ZMAX - 0.01 ? "That's as close as the atlas goes. Open a trip diary for street-level detail." : 'Tap a trip to look back on it.');
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+return Object.assign(out, {
+vb: vbx.toFixed(3) + ' ' + vby.toFixed(3) + ' ' + vw.toFixed(3) + ' ' + vh.toFixed(3),
+swGrid: (1 * k).toFixed(3), swLand: (1 * k).toFixed(3),
+tags: tags,
+hint: hint,
+noPop: s.open < 0, pop: s.open >= 0,
+pTitle: T ? T.n : '', pWhen: T ? T.m.toUpperCase() : '', pLive: T ? !!T.live : false,
+pDays: T ? T.d : '', pKm: T ? T.km : '', pPrice: T ? '$$$$$'.slice(0, T.price) : '', pPriceOff: T ? '$$$$$'.slice(T.price) : '',
+pEff: T ? '●●●●●'.slice(0, T.eff) + '○○○○○'.slice(T.eff) : '', pHi: T ? T.hi : '', 
+closePop: function () { self.setState({ open: -1, mv: -1 }); },
+thumbs: T ? T.moms.slice(0, 3).map(function (m, i) { var extra = T.moms.length - 3; return { more: i === 2 && extra > 0 ? '+' + extra : '', aria: 'Open moment: ' + m.p, style: 'flex: 1; height: 84px; border-radius: 14px; border: 0; padding: 8px; box-sizing: border-box; display: flex; align-items: flex-end; justify-content: flex-end; cursor: pointer; background: ' + PH[m.ph] + ';', open: function () { self.setState({ mv: i }); } }; }) : [],
+mvOn: !!T && s.mv >= 0,
+mvPlace: MV ? MV.p : '', mvWhen: MV ? MV.d.toUpperCase() : '', mvText: MV ? MV.txt : '',
+mvPos: MV ? (s.mv + 1) + ' / ' + T.moms.length : '',
+mvPhoto: 'position: relative; height: 280px; border-radius: 16px; overflow: hidden; touch-action: pan-y; cursor: grab; background: ' + (MV ? PH[MV.ph] : '#3A4838') + ';',
+mvDots: T ? T.moms.map(function (_, i) { return { style: 'width: ' + (i === s.mv ? 20 : 8) + 'px; height: 8px; border-radius: 999px; background: ' + (i === s.mv ? '#B9DE5C' : '#3A3F37') + ';' }; }) : [],
+mvNext: function () { self.setState({ mv: (s.mv + 1) % T.moms.length }); },
+mvPrev: function () { self.setState({ mv: (s.mv - 1 + T.moms.length) % T.moms.length }); },
+mvClose: function () { self.setState({ mv: -1 }); },
+swDown: function (e) { self.sx = e.clientX; },
+swUp: function (e) { if (self.sx == null) return; var dx = e.clientX - self.sx; self.sx = null; if (dx < -40) self.setState({ mv: (s.mv + 1) % T.moms.length }); else if (dx > 40) self.setState({ mv: (s.mv - 1 + T.moms.length) % T.moms.length }); },
+toastOn: !!s.toast, toast: s.toast,
+zoomIn: function () { if (z >= self.ZMAX - 0.01) { self.say("That's as close as the atlas goes. For street-level detail, open a trip diary."); return; } self.setState({ z: Math.min(self.ZMAX, +(z * 1.6).toFixed(3)) }); },
+zoomOut: function () { self.setState({ z: Math.max(self.ZMIN, +(z / 1.6).toFixed(3)) }); },
+fit: function () { self.setState(Object.assign({ open: -1 }, self.home)); },
+mDown: function (e) { if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} } self.pan = { sx: e.clientX, sy: e.clientY, cx: s.cx, cy: s.cy, moved: false }; },
+mMove: function (e) {
+if (!self.pan) return;
+if (Math.hypot(e.clientX - self.pan.sx, e.clientY - self.pan.sy) > 5) self.pan.moved = true;
+if (!self.pan.moved) return;
+var r = e.currentTarget.getBoundingClientRect(), sc = r.width / 390;
+self.setState({ cx: clamp(self.pan.cx - (e.clientX - self.pan.sx) / sc / ppu, 0, 360), cy: clamp(self.pan.cy - (e.clientY - self.pan.sy) / sc / ppu, 0, 180) });
+},
+mUp: function (e) {
+var p = self.pan; self.pan = null;
+if (!p || p.moved) return;
+var r = e.currentTarget.getBoundingClientRect(), sc = r.width / 390;
+var ux = vbx + (e.clientX - r.left) / sc / ppu, uy = vby + (e.clientY - r.top) / sc / ppu;
+var best = -1, bd = 22 / ppu;
+self.trips.forEach(function (t, i) { t.xy.forEach(function (q) { var d = Math.hypot(q[0] - ux, q[1] - uy); if (d < bd) { bd = d; best = i; } }); });
+if (best >= 0) self.openTrip(best); else if (s.open >= 0) self.setState({ open: -1 });
+},
+mLeave: function () { self.pan = null; }
+});
+}
+}
+</script>
+</body>
+</html>

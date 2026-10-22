@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Build from photos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 110px 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Create.dc.html" aria-label="Back" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="flex: 1; margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">Build from photos</h1>
+</div>
+<div style="display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 16px; background: var(--sf); border: 1px solid var(--act)">
+<span style="font-size: 22px; flex: none">✓</span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 700">10 photos → {{nDays}} days</span><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">Sorted by the date each photo was taken on your phone. AirDropped or saved photos can carry the wrong date: tap one to move it.</span></span>
+</div>
+
+<sc-for list="{{days}}" as="d" hint-placeholder-count="4">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--act); flex: none">DAY {{d.n}}</span>
+<input aria-label="Place for day {{d.n}}" value="{{d.place}}" placeholder="{{d.ph}}" style="flex: 1; min-width: 0; height: 36px; border-radius: 10px; border: 1px solid transparent; background: transparent; padding: 0 6px; font-family: inherit; font-size: 16px; font-weight: 700; color: var(--tx)">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu); flex: none">{{d.date}}</span>
+</div>
+<div style="display: flex; gap: 6px">
+<sc-for list="{{d.pics}}" as="p" hint-placeholder-count="3">
+<button type="button" onClick="{{p.tap}}" aria-label="Photo options" style="{{p.style}}"><span style="{{p.badge}}">★</span></button>
+</sc-for>
+</div>
+<sc-if value="{{d.hasSel}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 14px; background: var(--bg); border: 1px solid var(--ln)">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">{{d.selInfo}}</span>
+<button type="button" onClick="{{d.star}}" style="{{d.starStyle}}">{{d.starLabel}}</button>
+<span style="font-size: 12px; color: var(--mu)">Wrong day? Move to</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{d.moves}}" as="mv" hint-placeholder-count="5">
+<button type="button" onClick="{{mv.go}}" style="{{mv.style}}">{{mv.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{d.modes}}" as="m" hint-placeholder-count="4">
+<button type="button" onClick="{{m.pick}}" style="{{m.style}}">{{m.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+
+<button type="button" onClick="{{addDay}}" style="height: 48px; border-radius: 16px; border: 1px dashed var(--ln); background: transparent; color: var(--act); font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">+ Add a day</button>
+<div style="background: var(--sf); border: 1px dashed var(--warn); border-radius: 18px; padding: 12px 14px; display: flex; gap: 12px; align-items: center">
+<div style="width: 60px; height: 60px; border-radius: 12px; background: var(--ph4); flex: none"></div>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">1 photo has no location</span><span style="font-size: 12px; color: var(--mu)">Taken 14 Sep, 4:12pm. Drop a pin or skip it.</span></span>
+<a href="Live.dc.html" style="height: 36px; padding: 0 12px; border-radius: 999px; background: var(--sf2); color: var(--tx); text-decoration: none; display: flex; align-items: center; font-size: 13px; font-weight: 700; flex: none">Pin it</a>
+</div>
+<span style="font-size: 12px; line-height: 1.45; color: var(--mu)">Tap a photo to make it a moment or move it to another day. Photos that aren't moments stay private and only help place the day.</span>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 24px 16px; background: var(--bg); border-top: 1px solid var(--ln)">
+<a href="LivePhotos.dc.html" style="height: 50px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">Build {{nDays}} days · {{nMom}} moments</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1340}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { days: [['Sa Pa', '12 SEP', 'Bus'], ['Cat Cat village', '13 SEP', 'Walk'], ['Bac Ha market', '14 SEP', 'Moto'], ['Lao Cai → Hanoi', '15 SEP', 'Train']], sel: 'p5', mode: {}, pics: [ { id: 'p1', ph: 'ph1', day: 0, star: true, taken: '12 SEP · 8:02AM' }, { id: 'p2', ph: 'ph3', day: 0, star: false, taken: '12 SEP · 1:15PM' }, { id: 'p3', ph: 'ph2', day: 0, star: false, taken: '12 SEP · 6:40PM' }, { id: 'p4', ph: 'ph2', day: 1, star: false, taken: '13 SEP · 9:30AM' }, { id: 'p5', ph: 'ph4', day: 1, star: false, taken: '20 SEP · 11:02PM · SAVED DATE, MAYBE AIRDROPPED' }, { id: 'p6', ph: 'ph4', day: 2, star: true, taken: '14 SEP · 7:05AM' }, { id: 'p7', ph: 'ph2', day: 2, star: false, taken: '14 SEP · 10:20AM' }, { id: 'p8', ph: 'ph3', day: 2, star: true, taken: '14 SEP · 3:48PM' }, { id: 'p9', ph: 'ph3', day: 3, star: false, taken: '15 SEP · 9:00AM' } ] }; }
+renderVals() {
+var self = this;
+var s = this.state;
+var P = this.props;
+function chip(on) { return 'min-height: 40px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'); }
+var V = {};
+
+var D = s.days;
+var nMom = s.pics.filter(function (p) { return p.star; }).length;
+V.days = D.map(function (d, i) {
+var mode = s.mode[i] || d[2];
+var mine = s.pics.filter(function (p) { return p.day === i; });
+var sel = s.pics.filter(function (p) { return p.id === s.sel && p.day === i; })[0];
+function upd(id, ch) { self.setState({ pics: s.pics.map(function (p) { return p.id === id ? Object.assign({}, p, ch) : p; }) }); }
+return { n: i + 1, place: d[0], date: d[1], ph: d[0] ? '' : 'Where were you?', empty: mine.length === 0,
+pics: mine.map(function (p) { var on = p.star, picked = s.sel === p.id; return {
+style: 'position: relative; width: 74px; height: 74px; border-radius: 12px; border: ' + (picked ? '3px solid var(--tx)' : on ? '2px solid var(--ac)' : '1px solid var(--ln)') + '; background: var(--' + p.ph + '); padding: 0; cursor: pointer; box-sizing: border-box;',
+badge: 'position: absolute; top: 5px; right: 5px; width: 22px; height: 22px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 12px; ' + (on ? 'background: var(--ac); color: var(--on);' : 'background: var(--scrim); color: var(--mu);'),
+tap: function () { self.setState({ sel: picked ? null : p.id }); } }; }),
+hasSel: !!sel,
+selInfo: sel ? 'TAKEN ' + sel.taken : '',
+starLabel: sel && sel.star ? '★ Moment · tap to undo' : '☆ Make it a moment',
+starStyle: 'height: 36px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; ' + (sel && sel.star ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: transparent; color: var(--tx);'),
+star: function () { if (sel) upd(sel.id, { star: !sel.star }); },
+moves: D.map(function (_, j) { return j; }).concat(['new']).map(function (j) { var isNew = j === 'new', here = j === i; return { label: isNew ? '+ New day' : 'Day ' + (j + 1), go: function () { if (!sel) return; if (isNew) { self.setState({ days: D.concat([['', 'NEW', 'Stayed put']]), pics: s.pics.map(function (p) { return p.id === sel.id ? Object.assign({}, p, { day: D.length }) : p; }) }); } else if (!here) upd(sel.id, { day: j }); }, style: 'flex: none; height: 34px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; ' + (isNew ? 'border: 1px dashed var(--act); background: transparent; color: var(--act);' : here ? 'border: 1px solid var(--ln); background: var(--sf2); color: var(--mu);' : 'border: 1px solid var(--ln); background: transparent; color: var(--tx);') }; }),
+modes: ['Stayed put', 'Walk', 'Bus', 'Moto', 'Train'].map(function (m) { return { label: m, pick: function () { var mm = Object.assign({}, s.mode); mm[i] = m; self.setState({ mode: mm }); }, style: 'height: 30px; padding: 0 10px; border-radius: 999px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; ' + (mode === m ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: transparent; color: var(--mu);') }; }) };
+});
+V.nMom = nMom; V.nDays = D.length;
+V.addDay = function () { self.setState({ days: D.concat([['', 'NEW', 'Stayed put']]) }); };
+
+V.rootStyle = 'width: 390px; height: 1340px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); --bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --warn: #F0B45A; --danger: #F08A7E; --map: #253126; --cnt: #34453A; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000;';
+return V;
+}
+}
+</script>
+</body>
+</html>

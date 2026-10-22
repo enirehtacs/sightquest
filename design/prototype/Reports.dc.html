@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Updates</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 110px 16px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Route.dc.html" aria-label="Back to route" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="flex: 1; margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">Updates</h1>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--mu)">Ha Giang, the long way · what it's like right now, from people who just went. Newest first.</p>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">{{g.title}}</span>
+<sc-for list="{{g.items}}" as="r" hint-placeholder-count="2">
+<div style="{{r.card}}">
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<span style="{{r.iconStyle}}">{{r.icon}}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700; line-height: 1.3">{{r.title}}</span>
+<span style="font-size: 13px; color: var(--mu)">{{r.place}} · {{r.status}}</span>
+</div>
+</div>
+<span style="font-size: 14px; line-height: 1.45">{{r.note}}</span>
+<sc-if value="{{r.hasPhoto}}" hint-placeholder-val="{{ false }}"><div style="height: 120px; border-radius: 12px; background: var(--ph1)"></div></sc-if>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">{{r.meta}}</span>
+<sc-if value="{{r.open}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 8px">
+<button type="button" onClick="{{r.yes}}" style="{{r.yesStyle}}">Still true · {{r.n}}</button>
+<button type="button" onClick="{{r.fixed}}" style="flex: 1; height: 40px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">It's sorted</button>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 24px 16px; background: var(--bg); border-top: 1px solid var(--ln)">
+<a href="Report.dc.html" style="height: 50px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">+ Post an update</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1640}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { conf: {} }; }
+renderVals() {
+var self = this;
+var s = this.state;
+var P = this.props;
+function chip(on) { return 'min-height: 40px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'); }
+var V = {};
+
+var RS = [
+['good', '✓', 'Ma Pi Leng at 7am still empty', 'Ma Pi Leng Pass · Day 3', 'All good', 'Went last week, had the skywalk to ourselves till 8. Creator was right.', '8 OCT · @kellykayaks', 9, false],
+['good', '✓', 'Auntie Hoa\'s homestay still the best', 'Lung Cu · Day 8', 'All good', 'Same price as the route says. She still gives directions to the ridge path.', '5 OCT · @jun.walks', 3, false],
+['open', '⛰', 'Landslide near Ma Pi Leng', 'Ma Pi Leng Pass · Day 3', 'One lane open', 'Landslide after heavy rain. Workers say about 2 weeks. Go early, queues build after 9am.', '3 OCT · @saltandsole', 4, true],
+['open', '$', 'Boat price went up', 'Nho Que boat pier · Day 6', 'Still running', 'Now 150k VND per person, was 100k. Still worth it.', '28 SEP · @jun.walks', 2, false],
+['open', '⏸', 'Homestay closed for renovation', 'Du Gia · Day 7', 'Closed until Dec', 'Lam\'s homestay is closed. The one next to the waterfall path took us in.', '20 SEP · @maya.goes', 1, false],
+['done', '⚠', 'Road works past Meo Vac', 'Meo Vac · Day 5', 'Sorted', 'Detour via Khau Vai, about 2h extra.', 'AUG · SORTED, CONFIRMED BY 6', 0, false]
+];
+function item(r, i) { var open = r[0] !== 'done'; var good = r[0] === 'good'; var c = !!s.conf[i]; return {
+icon: r[1], title: r[2], place: r[3], status: r[4], note: r[5], meta: r[6], hasPhoto: r[8], open: open, n: r[7] + (c ? 1 : 0),
+card: 'background: var(--sf); border: 1px solid ' + (good ? 'rgba(185,222,92,.4)' : open ? 'rgba(240,180,90,.45)' : 'var(--ln)') + '; border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; opacity: ' + (open ? 1 : 0.6) + ';',
+iconStyle: 'width: 32px; height: 32px; border-radius: 10px; flex: none; display: flex; align-items: center; justify-content: center; font-size: 15px; ' + (good ? 'background: rgba(185,222,92,.15); color: var(--act);' : open ? 'background: rgba(240,180,90,.18); color: var(--warn);' : 'background: var(--sf2); color: var(--mu);'),
+yesStyle: 'flex: 1; height: 40px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; ' + (c ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: transparent; color: var(--tx);'),
+yes: function () { var x = Object.assign({}, s.conf); x[i] = !c; self.setState({ conf: x }); }, fixed: function () {} }; }
+V.groups = [{ title: 'HEADS UP · 3', items: [2, 3, 4].map(function (i) { return item(RS[i], i); }) }, { title: 'ALL GOOD · 2', items: [0, 1].map(function (i) { return item(RS[i], i); }) }, { title: 'SORTED', items: [item(RS[5], 5)] }];
+
+V.rootStyle = 'width: 390px; height: 1640px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); --bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --warn: #F0B45A; --danger: #F08A7E; --map: #253126; --cnt: #34453A; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000;';
+return V;
+}
+}
+</script>
+</body>
+</html>

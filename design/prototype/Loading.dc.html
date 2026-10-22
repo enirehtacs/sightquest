@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Loading</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="position: absolute; top: 150px; left: 55px; width: 280px; height: 280px">
+<svg viewBox="-20 -20 300 300" width="280" height="280" overflow="visible" role="img" aria-label="Spinning globe">
+<circle cx="130" cy="130" r="126" fill="none" stroke-width="20" style="stroke: var(--rt); opacity: 0.07"></circle>
+<circle cx="130" cy="130" r="110" style="fill: var(--globe)"></circle>
+<path d="{{grat}}" fill="none" stroke-width="0.7" style="stroke: var(--grat)"></path>
+<path d="{{contours}}" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt); opacity: 0.08"></path>
+<path d="{{contours}}" fill="none" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt); opacity: 0.55"></path>
+<path d="{{cores}}" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt); opacity: 0.18"></path>
+<path d="{{cores}}" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></path>
+<circle cx="130" cy="130" r="110" fill="none" stroke-width="1.4" style="stroke: var(--rt); opacity: 0.45"></circle>
+<circle cx="130" cy="130" r="122" fill="none" stroke-width="3" stroke-linecap="round" pathLength="100" stroke-dasharray="{{ring}}" transform="rotate(-90 130 130)" style="stroke: var(--rt)"></circle>
+</svg>
+</div>
+
+<div style="position: absolute; top: 470px; left: 16px; right: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center">
+<h1 style="margin: 0; font-size: 24px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">{{title}}</h1>
+<p aria-live="polite" style="margin: 0; font-size: 15px; line-height: 1.45; color: var(--mu)">{{step}}</p>
+<div style="margin-top: 6px; display: flex; gap: 6px">
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="4">
+<span style="{{d.style}}"></span>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{working}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 16px; right: 16px; bottom: 36px; background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start">
+<span style="flex: none; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--act); padding-top: 3px">FROM THE ROAD</span>
+<span style="font-size: 14px; line-height: 1.45; color: var(--mu)">{{tip}}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{finished}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 16px; right: 16px; bottom: 36px; display: flex; flex-direction: column; gap: 10px">
+<a href="{{doneHref}}" style="height: 48px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">{{doneCta}}</a>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"kind":{"editor":"enum","options":["post","atlas","reel"],"default":"post"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { a: 0.6, t: 0 };
+var Q = [
+'Get lost on purpose. Someone here will help you find your way back.',
+'The bus leaves when it is full, not when it is scheduled. Breathe.',
+'Every wrong turn is a route nobody has posted yet.',
+'Your sketchiest night bus is someone else\'s favourite story.',
+'Pack light. Wander far. Report back.',
+'Leave a fresh check when you can. The next person is counting on it.',
+'No map? Good. Ask the auntie.',
+'Somewhere out there, a goat is judging your hiking boots.',
+'Share the shortcut. Keep the sunset.',
+'Be the traveller you needed on day one.',
+'Mild chaos is still a plan.',
+'The best directions come with a hand-drawn map and a wink.',
+'Strangers on the road are just friends who haven\'t shared snacks yet.',
+'You don\'t need a reason to go. You just need a bag.'
+];
+this.quote = Q[Math.floor(Math.random() * Q.length)];
+var D = Math.PI / 180;
+var journeys = [[-170, 20, 170, 14, 2.2, 0.3], [-60, -22, 160, 12, 2.8, 1.1], [40, 38, 150, 9, 2.4, 2.4], [120, -36, 170, 15, 1.8, 0.7], [-125, 56, 130, 7, 3.2, 1.9]];
+var lines = [], cores = [];
+function rough(u, k, ph) { return 0.9 * Math.sin(23 * u * Math.PI + ph + k) + 0.6 * Math.sin(41 * u * Math.PI + ph * 3 + k * 2) + 0.35 * Math.sin(67 * u * Math.PI + k * 5); }
+journeys.forEach(function (j) {
+var N = 100;
+function cl(u) { return [j[1] + j[3] * Math.sin(j[4] * u * Math.PI + j[5]) + 3.5 * Math.sin(6 * u * Math.PI + j[5] * 2) + 1.2 * Math.sin(15 * u * Math.PI + j[5]), j[0] + j[2] * u]; }
+var core = [];
+for (var k = 0; k <= N; k++) { var u = k / N; var c = cl(u); core.push([(c[0] + 0.5 * rough(u, 9, j[5])) * D, c[1] * D]); }
+cores.push(core);
+[3, 6, 9, 12].forEach(function (r, ri) {
+function w(u) { return r * (0.55 + 0.45 * Math.sin(Math.PI * u)) * (1 + 0.25 * Math.sin(4 * u * Math.PI + ri + j[5])); }
+var loop = [], k1, u1, c1;
+for (k1 = 0; k1 <= N; k1++) { u1 = k1 / N; c1 = cl(u1); loop.push([(c1[0] + w(u1) + 0.55 * rough(u1, ri, j[5])) * D, c1[1] * D]); }
+var ce = cl(1), we = w(1);
+for (var a = 1; a < 12; a++) { var th = Math.PI / 2 - a * Math.PI / 12; loop.push([(ce[0] + we * Math.sin(th)) * D, (ce[1] + we * 0.9 * Math.cos(th)) * D]); }
+for (k1 = N; k1 >= 0; k1--) { u1 = k1 / N; c1 = cl(u1); loop.push([(c1[0] - w(u1) + 0.55 * rough(u1, ri + 3, j[5])) * D, c1[1] * D]); }
+var cs = cl(0), ws = w(0);
+for (var b = 1; b <= 12; b++) { var th2 = -Math.PI / 2 - b * Math.PI / 12; loop.push([(cs[0] + ws * Math.sin(th2)) * D, (cs[1] + ws * 0.9 * Math.cos(th2)) * D]); }
+lines.push(loop);
+});
+});
+var grat = [];
+for (var la = -60; la <= 60; la += 30) { var p = []; for (var lo = 0; lo <= 360; lo += 8) p.push([la * D, lo * D]); grat.push(p); }
+for (var lo2 = 0; lo2 < 180; lo2 += 30) { var q = []; for (var g = 0; g <= 360; g += 8) q.push([Math.asin(Math.sin(g * D)), lo2 * D + (Math.cos(g * D) < 0 ? Math.PI : 0)]); grat.push(q); }
+this.lines = lines; this.cores = cores; this.gratLines = grat;
+}
+componentDidMount() {
+var self = this, last = 0;
+function tick(now) {
+if (now - last > 33) {
+var dt = last ? Math.min(now - last, 100) : 33;
+last = now;
+self.setState({ a: (self.state.a + dt * 0.0006) % (Math.PI * 2), t: Math.min(1, self.state.t + dt / 6000) });
+}
+self.raf = requestAnimationFrame(tick);
+}
+this.raf = requestAnimationFrame(tick);
+}
+componentWillUnmount() { cancelAnimationFrame(this.raf); }
+path(lines) {
+var a = this.state.a, tilt = 0.38, R = 110, c = 130;
+var ct = Math.cos(tilt), st = Math.sin(tilt), out = '';
+lines.forEach(function (pts) {
+var pen = false;
+pts.forEach(function (p) {
+var lam = p[1] + a;
+var x = Math.cos(p[0]) * Math.sin(lam), y0 = Math.sin(p[0]), z0 = Math.cos(p[0]) * Math.cos(lam);
+var y = y0 * ct - z0 * st, z = y0 * st + z0 * ct;
+if (z > 0) { out += (pen ? 'L' : 'M') + (c + R * x).toFixed(1) + ' ' + (c - R * y).toFixed(1); pen = true; } else { pen = false; }
+});
+});
+return out || 'M0 0';
+}
+renderVals() {
+var self = this;
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --rt: #B9DE5C; --globe: #182019; --grat: #2A3529; --dot: #31362F;',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212; --rt: #5E8A0F; --globe: #E6EDDD; --grat: #CBD6C0; --dot: #DCDBD2;'
+};
+var K = {
+post: { title: 'Posting Day 13', steps: ['Uploading 6 moments…', 'Tagging Hue on your map…', 'Updating your live route…', 'Letting your followers know…'], doneTitle: 'Day 13 is up', doneStep: 'Shared with followers on a 24h delay.', cta: 'View updated route', href: 'Live.dc.html', tip: 'Add a one-line tip to every leg. It is the bit people actually use.' },
+atlas: { title: 'Adding to your atlas', steps: ['Saving your route…', 'Drawing your line…', 'Counting countries…', 'Polishing your profile…'], doneTitle: 'Route complete', doneStep: 'Vietnam, south to north is now on your atlas.', cta: 'See your atlas', href: 'Profile.dc.html', tip: 'Completed routes show up in search, so other travellers can find them.' },
+reel: { title: 'Making your reel', steps: ['Pulling your moments…', 'Drawing the route…', 'Timing it to the beat…', 'Exporting for stories…'], doneTitle: 'Your reel is ready', doneStep: 'Saved to your phone. Share it anywhere.', cta: 'Back to sharing', href: 'Share.dc.html', tip: 'Reels with 6 to 10 moments feel the snappiest.' }
+};
+var k = K[this.props.kind] || K.post;
+var t = this.state.t;
+var fin = t >= 1;
+var idx = Math.min(3, Math.floor(t * 4));
+var dots = [0, 1, 2, 3].map(function (i) {
+var on = fin || i <= idx;
+return { style: 'width: ' + (i === idx && !fin ? 22 : 8) + 'px; height: 8px; border-radius: 999px; background: ' + (on ? 'var(--rt)' : 'var(--dot)') + ';' };
+});
+var theme = this.props.theme === 'light' ? 'light' : 'dark';
+return {
+rootStyle: 'width: 390px; height: 844px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[theme],
+grat: this.path(this.gratLines),
+contours: this.path(this.lines),
+cores: this.path(this.cores),
+ring: (fin ? 100 : Math.round(t * 100)) + ' 100',
+title: fin ? k.doneTitle : k.title,
+step: fin ? k.doneStep : k.steps[idx],
+dots: dots,
+working: !fin,
+finished: fin,
+tip: this.quote,
+doneHref: k.href,
+doneCta: k.cta
+};
+}
+}
+</script>
+</body>
+</html>

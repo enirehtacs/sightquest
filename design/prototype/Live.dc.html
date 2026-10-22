@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Live route</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="{{mapBoxStyle}}">
+<div onPointerDown="{{mDown}}" onPointerMove="{{mMove}}" onPointerUp="{{mUp}}" onPointerLeave="{{mUp}}" style="position: absolute; inset: 0; touch-action: none; cursor: grab">
+<svg width="390" height="{{mapH}}" viewBox="{{vb}}" preserveAspectRatio="xMidYMid slice" style="display: block; pointer-events: none"><rect x="-300" y="-300" width="1000" height="1000" style="fill: var(--nb)"></rect><path d="{{seaPath}}" style="fill: var(--sea)"></path><path d="{{vnPath}}" stroke-width="{{swB}}" stroke-linejoin="round" style="fill: var(--land); stroke: var(--bd)"></path><text x="150" y="-2" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">CHINA</text><text x="140" y="120" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">LAOS</text><text x="80" y="190" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">THAILAND</text><text x="176" y="236" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">CAMBODIA</text><text x="330" y="170" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">EAST SEA</text><text x="258" y="64" font-size="{{fsR}}" font-family="JetBrains Mono, monospace" font-weight="600" letter-spacing="2" text-anchor="middle" style="fill: var(--mu); opacity: 0.75">GULF OF TONKIN</text><polyline points="{{ahead}}" fill="none" stroke-width="{{sw3}}" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="{{dash}}" style="stroke: var(--mu)"></polyline><path d="{{tripPath}}" fill="none" stroke-width="{{sw3}}" stroke-linecap="round" stroke-dasharray="{{dash}}" style="stroke: var(--rt)"></path><polyline points="{{trailPts}}" fill="none" stroke-width="{{sw4}}" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><circle cx="160" cy="48" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="160" y="48" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{majorOp}}">Hanoi</text><circle cx="222" cy="106" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="222" y="106" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{majorOp}}">Hue</text><circle cx="244" cy="118" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="244" y="118" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{majorOp}}">Da Nang</text><circle cx="220" cy="282" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="220" y="282" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{majorOp}}">Ho Chi Minh City</text><circle cx="276" cy="206" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="276" y="206" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{majorOp}}">Nha Trang</text><circle cx="240" cy="238" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="240" y="238" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{minorOp}}">Da Lat</text><circle cx="168" cy="62" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="168" y="62" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{minorOp}}">Ninh Binh</text><circle cx="150" cy="26" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="150" y="26" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{minorOp}}">Ha Giang</text><circle cx="124" cy="30" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="124" y="30" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{minorOp}}">Sapa</text><circle cx="196" cy="86" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="196" y="86" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{minorOp}}">Phong Nha</text><circle cx="272" cy="166" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="272" y="166" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{minorOp}}">Quy Nhon</text><circle cx="262" cy="262" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="262" y="262" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{minorOp}}">Mui Ne</text><circle cx="196" cy="44" r="{{rDot}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><text x="196" y="44" dx="{{lblDx}}" dy="{{lblDy}}" font-size="{{fsC}}" font-family="Archivo, sans-serif" font-weight="600" style="fill: var(--tx); opacity: {{minorOp}}">Ha Long Bay</text><path d="{{tripDots}}" stroke-width="{{swDot}}" style="fill: var(--rt); stroke: var(--ring)"></path><circle cx="220" cy="282" r="{{r5}}" stroke-width="{{swDot}}" style="fill: var(--tx); stroke: var(--ring)"></circle><circle cx="{{curX}}" cy="{{curY}}" r="{{r16}}" style="fill: var(--rt); opacity: 0.25"></circle><circle cx="{{curX}}" cy="{{curY}}" r="{{r8}}" stroke-width="{{sw3}}" style="fill: var(--rt); stroke: var(--ring)"></circle><text x="{{curX}}" y="{{curY}}" dx="{{curDx}}" dy="{{curDy}}" font-size="{{fsCur}}" font-family="Archivo, sans-serif" font-weight="800" text-anchor="end" style="fill: var(--tx)">{{here}}</text></svg>
+</div>
+<a href="Main.dc.html" aria-label="Back" style="position: absolute; top: 14px; left: 14px; width: 44px; height: 44px; border-radius: 999px; background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<span style="{{badgeStyle}}">{{badge}}</span>
+<div style="position: absolute; right: 14px; bottom: 40px; display: flex; flex-direction: column; gap: 8px">
+<button type="button" aria-label="Zoom in" onClick="{{zoomIn}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+<button type="button" aria-label="Zoom out" onClick="{{zoomOut}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--tx); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path></svg></button>
+<button type="button" aria-label="Centre on where I am" onClick="{{locate}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--ln); background: var(--scrim); color: var(--act); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg></button>
+</div>
+</div>
+
+<div style="{{sheetStyle}}">
+<button type="button" aria-label="Drag to resize the map" onPointerDown="{{hDown}}" onPointerMove="{{hMove}}" onPointerUp="{{hUp}}" style="align-self: stretch; height: 30px; margin: -14px 0 -10px 0; border: 0; background: transparent; cursor: ns-resize; touch-action: none; display: flex; align-items: center; justify-content: center"><span style="width: 44px; height: 5px; border-radius: 999px; background: var(--mu); opacity: 0.6"></span></button>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">{{title}}</h1>
+<div style="font-size: 15px; color: var(--mu)">{{subline}}</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="width: 36px; height: 36px; border-radius: 999px; background: var(--ph1)"></div>
+<div style="flex: 1"><div style="font-size: 15px; font-weight: 700">{{who}}</div><div style="font-size: 13px; color: var(--mu)">{{lastUpdate}}</div></div>
+<sc-if value="{{isOwner}}" hint-placeholder-val="{{ true }}">
+<a href="Share.dc.html" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"></path><path d="M5 12v8h14v-8"></path></svg>Share</a>
+</sc-if>
+<sc-if value="{{isFollower}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{toggleFollow}}" style="{{followStyle}}">{{followLabel}}</button>
+</sc-if>
+</div>
+
+<sc-if value="{{collab}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 14px; background: var(--sf); border: 1px solid var(--ln)">
+<span style="display: flex; flex: none"><span style="width: 26px; height: 26px; border-radius: 999px; background: var(--ph1); border: 2px solid var(--bg)"></span><span style="width: 26px; height: 26px; border-radius: 999px; background: var(--ph2); border: 2px solid var(--bg); margin-left: -8px"></span></span>
+<span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.35; color: var(--mu)"><b style="color: var(--tx)">Built with @maya.goes</b> · either of you can add days</span>
+<sc-if value="{{isOwner}}" hint-placeholder-val="{{ true }}"><a href="Create.dc.html" style="font-size: 13px; font-weight: 700; color: var(--act); flex: none">Manage</a></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{offline}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; background: var(--sf2); border: 1px dashed var(--mu)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex: none; color: var(--mu); margin-top: 1px"><path d="M2 8.5a15 15 0 0120 0M5 12a10 10 0 0114 0M8.5 15.5a5 5 0 017 0"></path><path d="M3 3l18 18"></path></svg>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">No signal, keep building</span><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">Days, photos and pins save to your phone. They post by themselves when you're back online.</span></span>
+</div>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 8px; border-radius: 999px; background: var(--sf2); overflow: hidden"><div style="{{barStyle}}"></div></div>
+<div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)"><span>{{dayCount}}</span><span>{{stopCount}}</span></div>
+</div>
+
+<sc-if value="{{showVis}}" hint-placeholder-val="{{ true }}">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 20px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"></path></svg><span style="font-size: 16px; font-weight: 700">Who can follow along live?</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{visOpts}}" as="v" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{v.pressed}}" onClick="{{v.pick}}" style="{{v.style}}">{{v.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 14px; line-height: 1.45; color: var(--mu)">{{visNote}}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{canAdd}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{openAdd}}" style="width: 100%; height: 50px; border-radius: 999px; border: 0; background: var(--ac); color: var(--on); font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Add next day</button>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 18px; overflow: hidden">
+<div style="padding: 12px 14px 10px 14px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 15px; font-weight: 700">Finish your route</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--act)">2 OF 4 DONE</span></div>
+<div style="height: 6px; border-radius: 999px; background: var(--sf2); overflow: hidden"><div style="width: 50%; height: 100%; background: var(--ac)"></div></div>
+</div>
+<sc-for list="{{finish}}" as="fi" hint-placeholder-count="4">
+<a href="{{fi.href}}" style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; border-top: 1px solid var(--ln); color: var(--tx); text-decoration: none">
+<span style="{{fi.dot}}">{{fi.mark}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 15px; font-weight: 600">{{fi.label}}</span><span style="font-size: 12px; color: var(--mu)">{{fi.sub}}</span></span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--mu); flex: none"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{adding}}" hint-placeholder-val="{{ false }}">
+<div style="background: var(--sf); border: 1px solid var(--act); border-radius: 20px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 16px; font-weight: 700">Day {{pickDay}}</span><span style="font-size: 14px; color: var(--mu)">starting in {{here}}</span></div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">WHICH DATE?</span>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+<sc-for list="{{dates}}" as="d" hint-placeholder-count="7">
+<button type="button" aria-pressed="{{d.pressed}}" aria-label="{{d.aria}}" disabled="{{d.disabled}}" onClick="{{d.pick}}" style="{{d.style}}"><span style="font-size: 10px; font-family: 'JetBrains Mono', monospace">{{d.dow}}</span><span style="font-size: 16px; font-weight: 700">{{d.num}}</span></button>
+</sc-for>
+</div>
+<span style="font-size: 13px; color: var(--mu)">Only you see exact dates. Others see Day {{pickDay}} and the month you went.</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">WEATHER</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{wxOpts}}" as="w" hint-placeholder-count="7">
+<button type="button" aria-pressed="{{w.pressed}}" onClick="{{w.pick}}" style="{{w.style}}">{{w.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">HOW DID THE DAY GO?</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{modes}}" as="m" hint-placeholder-count="6">
+<button type="button" aria-pressed="{{m.pressed}}" onClick="{{m.pick}}" style="{{m.style}}">{{m.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{moving}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="to" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">{{whereLabel}}</label>
+<div style="display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg)">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--act); flex: none"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+<input id="to" role="combobox" aria-expanded="{{listOpen}}" aria-controls="place-list" autocomplete="off" value="{{query}}" onChange="{{onQuery}}" placeholder="Town, beach, trailhead…" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-family: inherit; font-size: 16px; color: var(--tx)">
+<sc-if value="{{hasDest}}" hint-placeholder-val="{{ false }}"><span style="flex: none; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--act)">{{destTag}}</span></sc-if>
+</div>
+
+<sc-if value="{{showList}}" hint-placeholder-val="{{ false }}">
+<div id="place-list" role="listbox" style="display: flex; flex-direction: column; border: 1px solid var(--ln); border-radius: 14px; overflow: hidden; background: var(--bg)">
+<sc-for list="{{matches}}" as="p" hint-placeholder-count="3">
+<button type="button" role="option" onClick="{{p.pick}}" style="display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 8px 14px; border: 0; border-bottom: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; text-align: left; cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; color: var(--mu)"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+<span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">{{p.n}}</span><span style="font-size: 13px; color: var(--mu)">{{p.r}}</span></span>
+</button>
+</sc-for>
+<button type="button" onClick="{{startPin}}" style="display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 8px 14px; border: 0; background: var(--sf2); color: var(--tx); font-family: inherit; text-align: left; cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="flex: none; color: var(--act)"><path d="M12 5v14M5 12h14"></path></svg>
+<span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">Not listed? Drop a pin</span><span style="font-size: 13px; color: var(--mu)">For off-the-map spots: drag the map to place “{{query}}”</span></span>
+</button>
+</div>
+</sc-if>
+
+<sc-if value="{{showMini}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div onPointerDown="{{pDown}}" onPointerMove="{{pMove}}" onPointerUp="{{pUp}}" onPointerLeave="{{pUp}}" style="{{miniStyle}}">
+<svg viewBox="60 0 270 330" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display: block; pointer-events: none"><rect x="-300" y="-300" width="1000" height="1000" style="fill: var(--nb)"></rect><path d="{{seaPath}}" style="fill: var(--sea)"></path><path d="{{vnPath}}" stroke-width="1" stroke-linejoin="round" style="fill: var(--land); stroke: var(--bd)"></path><polyline points="{{trailPts}}" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><line x1="{{curX}}" y1="{{curY}}" x2="{{destX}}" y2="{{destY}}" stroke-width="2.5" stroke-dasharray="3 5" stroke-linecap="round" style="stroke: var(--tx)"></line><circle cx="{{curX}}" cy="{{curY}}" r="6" stroke-width="2" style="fill: var(--rt); stroke: var(--ring)"></circle><path d="{{pinPath}}" stroke-width="2" style="fill: var(--ac); stroke: var(--on)"></path><circle cx="{{destX}}" cy="{{pinDotY}}" r="3.5" style="fill: var(--on)"></circle><text x="{{destLabelX}}" y="{{destLabelY}}" font-family="Archivo, sans-serif" font-size="12" font-weight="700" style="fill: var(--tx)">{{destName}}</text></svg>
+</div>
+<sc-if value="{{pinning}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 10px; align-items: center">
+<span style="flex: 1; font-size: 13px; line-height: 1.4; color: var(--mu)">Tap or drag on the map to move the pin.</span>
+<button type="button" onClick="{{confirmPin}}" style="height: 44px; padding: 0 14px; border-radius: 999px; border: 0; background: var(--tx); color: var(--bg); font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">Pin it here</button>
+</div>
+</sc-if>
+<sc-if value="{{hasDest}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 13px; color: var(--mu)">{{destNote}}</span>
+</sc-if>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="tip" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">ONE-LINE NOTE</label>
+<input id="tip" placeholder="{{notePlaceholder}}" style="height: 48px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg); padding: 0 14px; font-family: inherit; font-size: 15px; color: var(--tx)">
+</div>
+
+<div style="display: flex; gap: 10px">
+<button type="button" onClick="{{closeAdd}}" style="flex: 1; height: 46px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Cancel</button>
+<button type="button" onClick="{{saveDay}}" disabled="{{saveDisabled}}" style="{{saveStyle}}">Save day {{pickDay}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+<div style="background: var(--sf); border: 1px solid var(--act); border-radius: 20px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 16px; font-weight: 700">Route complete</div>
+<div style="font-size: 15px; line-height: 1.45; color: var(--mu)">{{doneNote}}</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 15px; font-weight: 700">How pricey was the trip?</span><span style="font-size: 14px; font-weight: 700; color: var(--act)">{{priceName}}</span></div>
+<div role="radiogroup" aria-label="Price level" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{priceOpts}}" as="p" hint-placeholder-count="5">
+<button type="button" role="radio" aria-checked="{{p.checked}}" aria-label="{{p.aria}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 13px; color: var(--mu)">Shown as a price level, never what you actually spent.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 15px; font-weight: 700">How much effort was it?</span><span style="font-size: 14px; font-weight: 700; color: var(--act)">{{effName}}</span></div>
+<div role="radiogroup" aria-label="Effort" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{effOpts}}" as="p" hint-placeholder-count="5">
+<button type="button" role="radio" aria-checked="{{p.checked}}" aria-label="{{p.aria}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 700">Did this solo as a woman?</span><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">Optional, only asked to women on Sightquest. Adds to the route's SOWO score.</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{soloOpts}}" as="o" hint-placeholder-count="4">
+<button type="button" onClick="{{o.pick}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+<a href="Share.dc.html" style="height: 46px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">Share it as an image or reel</a>
+</div>
+</sc-if>
+</div>
+
+<div style="padding: 16px 16px 0 16px">
+<h2 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700">Day by day</h2>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{log}}" as="d" hint-placeholder-count="4">
+<div style="display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--ln)">
+<div style="flex: none; width: 44px; display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">DAY</span><span style="font-size: 16px; font-weight: 700">{{d.day}}</span></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{d.route}}</span><span style="flex: none; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--sf2); color: var(--act); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; display: flex; align-items: center">{{d.mode}}</span></div>
+<sc-if value="{{d.hasPics}}" hint-placeholder-val="{{ false }}"><div style="display: flex; gap: 6px; padding: 2px 0">
+<sc-for list="{{d.pics}}" as="pc" hint-placeholder-count="3"><span style="{{pc.style}}"><span style="{{pc.star}}">★</span></span></sc-for>
+</div></sc-if>
+<sc-if value="{{d.ask}}" hint-placeholder-val="{{ false }}"><textarea aria-label="Describe day {{d.day}}" rows="2" placeholder="What was it like? Your moments are right above." style="border-radius: 12px; border: 1px solid var(--act); background: var(--sf); padding: 10px 12px; font-family: inherit; font-size: 14px; line-height: 1.4; color: var(--tx); resize: none"></textarea></sc-if>
+<sc-if value="{{d.hasNote}}" hint-placeholder-val="{{ true }}"><div style="font-size: 14px; line-height: 1.4; color: var(--mu)">{{d.note}}</div></sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--ln); color: var(--mu); font-size: 12px; font-weight: 600; display: flex; align-items: center">{{d.wx}}</span><sc-if value="{{d.sync}}" hint-placeholder-val="{{ false }}"><span style="height: 28px; padding: 0 10px; border-radius: 999px; background: var(--sf2); color: var(--mu); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; display: flex; align-items: center">⟳ SAVED ON PHONE</span></sc-if><sc-if value="{{d.byMaya}}" hint-placeholder-val="{{ false }}"><span style="height: 28px; padding: 0 10px; border-radius: 999px; background: var(--sf2); color: var(--tx); font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 14px; border-radius: 999px; background: var(--ph2)"></span>Maya</span></sc-if>
+<sc-if value="{{d.hasPost}}" hint-placeholder-val="{{ false }}"><span style="height: 28px; padding: 0 10px; border-radius: 999px; background: var(--sf2); color: var(--tx); font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 5px"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg>{{d.post}}</span></sc-if>
+<sc-if value="{{d.owner}}" hint-placeholder-val="{{ true }}"><a href="DayMoment.dc.html" style="height: 28px; padding: 0 10px; border-radius: 999px; background: var(--sf2); color: var(--act); text-decoration: none; font-size: 12px; font-weight: 700; display: flex; align-items: center">+ Moment</a></sc-if>
+<sc-if value="{{d.owner}}" hint-placeholder-val="{{ true }}"><a href="Pro.dc.html" style="height: 28px; padding: 0 10px; border-radius: 999px; border: 1px dashed var(--ln); color: var(--mu); text-decoration: none; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px">+ Link a post<span style="background: var(--ac); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 999px">PRO</span></a></sc-if>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+<a href="Diary.dc.html" style="margin-top: 6px; height: 44px; width: 100%; color: var(--act); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">Show all {{dayTotal}} days</a>
+</div>
+
+<sc-if value="{{canComplete}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 12px 16px 0 16px">
+<button type="button" onClick="{{complete}}" style="width: 100%; height: 48px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer">Mark route complete</button>
+</div>
+</sc-if>
+
+<sc-if value="{{warning}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex; justify-content: center; align-items: flex-start; padding: 220px 16px 0 16px; box-sizing: border-box">
+<div role="dialog" aria-modal="true" aria-labelledby="warn-title" style="width: 100%; background: var(--sf); border-radius: 24px; padding: 18px 16px 16px 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="width: 48px; height: 48px; border-radius: 999px; background: var(--sf2); color: var(--act); display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"></path><path d="M12 8v5M12 16h.01"></path></svg></div>
+<h2 id="warn-title" style="margin: 0; font-size: 21px; line-height: 1.25; font-weight: 800">Before you go live</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: var(--mu)">Live routes show where you are as you travel. Someone could use that to work out where you're staying or where you're heading next. Most solo travellers share with a delay.</p>
+<sc-for list="{{safety}}" as="o" hint-placeholder-count="2">
+<button type="button" role="switch" aria-checked="{{o.checked}}" onClick="{{o.pick}}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 48px; padding: 8px 12px; border-radius: 16px; border: 1px solid var(--ln); background: var(--bg); color: var(--tx); font-family: inherit; text-align: left; cursor: pointer">
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">{{o.label}}</span><span style="font-size: 13px; color: var(--mu)">{{o.hint}}</span></span>
+<span style="{{o.track}}"><span style="{{o.knob}}"></span></span>
+</button>
+</sc-for>
+<p style="margin: 0; font-size: 13px; line-height: 1.45; color: var(--mu)">Never post your hostel name, room number or tomorrow's plan. You can switch back to private any time.</p>
+<div style="display: flex; gap: 10px">
+<button type="button" onClick="{{cancelLive}}" style="flex: 1; height: 46px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Keep private</button>
+<button type="button" onClick="{{confirmLive}}" style="flex: 1; height: 46px; border-radius: 999px; border: 0; background: var(--ac); color: var(--on); font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">{{confirmLabel}}</button>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["live","past"],"default":"live"},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"view":{"editor":"enum","options":["owner","follower"],"default":"owner"},"collab":{"editor":"boolean","default":true},"offline":{"editor":"boolean","default":false},"fromPhotos":{"editor":"boolean","default":false},"$preview":{"width":390,"height":2300}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+var S = function (n, x, y) { return { n: n, x: x, y: y }; };
+this.visited = [S('Ho Chi Minh City', 220, 282), S('Mui Ne', 262, 262), S('Da Lat', 240, 238), S('Nha Trang', 276, 206), S('Quy Nhon', 272, 166), S('Hoi An', 246, 124)];
+this.plan = [S('Hue', 222, 106), S('Phong Nha', 196, 86), S('Ninh Binh', 168, 62), S('Hanoi', 160, 48), S('Ha Giang', 150, 26)];
+this.places = [
+{ n: 'Hue', r: 'Thua Thien Hue · city', x: 222, y: 106 },
+{ n: 'Hue Imperial Citadel', r: 'Hue · landmark', x: 220, y: 104 },
+{ n: 'Hai Van Pass', r: 'Da Nang · mountain road', x: 236, y: 114 },
+{ n: 'Da Nang', r: 'Da Nang · city', x: 244, y: 118 },
+{ n: 'Hoi An', r: 'Quang Nam · old town', x: 246, y: 124 },
+{ n: 'My Son Sanctuary', r: 'Quang Nam · temple ruins', x: 234, y: 132 },
+{ n: 'Marble Mountains', r: 'Da Nang · caves', x: 248, y: 119 },
+{ n: 'Cu Lao Cham', r: 'Quang Nam · island', x: 264, y: 122 },
+{ n: 'Phong Nha', r: 'Quang Binh · caves', x: 196, y: 86 },
+{ n: 'Dong Hoi', r: 'Quang Binh · beach town', x: 206, y: 92 },
+{ n: 'Ninh Binh', r: 'Ninh Binh · karsts', x: 168, y: 62 },
+{ n: 'Tam Coc', r: 'Ninh Binh · rice fields', x: 166, y: 66 },
+{ n: 'Pu Luong', r: 'Thanh Hoa · nature reserve', x: 152, y: 66 },
+{ n: 'Mai Chau', r: 'Hoa Binh · valley', x: 146, y: 58 },
+{ n: 'Hanoi', r: 'Hanoi · capital', x: 160, y: 48 },
+{ n: 'Ha Long Bay', r: 'Quang Ninh · bay', x: 196, y: 44 },
+{ n: 'Sapa', r: 'Lao Cai · mountains', x: 124, y: 30 },
+{ n: 'Ha Giang', r: 'Ha Giang · loop', x: 150, y: 26 },
+{ n: 'Ban Gioc Waterfall', r: 'Cao Bang · waterfall', x: 188, y: 20 }
+];
+this.start = new Date(2026, 8, 28);
+this.vnPath = 'M100 30 L112 16 L140 10 L156 5 L170 9 L196 12 L214 24 L210 38 L200 46 L186 54 L178 66 L190 78 L208 90 L222 98 L234 106 L244 114 L252 124 L262 140 L272 158 L278 176 L282 198 L280 214 L274 232 L268 256 L254 276 L236 290 L222 300 L204 312 L184 326 L172 320 L170 300 L186 290 L200 276 L210 256 L214 236 L222 212 L230 186 L236 162 L232 140 L220 124 L204 110 L188 100 L174 88 L156 78 L136 72 L118 62 L104 50 Z';
+this.seaPath = 'M214 -300 L214 24 L214 24 L210 38 L200 46 L186 54 L178 66 L190 78 L208 90 L222 98 L234 106 L244 114 L252 124 L262 140 L272 158 L278 176 L282 198 L280 214 L274 232 L268 256 L254 276 L236 290 L222 300 L204 312 L184 326 L184 326 L184 400 L800 400 L800 -300 Z M-300 300 L170 300 L172 320 L184 326 L184 700 L-300 700 Z';
+this.state = {
+day: 12, adding: true, mode: 'Bus', pick: 13, wx: 'Sunny', price: 2, eff: 3, done: false, following: false,
+vis: 'Only me', pendingVis: null, delay: true, blur: true,
+mapH: 260, zoom: 1, cx: 205, cy: 160, trail: this.visited, trips: [{ a: { x: 272, y: 166 }, b: { x: 284, y: 178 } }], query: 'Hu', dest: null, pinning: false, pin: { x: 200, y: 110 }, dragging: false,
+log: [
+{ day: 12, route: 'Quy Nhon → Hoi An', mode: 'TRAIN', note: 'Coastal train. Sit on the right for the sea.', post: 'TikTok · 12.4k', wx: 'Sunny' },
+{ day: 11, route: 'Quy Nhon ⇄ Ky Co Beach', mode: 'DAY TRIP', note: 'Boat out, swim, back in time for banh xeo.', post: 'Reel · 3.1k', wx: 'Hot' },
+{ day: 10, route: 'Nha Trang → Quy Nhon', mode: 'BUS', note: 'Got off at the wrong stop. Found a better beach.', wx: 'Rainy' },
+{ day: 9, route: 'Da Lat → Nha Trang', mode: 'MOTO', note: 'Down the pass inside a cloud. Worth the cold hands.', wx: 'Misty' }
+]
+};
+}
+toMap(e) {
+var r = e.currentTarget.getBoundingClientRect();
+var sc = Math.min(r.width / 270, r.height / 330);
+var ox = (r.width - 270 * sc) / 2, oy = (r.height - 330 * sc) / 2;
+var x = 60 + (e.clientX - r.left - ox) / sc, y = (e.clientY - r.top - oy) / sc;
+return { x: Math.max(66, Math.min(324, Math.round(x))), y: Math.max(14, Math.min(320, Math.round(y))) };
+}
+renderVals() {
+var self = this;
+var s = this.state;
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --map: #253126; --cnt: #34453A; --land: #27312B; --nb: #1B201C; --sea: #131A1D; --bd: #46564A; --ring: #000000; --rt: #B9DE5C; --ph1: #3A4838; --scrim: rgba(19,21,18,0.78);',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --sf2: #E9E8E1; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212; --map: #DDE5D4; --cnt: #C3CFB8; --land: #F2F5EC; --nb: #E1E4D8; --sea: #D2E1EA; --bd: #AFBDA5; --ring: #1B1D19; --rt: #5E8A0F; --ph1: #C8D4C0; --scrim: rgba(255,255,255,0.86);'
+};
+var t = this.props.theme === 'light' ? 'light' : 'dark';
+var follower = this.props.view === 'follower';
+var past = this.props.mode === 'past';
+var start = this.start;
+function pts(a) { return a.map(function (p) { return p.x + ',' + p.y; }).join(' '); }
+var trail = s.trail;
+var cur = trail[trail.length - 1];
+var ahead = [cur].concat(this.plan.filter(function (p) { return p.y < cur.y - 4; }));
+var chipBase = 'min-height: 44px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ';
+function chip(on, bg) { return chipBase + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: ' + bg + '; color: var(--tx);'); }
+var moving = s.mode !== 'Stayed put';
+var dayTrip = s.mode === 'Day trip';
+var modes = ['Stayed put', 'Day trip', 'Walk', 'Bicycle', 'Moto', 'Bus', 'Train', 'Plane', 'Boat'].map(function (m) {
+return { label: m, pressed: s.mode === m ? 'true' : 'false', style: chip(s.mode === m, 'var(--bg)'), pick: function () { self.setState({ mode: m }); } };
+});
+var dow = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+var dates = [];
+for (var d = s.day - 1; d <= s.day + 5; d++) {
+(function (dayN) {
+var dt = new Date(start.getTime() + (dayN - 1) * 86400000);
+var logged = dayN <= s.day;
+var on = s.pick === dayN;
+dates.push({
+dow: dow[dt.getDay()], num: dt.getDate(),
+aria: dt.toDateString() + ', day ' + dayN + (logged ? ', already added' : ''),
+pressed: on ? 'true' : 'false', disabled: logged,
+style: 'height: 48px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-family: inherit; cursor: ' + (logged ? 'default' : 'pointer') + '; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : logged ? 'border: 1px dashed var(--ln); background: transparent; color: var(--mu); opacity: 0.6;' : 'border: 1px solid var(--ln); background: var(--bg); color: var(--tx);'),
+pick: function () { if (!logged) self.setState({ pick: dayN }); }
+});
+})(d);
+}
+var q = (s.query || '').trim().toLowerCase();
+var matches = q ? this.places.filter(function (p) { return p.n.toLowerCase().indexOf(q) !== -1 || p.r.toLowerCase().indexOf(q) !== -1; }).slice(0, 4).map(function (p) {
+return { n: p.n, r: p.r, pick: function () { self.setState({ query: p.n, dest: { n: p.n, x: p.x, y: p.y, custom: false }, pinning: false }); } };
+}) : [];
+var target = s.pinning ? { n: s.query.trim() || 'New spot', x: s.pin.x, y: s.pin.y } : s.dest;
+var tx = target ? target.x : cur.x, ty = target ? target.y : cur.y;
+var visOpts = ['Only me', 'Followers', 'Everyone'].map(function (v) {
+return {
+label: v, pressed: s.vis === v ? 'true' : 'false', style: chip(s.vis === v, 'var(--bg)') + ' padding: 0 6px;',
+pick: function () { if (v === s.vis) return; if (v === 'Only me') self.setState({ vis: v }); else self.setState({ pendingVis: v }); }
+};
+});
+var lag = s.delay ? ' 24 hours after you post them' : ' as soon as you post them';
+var visNote = s.vis === 'Only me' ? 'Private for now. Nobody sees this route until you share it or mark it complete.' : (s.vis === 'Followers' ? 'People who follow you see new days' : 'Anyone on Sightquest sees new days') + lag + (s.blur ? ', with where you sleep blurred.' : '.');
+function sw(on) {
+return {
+track: 'flex: none; width: 46px; height: 28px; border-radius: 999px; padding: 3px; box-sizing: border-box; display: flex; background: ' + (on ? 'var(--ac)' : 'var(--sf2)') + '; justify-content: ' + (on ? 'flex-end' : 'flex-start') + ';',
+knob: 'width: 22px; height: 22px; border-radius: 999px; background: ' + (on ? 'var(--on)' : 'var(--mu)') + ';'
+};
+}
+var sDelay = sw(s.delay), sBlur = sw(s.blur);
+var safety = [
+{ label: 'Post with a 24h delay', hint: 'People see yesterday, never today', checked: s.delay ? 'true' : 'false', track: sDelay.track, knob: sDelay.knob, pick: function () { self.setState({ delay: !s.delay }); } },
+{ label: 'Blur where I sleep', hint: 'Overnight stops show as a 2 km area', checked: s.blur ? 'true' : 'false', track: sBlur.track, knob: sBlur.knob, pick: function () { self.setState({ blur: !s.blur }); } }
+];
+var pct = Math.max(0, Math.min(100, Math.round((282 - cur.y) / 256 * 100)));
+var badgeBase = 'position: absolute; top: 22px; right: 14px; font-family: JetBrains Mono, monospace; font-size: 11px; font-weight: 600; padding: 7px 12px; border-radius: 999px; ';
+var shared = s.vis !== 'Only me';
+var fbtn = 'height: 40px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; ';
+var z = s.zoom, mh = s.mapH;
+var vw = 390 / z, vh = mh / z;
+var vb = (s.cx - vw / 2).toFixed(1) + ' ' + (s.cy - vh / 2).toFixed(1) + ' ' + vw.toFixed(1) + ' ' + vh.toFixed(1);
+var k = 1 / z;
+var canSave = !moving || !!s.dest;
+var showMini = moving && (s.pinning || !!s.dest);
+var fromPhotos = this.props.fromPhotos === true || this.props.fromPhotos === 'true';
+var collab = this.props.collab !== false && this.props.collab !== 'false';
+var offline = this.props.offline === true || this.props.offline === 'true';
+return {
+mapH: mh,
+tripPath: s.trips.map(function (tp) { return 'M' + tp.a.x + ' ' + tp.a.y + ' L' + tp.b.x + ' ' + tp.b.y; }).join(' ') || 'M0 0',
+tripDots: s.trips.map(function (tp) { var r = 3.5 * k; return 'M' + (tp.b.x - r) + ' ' + tp.b.y + ' a' + r + ' ' + r + ' 0 1 0 ' + (2 * r) + ' 0 a' + r + ' ' + r + ' 0 1 0 ' + (-2 * r) + ' 0'; }).join(' ') || 'M0 0',
+whereLabel: dayTrip ? 'DAY TRIP TO · BACK BY NIGHT' : 'WHERE TO',
+vb: vb,
+vnPath: this.vnPath,
+seaPath: this.seaPath,
+swB: (1.2 * k).toFixed(2), sw3: (3 * k).toFixed(2), sw4: (4 * k).toFixed(2),
+dash: (2 * k).toFixed(2) + ' ' + (8 * k).toFixed(2),
+r5: (5 * k).toFixed(2), r8: (8 * k).toFixed(2), r16: (16 * k).toFixed(2), rDot: (3.5 * k).toFixed(2), swDot: (1.6 * k).toFixed(2),
+fsC: (11 * k).toFixed(2), fsR: (10 * k).toFixed(2), fsCur: (14 * k).toFixed(2),
+lblDx: (5 * k).toFixed(2), lblDy: (-5 * k).toFixed(2), curDx: (-14 * k).toFixed(2), curDy: (5 * k).toFixed(2),
+majorOp: 0.85, minorOp: z >= 1.7 ? 0.85 : 0,
+mapBoxStyle: 'user-select: none; -webkit-user-select: none; position: absolute; top: 0; left: 0; width: 390px; height: ' + mh + 'px; overflow: hidden; background: var(--sea);',
+sheetStyle: 'margin-top: ' + (mh - 24) + 'px; position: relative; background: var(--bg); border-radius: 24px 24px 0 0; padding: 14px 16px 0 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 -8px 24px rgba(0,0,0,0.18);',
+zoomIn: function () { self.setState({ zoom: Math.min(5, +(z * 1.5).toFixed(2)) }); },
+zoomOut: function () { self.setState({ zoom: Math.max(1, +(z / 1.5).toFixed(2)) }); },
+locate: function () { self.setState({ cx: cur.x, cy: cur.y, zoom: Math.max(z, 2.2) }); },
+mDown: function (e) { if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} } self.pan = { sx: e.clientX, sy: e.clientY, cx: s.cx, cy: s.cy }; },
+mMove: function (e) { if (!self.pan) return; var r = e.currentTarget.getBoundingClientRect(); var ppu = r.width / vw; self.setState({ cx: Math.max(60, Math.min(340, self.pan.cx - (e.clientX - self.pan.sx) / ppu)), cy: Math.max(0, Math.min(340, self.pan.cy - (e.clientY - self.pan.sy) / ppu)) }); },
+mUp: function () { self.pan = null; },
+hDown: function (e) { if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} } var r = e.currentTarget.getBoundingClientRect(); self.hd = { sy: e.clientY, h: mh, sc: r.width / 350 || 1, moved: false }; },
+hMove: function (e) { if (!self.hd) return; var dy = (e.clientY - self.hd.sy) / self.hd.sc; if (Math.abs(dy) > 4) self.hd.moved = true; self.setState({ mapH: Math.round(Math.max(220, Math.min(680, self.hd.h + dy))) }); },
+hUp: function () { if (!self.hd) return; var moved = self.hd.moved; self.hd = null; if (!moved) self.setState({ mapH: mh < 420 ? 680 : 260 }); },
+rootStyle: 'width: 390px; height: 2300px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[t],
+trailPts: pts(trail),
+ahead: s.done ? '0,0' : pts(ahead),
+curX: cur.x, curY: cur.y,
+labelX: cur.x - 100 > 10 ? cur.x - 100 : cur.x + 14,
+labelY: cur.y + 4,
+here: cur.n,
+badge: fromPhotos ? 'FROM PHOTOS · 4 DAYS' : s.done ? 'COMPLETE · ' + s.day + ' DAYS' : (past ? 'PAST TRIP · DAY ' + s.day : (follower || shared ? '● LIVE · DAY ' + s.day : 'DAY ' + s.day + ' · PRIVATE')),
+badgeStyle: badgeBase + (s.done || (!follower && !shared) ? 'background: var(--sf); color: var(--tx);' : 'background: var(--ac); color: var(--on);'),
+subline: fromPhotos ? 'Sep 2026 · 4 days from 9 photos · add what it was like' : s.done ? 'Finished in ' + cur.n + ' · ' + s.day + ' days' : (follower ? 'Travelling in Oct 2026 · now in ' + cur.n : 'Day ' + s.day + ' of roughly 30 · now in ' + cur.n),
+who: follower ? '@saltandsole' : 'You',
+lastUpdate: follower ? 'Shared with a 24h delay' : 'Last day added: Day ' + s.day,
+isFollower: follower,
+isOwner: !follower,
+followLabel: s.following ? 'Following' : 'Follow trip',
+followStyle: s.following ? fbtn + 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);' : fbtn + 'border: 0; background: var(--ac); color: var(--on);',
+toggleFollow: function () { self.setState({ following: !s.following }); },
+barStyle: 'height: 8px; border-radius: 999px; background: var(--rt); width: ' + (s.done ? 100 : pct) + '%;',
+dayCount: fromPhotos ? '4 DAYS' : s.day + ' DAYS SO FAR',
+stopCount: fromPhotos ? '4 MOMENTS' : trail.length + ' PLACES',
+showVis: !follower && !s.done && !past,
+visOpts: visOpts, visNote: visNote,
+canAdd: !follower && !s.done && !s.adding,
+canComplete: !follower && !s.done,
+adding: !follower && s.adding,
+pickDay: s.pick, dates: dates, modes: modes, moving: moving,
+query: s.query,
+onQuery: function (e) { self.setState({ query: e.target.value, dest: null, pinning: false }); },
+listOpen: q && !s.dest && !s.pinning ? 'true' : 'false',
+showList: !!q && !s.dest && !s.pinning,
+matches: matches,
+hasDest: !!s.dest,
+destTag: s.dest && s.dest.custom ? 'PINNED' : 'TAGGED',
+startPin: function () { self.setState({ pinning: true, dest: null, pin: { x: cur.x - 30, y: cur.y - 24 } }); },
+showMini: showMini,
+pinning: s.pinning,
+miniStyle: 'height: 200px; border-radius: 16px; overflow: hidden; background: var(--sea); touch-action: none; cursor: ' + (s.pinning ? 'crosshair' : 'default') + '; border: 1px solid ' + (s.pinning ? 'var(--act)' : 'var(--ln)') + ';',
+destX: tx, destY: ty,
+pinPath: 'M' + tx + ' ' + ty + ' c -3 -6 -9 -10 -9 -16 a 9 9 0 1 1 18 0 c 0 6 -6 10 -9 16 z',
+pinDotY: ty - 16,
+destName: target ? target.n : '',
+destLabelX: tx + 12, destLabelY: ty - 18,
+destNote: s.dest ? (s.dest.custom ? 'Pinned by you. It becomes a findable spot once your route is public.' : 'Tagged on the map automatically.') : '',
+pDown: function (e) { if (!s.pinning) return; if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} } self.setState({ dragging: true, pin: self.toMap(e) }); },
+pMove: function (e) { if (s.pinning && s.dragging) self.setState({ pin: self.toMap(e) }); },
+pUp: function () { if (s.dragging) self.setState({ dragging: false }); },
+confirmPin: function () { var n = s.query.trim() || 'Pinned spot'; self.setState({ pinning: false, query: n, dest: { n: n, x: s.pin.x, y: s.pin.y, custom: true } }); },
+notePlaceholder: moving ? 'What should the next person know?' : 'Laundry day? Best noodles? Rain?',
+saveDisabled: !canSave,
+saveStyle: 'flex: 2; height: 46px; border-radius: 999px; border: 0; font-family: inherit; font-size: 15px; font-weight: 700; ' + (canSave ? 'background: var(--ac); color: var(--on); cursor: pointer;' : 'background: var(--sf2); color: var(--mu); cursor: not-allowed;'),
+openAdd: function () { self.setState({ adding: true, pick: s.day + 1, query: '', dest: null, pinning: false }); },
+closeAdd: function () { self.setState({ adding: false, pinning: false }); },
+saveDay: function () {
+if (!canSave) return;
+var dest = moving ? s.dest : null;
+var entry = { day: s.pick, route: dest ? cur.n + (dayTrip ? ' ⇄ ' : ' → ') + dest.n : cur.n + ' · stayed', mode: moving ? s.mode.toUpperCase() : 'STAYED', note: dayTrip ? 'Day trip, back at base tonight' : 'Just added · moments on the way', wx: s.wx };
+var log = [entry].concat(s.log).sort(function (a, b) { return b.day - a.day; }).slice(0, 4);
+self.setState({ adding: false, day: Math.max(s.day, s.pick), trail: dest && !dayTrip ? trail.concat([{ n: dest.n, x: dest.x, y: dest.y }]) : trail, trips: dest && dayTrip ? s.trips.concat([{ a: { x: cur.x, y: cur.y }, b: { x: dest.x, y: dest.y } }]) : s.trips, log: log, query: '', dest: null });
+},
+complete: function () { self.setState({ done: true, adding: false }); },
+done: s.done,
+wxOpts: ['Sunny', 'Cloudy', 'Rainy', 'Stormy', 'Misty', 'Hot', 'Cold'].map(function (w) { var on = s.wx === w; return { label: w, pressed: on ? 'true' : 'false', style: chip(on, 'var(--bg)'), pick: function () { self.setState({ wx: w }); } }; }),
+effName: ['Cruisy', 'Easygoing', 'Up for it', 'Big effort', 'Epic'][s.eff - 1],
+effOpts: [1, 2, 3, 4, 5].map(function (n) { var on = n <= s.eff; var names = ['Cruisy', 'Easygoing', 'Up for it', 'Big effort', 'Epic']; return { label: String(n), aria: names[n - 1], checked: n === s.eff ? 'true' : 'false', style: 'height: 44px; border-radius: 14px; font-family: JetBrains Mono, monospace; font-size: 14px; font-weight: 700; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--bg); color: var(--tx);'), pick: function () { self.setState({ eff: n }); } }; }),
+priceName: s.price ? ['Shoestring', 'Budget', 'Mid-range', 'Comfortable', 'Splurge'][s.price - 1] : '',
+priceOpts: [1, 2, 3, 4, 5].map(function (n) { var on = n <= s.price; var names = ['Shoestring', 'Budget', 'Mid-range', 'Comfortable', 'Splurge']; return { label: '$$$$$'.slice(0, n), aria: names[n - 1], checked: n === s.price ? 'true' : 'false', style: 'height: 44px; border-radius: 14px; font-family: JetBrains Mono, monospace; font-size: 13px; font-weight: 700; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--bg); color: var(--tx);'), pick: function () { self.setState({ price: n }); } }; }),
+doneNote: 'Your line from Ho Chi Minh City to ' + cur.n + ' is now a full route. Followers get a heads-up, and it shows up in search.',
+log: (fromPhotos ? [
+{ day: 4, route: 'Lao Cai → Hanoi', mode: 'TRAIN', note: '', wx: 'Cloudy', pics: [['ph3', false]] },
+{ day: 3, route: 'Bac Ha market', mode: 'MOTO', note: '', wx: 'Sunny', pics: [['ph4', true], ['ph2', false], ['ph3', true]] },
+{ day: 2, route: 'Cat Cat village', mode: 'WALK', note: 'Walked down through the terraces, took the moto taxi back up. No shame.', wx: 'Misty', pics: [['ph2', false], ['ph4', false]] },
+{ day: 1, route: 'Sa Pa', mode: 'BUS', note: 'Sleeper bus from Hanoi, fog the whole way up.', wx: 'Rainy', pics: [['ph1', true], ['ph3', false], ['ph2', false]] }
+] : s.log).map(function (d, i) { var pics = (d.pics || []).map(function (p) { return { style: 'position: relative; width: 52px; height: 52px; border-radius: 10px; background: var(--' + p[0] + '); border: ' + (p[1] ? '2px solid var(--ac)' : '1px solid var(--ln)') + '; box-sizing: border-box; display: block;', star: 'position: absolute; top: 3px; right: 3px; font-size: 10px; color: var(--act); display: ' + (p[1] ? 'block' : 'none') + ';' }; }); return Object.assign({}, d, { pics: pics, hasPics: pics.length > 0, ask: fromPhotos && !d.note, hasNote: !!d.note, hasPost: !!d.post, post: d.post || '', wx: d.wx || 'Sunny', owner: !follower, sync: offline && i === 0, byMaya: collab && d.day === 11 }); }),
+finish: [['Spots', '4 places tagged · food, viewpoints, stays', 'EditPlace.dc.html', 'done'], ['Must-know', '7 of 12 filled · visa, cash, roads…', 'MustKnow.dc.html', 'part'], ['Trip tunes', 'Add a playlist or one song', 'Soundtrack.dc.html', 'todo'], ['Price & effort', 'Rate it when you finish', 'Live.dc.html', 'done']].map(function (f) { var st = f[3]; return { label: f[0], sub: f[1], href: f[2], mark: st === 'done' ? '✓' : st === 'part' ? '◐' : '+',
+dot: 'width: 26px; height: 26px; border-radius: 999px; display: flex; align-items: center; justify-content: center; flex: none; font-size: 13px; font-weight: 800; box-sizing: border-box; ' + (st === 'done' ? 'background: var(--ac); color: var(--on);' : st === 'part' ? 'border: 2px solid var(--act); color: var(--act);' : 'border: 1px dashed var(--mu); color: var(--mu);') }; }),
+collab: collab && !fromPhotos, offline: offline, title: fromPhotos ? 'Bac Ha loop, the scenic way' : 'Vietnam, south to north',
+soloOpts: ['Felt comfortable', 'Fine, stay alert', "Wouldn't go solo", "Didn't go solo"].map(function (o) { var on = s.solo === o; return { label: o, pick: function () { self.setState({ solo: o }); }, style: 'min-height: 42px; padding: 0 8px; border-radius: 14px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--bg); color: var(--tx);') }; }),
+dayTotal: s.day,
+warning: !!s.pendingVis,
+safety: safety,
+confirmLabel: s.pendingVis === 'Everyone' ? 'Share with everyone' : 'Share with followers',
+cancelLive: function () { self.setState({ pendingVis: null }); },
+confirmLive: function () { self.setState({ vis: s.pendingVis, pendingVis: null }); }
+};
+}
+}
+</script>
+</body>
+</html>

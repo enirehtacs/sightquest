@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · New route</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0} input[type=date]::-webkit-calendar-picker-indicator{margin-right:2px;padding:4px}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 0 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Main.dc.html" aria-label="Close" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></a>
+<h1 style="margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%">New route</h1>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="title" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">NAME IT</label>
+<input id="title" value="Bac Ha loop, the scenic way" style="height: 46px; border-radius: 16px; border: 1px solid var(--ln); background: var(--sf); padding: 0 16px; font-family: inherit; font-size: 16px; color: var(--tx)">
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">WHEN ARE YOU ADDING IT</span>
+<div role="radiogroup" aria-label="Route type" style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{modes}}" as="m" hint-placeholder-count="2">
+<button type="button" role="radio" aria-checked="{{m.checked}}" onClick="{{m.pick}}" style="{{m.style}}">
+<span style="{{m.radio}}"></span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px; text-align: left"><span style="font-size: 16px; font-weight: 700">{{m.title}}</span><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">{{m.sub}}</span></span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{isPast}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">WHEN DID YOU GO</span>
+<div style="display: flex; gap: 8px">
+<label style="flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--mu)">From<input type="date" value="2026-09-12" style="height: 46px; border-radius: 14px; border: 1px solid var(--ln); background: var(--sf); padding: 0 16px; font-family: inherit; font-size: 15px; color: var(--tx); color-scheme: dark"></label>
+<label style="flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--mu)">To<input type="date" value="2026-09-15" style="height: 46px; border-radius: 14px; border: 1px solid var(--ln); background: var(--sf); padding: 0 16px; font-family: inherit; font-size: 15px; color: var(--tx); color-scheme: dark"></label>
+</div>
+<span style="font-size: 13px; color: var(--mu)">Only you see the exact dates. Everyone else sees September 2026.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">HOW DO YOU WANT TO ADD THE DAYS</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{imports}}" as="o" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{isPhotos}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln)">
+<span style="font-size: 14px; font-weight: 700">Too busy to post on the trip? Do it now.</span>
+<sc-for list="{{steps}}" as="st" hint-placeholder-count="3">
+<div style="display: flex; gap: 10px; align-items: flex-start"><span style="width: 22px; height: 22px; border-radius: 999px; background: var(--sf2); color: var(--act); display: flex; align-items: center; justify-content: center; flex: none; font-size: 12px; font-weight: 800">{{st.n}}</span><span style="font-size: 13px; line-height: 1.45; color: var(--mu)">{{st.t}}</span></div>
+</sc-for>
+<span style="font-size: 12px; line-height: 1.4; color: var(--mu); padding-top: 2px">Photos stay private. Only the ones you turn into moments get posted.</span>
+</div>
+</sc-if>
+<sc-if value="{{isBlank}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">{{importNote}}</span></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isLive}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; color: var(--act); margin-top: 1px"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"></path></svg>
+<span style="font-size: 14px; line-height: 1.45; color: var(--mu)">Starts private. You choose later if followers can see it, with a delay and your stays blurred.</span>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">BUILDING WITH SOMEONE? (OPTIONAL)</span>
+<div style="display: flex; gap: 8px; align-items: center">
+<div style="flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 14px; border-radius: 16px; border: 1px solid var(--ln); background: var(--sf); box-sizing: border-box"><span style="color: var(--mu); flex: none">@</span><input aria-label="Co-builder username" value="{coName}" placeholder="their username" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-family: inherit; font-size: 15px; color: var(--tx)"></div>
+<button type="button" onClick="{invite}" style="{inviteStyle}">{inviteLabel}</button>
+</div>
+<span style="font-size: 12px; line-height: 1.4; color: var(--mu)">One co-builder per route. You both add days and moments, and it shows on both profiles. They accept from their notifications.</span>
+</div>
+
+<div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: var(--sf2)">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--act); padding-top: 3px; flex: none">NEXT</span>
+<span style="font-size: 14px; line-height: 1.45; color: var(--mu)">Both open the same day-by-day builder. Add where you went, how you got there, the weather, moments and tags. When you finish, rate the effort and budget.</span>
+</div>
+</div>
+
+<div style="position: absolute; left: 16px; right: 16px; bottom: 26px">
+<a href="{{ctaHref}}" style="height: 50px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">{{cta}}</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":1040}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { mode: 'past', imp: 'Upload photos', invited: true };
+}
+renderVals() {
+var self = this;
+var s = this.state;
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C;',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --sf2: #E9E8E1; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212;'
+};
+var t = this.props.theme === 'light' ? 'light' : 'dark';
+var modes = [
+{ id: 'live', title: "I'm travelling now", sub: 'Add each day as you go. Share it live if you want.' },
+{ id: 'past', title: "A trip I've done", sub: 'Add the days from memory, or let an import fill them in.' }
+].map(function (m) {
+var on = s.mode === m.id;
+return {
+title: m.title, sub: m.sub, checked: on ? 'true' : 'false',
+style: 'display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border-radius: 16px; background: var(--sf); color: var(--tx); font-family: inherit; cursor: pointer; border: ' + (on ? '2px solid var(--act)' : '1px solid var(--ln)') + ';',
+radio: 'flex: none; width: 20px; height: 20px; border-radius: 999px; box-sizing: border-box; ' + (on ? 'border: 6px solid var(--act);' : 'border: 2px solid var(--mu);'),
+pick: function () { self.setState({ mode: m.id }); }
+};
+});
+var notes = { 'Start blank': 'Add each day yourself, in any order. You can drop photos into any day later.' };
+var imports = ['Upload photos', 'Start blank'].map(function (o) {
+var on = s.imp === o;
+return { label: o, pressed: on ? 'true' : 'false', style: 'height: 46px; border-radius: 16px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'), pick: function () { self.setState({ imp: o }); } };
+});
+var photos = s.mode === 'past' && s.imp === 'Upload photos';
+return {
+rootStyle: 'width: 390px; height: 1040px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[t],
+modes: modes,
+isPast: s.mode === 'past', isLive: s.mode === 'live',
+imports: imports, importNote: notes[s.imp],
+cta: s.mode === 'live' ? 'Start Day 1' : (photos ? 'Choose photos' : 'Open the day builder'),
+ctaHref: photos ? 'Photos.dc.html' : 'Live.dc.html',
+isPhotos: s.imp === 'Upload photos', isBlank: s.imp === 'Start blank',
+steps: [{ n: '1', t: 'Pick photos from the trip. A few from each day is enough.' }, { n: '2', t: 'We sort them into days using the date and place your phone saved in each photo.' }, { n: '3', t: 'Check the days, pin any photo we couldn\'t place, then add notes.' }],
+coName: s.invited ? 'maya.goes' : '',
+invite: function () { self.setState({ invited: !s.invited }); },
+inviteLabel: s.invited ? 'Invited' : 'Invite',
+inviteStyle: 'flex: none; height: 46px; padding: 0 16px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; ' + (s.invited ? 'border: 1px solid var(--act); background: transparent; color: var(--act);' : 'border: 0; background: var(--tx); color: var(--bg);'),
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · The initiation</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="position: absolute; inset: 0; background: radial-gradient(120% 70% at 50% 0%, #1E2A1C 0%, #131512 60%)"></div>
+<svg viewBox="0 0 390 844" width="390" height="844" style="position: absolute; inset: 0; pointer-events: none" aria-hidden="true"><g fill="none" stroke="#B9DE5C" stroke-opacity=".07" stroke-width="1.2"><circle cx="195" cy="470" r="120"></circle><circle cx="195" cy="470" r="190"></circle><circle cx="195" cy="470" r="260"></circle><circle cx="195" cy="470" r="330"></circle></g></svg>
+
+<div style="position: absolute; left: 20px; right: 20px; top: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 2">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; font-stretch: 110%"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" style="stroke: var(--act)"><circle cx="12" cy="12" r="10"></circle><path d="M2.3 10.4c3.4-2.6 6.6 1.8 9.8-.6s5.8-2.8 9.6.2"></path><path d="M2.2 14c3.4-2.2 6.8 1.8 10.2-.3s5.4-2.1 9.4.4"></path><path d="M4.6 18c2.8-1.5 5.8 1.2 8.6-.2s4.2-1.3 6.4.2"></path></svg>Sightquest</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--act); letter-spacing: 1px">{{count}}</span></div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 2px; color: var(--act); margin-top: 6px">THE INITIATION · RITE 1 OF 1</span>
+<h1 style="margin: 0; font-size: 30px; line-height: 1.02; font-weight: 900; font-stretch: 115%; text-transform: uppercase">Catch the six<br>promises</h1>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: var(--mu)">Tap every bubble to take the oath.</p>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0">
+<sc-for list="{{bubbles}}" as="b" hint-placeholder-count="6">
+<button type="button" onClick="{{b.tap}}" aria-pressed="{{b.on}}" aria-label="{{b.aria}}" style="{{b.style}}"><span style="{{b.icon}}">{{b.mark}}</span><span style="{{b.text}}">{{b.label}}</span></button>
+</sc-for>
+</div>
+
+
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 10; opacity: {{fade}}; background: radial-gradient(90% 60% at 50% 38%, rgba(185,222,92,.18) 0%, rgba(19,21,18,.97) 60%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 0 28px; text-align: center">
+<svg viewBox="0 0 390 844" width="390" height="844" style="position: absolute; inset: 0; pointer-events: none" aria-hidden="true"><g fill="none" stroke="#B9DE5C" stroke-width="1.4"><circle cx="195" cy="330" r="{{r1}}" stroke-opacity="{{o1}}"></circle><circle cx="195" cy="330" r="{{r2}}" stroke-opacity="{{o2}}"></circle><circle cx="195" cy="330" r="{{r3}}" stroke-opacity="{{o3}}"></circle></g></svg>
+<div style="position: relative; margin-top: -40px"><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke-width=".9" stroke-linecap="round" style="stroke: var(--act); filter: drop-shadow(0 0 18px rgba(185,222,92,.45))"><circle cx="12" cy="12" r="10"></circle><path d="M2.3 10.4c3.4-2.6 6.6 1.8 9.8-.6s5.8-2.8 9.6.2"></path><path d="M2.2 14c3.4-2.2 6.8 1.8 10.2-.3s5.4-2.1 9.4.4"></path><path d="M4.6 18c2.8-1.5 5.8 1.2 8.6-.2s4.2-1.3 6.4.2"></path><path d="M5.2 6.1c2.4-1 4.6.8 7-.2s3.6-1 6 .2"></path></svg></div>
+<span style="position: relative; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 3px; color: var(--act)">OATH TAKEN · 6 OF 6</span>
+<h1 style="position: relative; margin: 0; font-size: 44px; line-height: .95; font-weight: 900; font-stretch: 118%; text-transform: uppercase">Welcome to<br>Sightquest</h1>
+<p style="position: relative; margin: 0; font-size: 16px; line-height: 1.5; color: var(--mu)">You're officially one of us. Now go get lost, on purpose, and leave the trail a little better than you found it.</p>
+<a href="Location.dc.html" style="position: relative; margin-top: 10px; width: 100%; height: 52px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 800; box-shadow: 0 0 30px rgba(185,222,92,.35)">Let's go</a>
+<span style="position: relative; font-size: 12px; color: var(--mu)">By continuing you agree to the <span style="color: var(--act); font-weight: 700">Terms</span> and <span style="color: var(--act); font-weight: 700">Privacy policy</span>.</span>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"done":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+var P = [
+['Help people\ntravel better', 'I share what really happened, the good and the messy, so the next person has a better trip.'],
+['Be\nkind', 'I can disagree without putting anyone down. No mocking, no gatekeeping.'],
+['Only post\nwhat\'s real', 'Real routes, real updates, real ratings. No fake warnings, spam or ads.'],
+['Respect people\n& places', 'I ask before photographing people and follow the rules at sacred and protected places.'],
+['Keep others\nsafe', 'I never share someone else\'s location, plans or details without their OK.'],
+['Stories, not\npro advice', 'Everything here is other travellers\' experiences, not professional advice. Conditions change, so I check what\'s right for me.']
+];
+var seeds = [[100, 290, 1.1, 0.7], [280, 300, -0.9, 0.8], [110, 470, 0.8, -1.0], [285, 480, -1.0, -0.7], [120, 640, 0.9, 0.9], [270, 650, -0.8, -1.1]];
+this.P = P;
+this.b = P.map(function (p, i) { var sd = seeds[i]; return { x: sd[0], y: sd[1], vx: sd[2] * 0.38, vy: sd[3] * 0.38, r: 60 }; });
+var all = props.done === true || props.done === 'true';
+this.state = { on: all ? { 0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 } : {}, last: -1, f: 0, wait: all ? 1 : 0, doneT: all ? 1 : 0 };
+}
+componentDidMount() {
+var self = this, last = 0;
+var W = 390, TOP = 210, BOT = 730;
+function tick(now) {
+var dt = last ? Math.min(now - last, 40) / 16 : 0; last = now;
+if (dt > 0) {
+var B = self.b;
+for (var i = 0; i < B.length; i++) {
+var b = B[i], slow = self.state.on[i] ? 0.6 : 1;
+b.x += b.vx * dt * slow; b.y += b.vy * dt * slow;
+if (b.x - b.r < 6) { b.x = 6 + b.r; b.vx = Math.abs(b.vx); }
+if (b.x + b.r > W - 6) { b.x = W - 6 - b.r; b.vx = -Math.abs(b.vx); }
+if (b.y - b.r < TOP) { b.y = TOP + b.r; b.vy = Math.abs(b.vy); }
+if (b.y + b.r > BOT) { b.y = BOT - b.r; b.vy = -Math.abs(b.vy); }
+}
+for (var a = 0; a < B.length; a++) for (var c = a + 1; c < B.length; c++) {
+var p = B[a], q = B[c], dx = q.x - p.x, dy = q.y - p.y, d = Math.sqrt(dx * dx + dy * dy), min = p.r + q.r;
+if (d < min && d > 0) {
+var nx = dx / d, ny = dy / d, ov = (min - d) / 2;
+p.x -= nx * ov; p.y -= ny * ov; q.x += nx * ov; q.y += ny * ov;
+var rel = (q.vx - p.vx) * nx + (q.vy - p.vy) * ny;
+if (rel < 0) { p.vx += rel * nx; p.vy += rel * ny; q.vx -= rel * nx; q.vy -= rel * ny; }
+}
+}
+var u = { f: self.state.f + 1 };
+if (Object.keys(self.state.on).length === B.length) { if (self.state.wait < 1) u.wait = Math.min(1, self.state.wait + dt / 80); else if (self.state.doneT < 1) u.doneT = Math.min(1, self.state.doneT + dt / 60); }
+self.setState(u);
+}
+self.raf = requestAnimationFrame(tick);
+}
+this.raf = requestAnimationFrame(tick);
+}
+componentWillUnmount() { cancelAnimationFrame(this.raf); }
+renderVals() {
+var self = this, s = this.state, V = {};
+var n = Object.keys(s.on).length, N = this.P.length;
+V.count = n + ' / ' + N;
+V.bubbles = this.b.map(function (b, i) { var on = !!s.on[i]; return { on: on ? 'true' : 'false', aria: self.P[i][0].replace('\n', ' '), mark: on ? '✓' : '○', label: self.P[i][0],
+tap: function () { var o = Object.assign({}, s.on); o[i] = 1; var bb = self.b[i]; bb.vx *= 1.25; bb.vy *= 1.25; self.setState({ on: o, last: i }); },
+style: 'position: absolute; left: ' + (b.x - b.r).toFixed(1) + 'px; top: ' + (b.y - b.r).toFixed(1) + 'px; width: ' + (b.r * 2) + 'px; height: ' + (b.r * 2) + 'px; border-radius: 999px; padding: 0 10px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; font-family: inherit; transition: border-color .25s, background .25s, box-shadow .25s; ' + (on ? 'border: 2.5px solid var(--act); background: radial-gradient(circle at 35% 30%, rgba(185,222,92,.22), rgba(185,222,92,.06) 70%); box-shadow: 0 0 24px rgba(185,222,92,.35), inset 0 0 18px rgba(185,222,92,.12);' : 'border: 1.5px dashed rgba(156,162,149,.55); background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.10), rgba(255,255,255,.02) 65%); box-shadow: inset 0 0 20px rgba(255,255,255,.04);'),
+icon: 'font-size: 14px; font-weight: 800; line-height: 1; color: ' + (on ? 'var(--act)' : 'var(--mu)') + ';',
+text: 'white-space: pre-line; text-align: center; font-size: 13.5px; font-weight: 800; line-height: 1.15; text-transform: uppercase; letter-spacing: .3px; color: ' + (on ? 'var(--act)' : 'var(--mu)') + ';' }; });
+V.toastKicker = s.last >= 0 ? 'PROMISE ' + (Object.keys(s.on).length) + ' TAKEN' : 'HOW IT WORKS';
+V.toastText = s.last >= 0 ? self.P[s.last][1] : 'Each bubble is a promise. Catch all six and you\'re in.';
+V.toastBorder = s.last >= 0 ? 'var(--act)' : 'var(--ln)';
+V.done = n === N && s.wait >= 1;
+var t = s.doneT;
+V.fade = Math.min(1, t * 2.5).toFixed(2);
+V.r1 = (60 + t * 160).toFixed(0); V.o1 = (0.5 * (1 - t) + 0.15).toFixed(2);
+V.r2 = (110 + t * 200).toFixed(0); V.o2 = (0.35 * (1 - t) + 0.1).toFixed(2);
+V.r3 = (160 + t * 240).toFixed(0); V.o3 = (0.25 * (1 - t) + 0.06).toFixed(2);
+V.rootStyle = 'width: 390px; height: 844px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); --bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --warn: #F0B45A; --danger: #F08A7E; --map: #253126; --cnt: #34453A; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000;';
+return V;
+}
+}
+
+</script>
+</body>
+</html>

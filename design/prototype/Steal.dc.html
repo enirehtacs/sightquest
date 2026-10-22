@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Steal this route</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 0 16px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Route.dc.html" aria-label="Back to route" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<h1 style="flex: 1; margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">Steal this route</h1>
+</div>
+<div style="display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; background: var(--sf); border: 1px solid var(--ln)">
+<div style="width: 56px; height: 56px; border-radius: 14px; background: var(--map); flex: none"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 700; white-space: nowrap">Ha Giang, the long way</span><span style="font-size: 13px; color: var(--mu)">by @nomadgoblin · 9 days</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--act)">STOLEN 47 TIMES</span></div>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--mu)">Copies the route into your drafts so you can make it yours. Keep the days you want, change anything, then build it live when you go.</p>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="nm" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">NAME YOUR VERSION</label>
+<input id="nm" value="My Ha Giang loop" style="height: 46px; border-radius: 16px; border: 1px solid var(--ln); background: var(--sf); padding: 0 16px; font-family: inherit; font-size: 16px; color: var(--tx)">
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">WHEN ARE YOU GOING</span>
+<div style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 0 16px; scrollbar-width: none">
+<sc-for list="{{months}}" as="m" hint-placeholder-count="6">
+<button type="button" onClick="{{m.pick}}" style="{{m.style}}; flex: none">{{m.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 12px; color: var(--mu)">{{monthNote}}</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.4px; color: var(--mu)">PICK THE DAYS YOU WANT</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--act)">{{nDays}} OF 9</span></div>
+<div style="display: flex; flex-direction: column; background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; overflow: hidden">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="9">
+<button type="button" role="checkbox" aria-checked="{{d.checked}}" onClick="{{d.toggle}}" style="{{d.row}}">
+<span style="{{d.box}}">{{d.tick}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu); width: 42px; flex: none">DAY {{d.n}}</span>
+<span style="flex: 1; min-width: 0; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{d.place}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu); flex: none">{{d.mode}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; overflow: hidden">
+<sc-for list="{{opts}}" as="o" hint-placeholder-count="3">
+<button type="button" role="switch" aria-checked="{{o.checked}}" onClick="{{o.toggle}}" style="{{o.row}}"><span style="flex: 1; display: flex; flex-direction: column; gap: 1px; text-align: left; padding: 8px 0"><span style="font-size: 15px">{{o.label}}</span><span style="font-size: 12px; color: var(--mu)">{{o.sub}}</span></span><span style="{{o.track}}"><span style="{{o.knob}}"></span></span></button>
+</sc-for>
+</div>
+<span style="font-size: 12px; line-height: 1.45; color: var(--mu)">Your version says "Stolen from @nomadgoblin" and they get a heads-up. Your own days, moments and dates stay yours.</span>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 24px 16px; background: var(--bg); border-top: 1px solid var(--ln)">
+<a href="Live.dc.html" style="height: 50px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">{{cta}}</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { off: { 3: true, 8: true }, month: 'Mar', sw: { tags: true, must: true, offline: false } }; }
+renderVals() {
+var self = this;
+var s = this.state;
+var P = this.props;
+function chip(on) { return 'min-height: 40px; padding: 0 14px; border-radius: 999px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'); }
+var V = {};
+
+var D = [['Hanoi → Ha Giang', 'BUS'], ['Ha Giang · Quan Ba', 'MOTO'], ['Yen Minh → Dong Van', 'MOTO'], ['Dong Van', 'STAYED PUT'], ['Ma Pi Leng → Meo Vac', 'MOTO'], ['Nho Que river', 'BOAT'], ['Meo Vac → Du Gia', 'MOTO'], ['Du Gia → Ha Giang', 'MOTO'], ['Ha Giang → Hanoi', 'BUS']];
+var n = 0;
+V.days = D.map(function (d, i) { var on = !s.off[i]; if (on) n++; return { n: i + 1, place: d[0], mode: d[1], checked: on ? 'true' : 'false', tick: on ? '✓' : '',
+row: 'display: flex; align-items: center; gap: 12px; width: 100%; min-height: 46px; padding: 0 14px; border: 0; background: transparent; color: var(--tx); font-family: inherit; text-align: left; cursor: pointer; opacity: ' + (on ? 1 : 0.5) + '; ' + (i < D.length - 1 ? 'border-bottom: 1px solid var(--ln);' : ''),
+box: 'width: 22px; height: 22px; border-radius: 7px; flex: none; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; ' + (on ? 'background: var(--ac); color: var(--on);' : 'border: 2px solid var(--mu); box-sizing: border-box;'),
+toggle: function () { var o = Object.assign({}, s.off); o[i] = on; self.setState({ off: o }); } }; });
+V.nDays = n;
+var M = ['Not sure yet', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'];
+V.months = M.map(function (m) { return { label: m, style: chip(s.month === m), pick: function () { self.setState({ month: m }); } }; });
+V.monthNote = s.month === 'Mar' ? 'Same month @nomadgoblin went. Expect misty mornings.' : (s.month === 'Not sure yet' ? 'Pick later. Only you see your dates.' : 'Only you see your dates. We\'ll show the weather other people had that month.');
+var O = [['tags', 'Bring their recommendations', 'Food, viewpoints, homestays'], ['must', 'Bring the Must-know', 'Visa, cash, permits, roads'], ['offline', 'Save it offline', 'Map and days on your phone']];
+V.opts = O.map(function (o, i) { var on = !!s.sw[o[0]]; return { label: o[1], sub: o[2], checked: on ? 'true' : 'false',
+row: 'display: flex; align-items: center; gap: 10px; width: 100%; min-height: 54px; padding: 0 14px; border: 0; background: transparent; color: var(--tx); font-family: inherit; cursor: pointer; ' + (i < O.length - 1 ? 'border-bottom: 1px solid var(--ln);' : ''),
+track: 'flex: none; width: 46px; height: 28px; border-radius: 999px; padding: 3px; box-sizing: border-box; display: flex; background: ' + (on ? 'var(--ac)' : 'var(--sf2)') + '; justify-content: ' + (on ? 'flex-end' : 'flex-start') + ';',
+knob: 'width: 22px; height: 22px; border-radius: 999px; background: ' + (on ? 'var(--on)' : 'var(--mu)') + ';',
+toggle: function () { var w = Object.assign({}, s.sw); w[o[0]] = !on; self.setState({ sw: w }); } }; });
+V.cta = 'Steal ' + n + ' days';
+
+V.rootStyle = 'width: 390px; height: 1180px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); --bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --warn: #F0B45A; --danger: #F08A7E; --map: #253126; --cnt: #34453A; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000;';
+return V;
+}
+}
+</script>
+</body>
+</html>

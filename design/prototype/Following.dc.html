@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Following</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 14px 16px 0 16px; display: flex; flex-direction: column; gap: 12px">
+<h1 style="margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">Your people</h1>
+<div style="display: flex; gap: 10px; overflow: hidden">
+<a href="Profile.dc.html" style="flex: none; width: 62px; display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--tx); text-decoration: none; font-size: 12px"><div style="width: 48px; height: 48px; border-radius: 999px; background: var(--ph2); border: 3px solid var(--act); box-sizing: border-box"></div>nomad…</a>
+<a href="Profile.dc.html" style="flex: none; width: 62px; display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--tx); text-decoration: none; font-size: 12px"><div style="width: 48px; height: 48px; border-radius: 999px; background: var(--ph3); border: 3px solid var(--act); box-sizing: border-box"></div>dusty</a>
+<a href="Profile.dc.html" style="flex: none; width: 62px; display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--tx); text-decoration: none; font-size: 12px"><div style="width: 48px; height: 48px; border-radius: 999px; background: var(--ph1); border: 3px solid var(--ln); box-sizing: border-box"></div>saltsole</a>
+<a href="Profile.dc.html" style="flex: none; width: 62px; display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--tx); text-decoration: none; font-size: 12px"><div style="width: 48px; height: 48px; border-radius: 999px; background: var(--ph4); border: 3px solid var(--ln); box-sizing: border-box"></div>slowpoke</a>
+<a href="Search.dc.html" style="flex: none; width: 62px; display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--tx); text-decoration: none; font-size: 12px"><div style="width: 48px; height: 48px; border-radius: 999px; border: 1.5px dashed var(--mu); box-sizing: border-box; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></div>Find more</a>
+</div>
+</div>
+
+<sc-if value="{{hasShared}}" hint-placeholder-val="{{ true }}">
+<div style="margin-top: 20px; padding: 0 16px; display: flex; justify-content: space-between; align-items: flex-end; gap: 12px"><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><h2 style="margin: 0; font-size: 17px; font-weight: 800; white-space: nowrap">Shared with you</h2><span style="font-size: 13px; color: var(--mu)">3 routes from friends</span></div><a href="CollectionShared.dc.html" style="font-size: 14px; font-weight: 600; color: var(--act)">See all</a></div>
+<div style="margin-top: 12px; padding-left: 16px; display: flex; gap: 12px; overflow: hidden">
+<a href="Route.dc.html" style="flex: none; width: 220px; display: flex; flex-direction: column; gap: 6px; color: var(--tx); text-decoration: none">
+<div style="height: 110px; border-radius: 18px; background: var(--map); position: relative"><span style="position: absolute; top: 8px; left: 8px; background: var(--scrim); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 999px">FROM @MAYA.GOES</span><span style="position: absolute; left: 8px; right: 8px; bottom: 8px; background: var(--scrim); font-size: 12px; padding: 6px 8px; border-radius: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">we HAVE to do this in March</span></div>
+<div style="font-size: 14px; font-weight: 700; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Ha Giang, the long way</div>
+</a>
+<a href="Route.dc.html" style="flex: none; width: 220px; display: flex; flex-direction: column; gap: 6px; color: var(--tx); text-decoration: none">
+<div style="height: 110px; border-radius: 18px; background: var(--ph3); position: relative"><span style="position: absolute; top: 8px; left: 8px; background: var(--scrim); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 999px">FROM @JUN.WALKS</span><span style="position: absolute; left: 8px; right: 8px; bottom: 8px; background: var(--scrim); font-size: 12px; padding: 6px 8px; border-radius: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">chill version of your Vietnam trip</span></div>
+<div style="font-size: 14px; font-weight: 700; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Laos by slow boat</div>
+</a>
+</div>
+</sc-if>
+<div style="margin-top: 20px; padding: 0 16px; display: flex; flex-direction: column; gap: 12px">
+<a href="Live.dc.html" style="display: flex; gap: 12px; align-items: center; background: var(--sf); border: 1px solid var(--act); border-radius: 20px; padding: 12px 14px; color: var(--tx); text-decoration: none">
+<div style="width: 44px; height: 44px; border-radius: 999px; background: var(--ph1); flex: none"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><div style="display: flex; gap: 8px; align-items: center"><span style="background: var(--ac); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 999px">● LIVE · DAY 12</span><span style="font-size: 13px; color: var(--mu)">@saltandsole · 3h</span></div><div style="font-size: 16px; font-weight: 700; white-space: nowrap">Vietnam, south to north</div><div style="font-size: 14px; color: var(--mu)">Just reached Hoi An by coastal train</div></div>
+</a>
+<a href="Route.dc.html" style="display: block; height: 190px; border-radius: 24px; overflow: hidden; position: relative; background: var(--ph3); border: 1px solid var(--ln); box-sizing: border-box; color: var(--tx); text-decoration: none">
+<svg viewBox="0 0 350 260" width="350" height="260" style="position: absolute; inset: 0"><g fill="none" stroke-width="1.2" style="stroke: var(--cnt)"><path d="M-10 70 C80 40 150 100 230 60 S330 50 360 70"></path><path d="M-10 140 C80 110 160 170 250 130 S330 120 360 140"></path></g><path d="M30 70 C80 90 100 120 140 114 S200 150 240 140 S300 160 320 176" fill="none" stroke-width="4" stroke-linecap="round" style="stroke: var(--rt)"></path></svg>
+<div style="position: absolute; top: 12px; left: 12px; right: 12px; display: flex; align-items: center; gap: 8px; background: var(--scrim); border-radius: 999px; padding: 4px 12px 4px 4px"><div style="width: 30px; height: 30px; border-radius: 999px; background: var(--ph2)"></div><span style="font-size: 13px; font-weight: 600">@dustbunny · new route</span><span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">2H</span></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 14px; background: var(--sf); display: flex; flex-direction: column; gap: 2px">
+<div style="font-size: 16px; font-weight: 700; line-height: 1.25; white-space: nowrap">Island hopping the Togeans</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">INDONESIA · AUG · 8D · $$</div>
+</div>
+</a>
+
+<a href="Route.dc.html" style="display: flex; gap: 12px; align-items: flex-start; background: var(--sf); border: 1px solid var(--ln); border-radius: 20px; padding: 12px 14px; color: var(--tx); text-decoration: none">
+<div style="width: 32px; height: 32px; border-radius: 999px; background: var(--ph1); flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px"><div style="font-size: 14px; line-height: 1.4"><b>@saltandsole</b> stole <b>Ha Giang, the long way</b></div><div style="font-size: 14px; line-height: 1.4; color: var(--mu)">Did it with an easy rider instead. Zero stress, all views.</div></div>
+</a>
+
+<a href="Route.dc.html" style="display: flex; gap: 12px; align-items: flex-start; background: var(--sf); border: 1px solid var(--ln); border-radius: 20px; padding: 12px 14px; color: var(--tx); text-decoration: none">
+<div style="width: 32px; height: 32px; border-radius: 999px; background: var(--ph2); flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px"><div style="display: flex; gap: 8px; align-items: center"><span style="background: var(--info); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 999px">FRESH CHECK</span><span style="font-size: 14px; font-weight: 700">@nomadgoblin</span></div><div style="font-size: 14px; line-height: 1.4; color: var(--mu)">Bac Ha bus now leaves 6:30, not 7. Same one song on repeat.</div></div>
+</a>
+</div>
+
+<nav aria-label="Main" style="position: absolute; left: 12px; right: 12px; bottom: 12px; height: 60px; border-radius: 999px; background: var(--sf); border: 1px solid var(--ln); display: flex; justify-content: space-evenly; align-items: center; padding: 0 14px; box-sizing: border-box">
+<a href="Main.dc.html" aria-label="Explore" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 10a4.5 4.5 0 014.5-4.5h4a4.5 4.5 0 014.5 4.5v9a2 2 0 01-2 2h-9a2 2 0 01-2-2z"></path><path d="M9.5 5.5V4.5a2.5 2.5 0 015 0v1"></path><path d="M8.5 21v-4a1.5 1.5 0 011.5-1.5h4a1.5 1.5 0 011.5 1.5v4"></path></svg></a>
+<a href="Search.dc.html" aria-label="Search" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg></a>
+<a href="Create.dc.html" aria-label="Build a route" style="flex: none; width: 66px; height: 66px; border-radius: 999px; background: var(--ac); color: var(--on); box-shadow: 0 6px 18px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><path d="M2.3 10.4c3.4-2.6 6.6 1.8 9.8-.6s5.8-2.8 9.6.2"></path><path d="M2.2 14c3.4-2.2 6.8 1.8 10.2-.3s5.4-2.1 9.4.4"></path><path d="M4.6 18c2.8-1.5 5.8 1.2 8.6-.2s4.2-1.3 6.4.2"></path><path d="M5.2 6.1c2.4-1 4.6.8 7-.2s3.6-1 6 .2"></path></svg></a>
+<a href="Following.dc.html" aria-label="Friends" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--act)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.8"></circle><ellipse cx="12" cy="12" rx="10" ry="4"></ellipse><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"></ellipse><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"></ellipse></svg></a>
+<a href="Me.dc.html" aria-label="My profile" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg></a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"hasShared":{"editor":"boolean","default":true},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"$preview":{"width":390,"height":1100}}'>
+class Component extends DCLogic {
+renderVals() {
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --cnt: #45545B; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78);',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212; --info: #CFE2F5; --cnt: #AEBFCA; --rt: #5E8A0F; --ph1: #C8D4C0; --ph2: #DCCFC0; --ph3: #C5D2DB; --ph4: #D3CEDA; --scrim: rgba(255,255,255,0.86);'
+};
+var t = this.props.theme === 'light' ? 'light' : 'dark';
+return {
+hasShared: this.props.hasShared !== false && this.props.hasShared !== 'false',
+rootStyle: 'width: 390px; height: 1100px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[t]
+};
+}
+}
+</script>
+</body>
+</html>

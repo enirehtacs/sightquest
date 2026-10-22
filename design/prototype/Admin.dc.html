@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest Admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="display: flex; height: 100%">
+<aside style="width: 196px; flex: none; border-right: 1px solid var(--ln); padding: 14px 10px; display: flex; flex-direction: column; gap: 4px; background: #101210">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 6px 12px 6px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" style="stroke: var(--act)"><circle cx="12" cy="12" r="10"></circle><path d="M2.3 10.4c3.4-2.6 6.6 1.8 9.8-.6s5.8-2.8 9.6.2"></path><path d="M2.2 14c3.4-2.2 6.8 1.8 10.2-.3s5.4-2.1 9.4.4"></path><path d="M4.6 18c2.8-1.5 5.8 1.2 8.6-.2s4.2-1.3 6.4.2"></path><path d="M5.2 6.1c2.4-1 4.6.8 7-.2s3.6-1 6 .2"></path></svg><span style="display: flex; flex-direction: column"><span style="font-size: 16px; font-weight: 800; font-stretch: 110%">Sightquest</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--act); font-weight: 600">ADMIN</span></span></div>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="9">
+<button type="button" onClick="{{n.pick}}" style="{{n.style}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="{{n.icon}}"></path></svg><span style="flex: 1; text-align: left">{{n.label}}</span><span style="{{n.badgeStyle}}">{{n.badge}}</span></button>
+</sc-for>
+<div style="margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 10px 8px; border-top: 1px solid var(--ln)"><span style="width: 32px; height: 32px; border-radius: 999px; background: var(--ph2); border: 2px solid var(--act); box-sizing: border-box"></span><span style="display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Vivi</span><span style="font-size: 11px; color: var(--mu)">Owner · 2FA on</span></span></div>
+</aside>
+
+<main style="flex: 1; min-width: 0; padding: 16px 22px; display: flex; flex-direction: column; gap: 12px; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 12px"><h1 style="margin: 0; font-size: 20px; font-weight: 800; font-stretch: 110%; flex: 1">{{title}}</h1><span style="{{phaseStyle}}">{{phase}}</span><div style="display: flex; align-items: center; gap: 8px; width: 260px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); box-sizing: border-box; color: var(--mu); font-size: 14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>Search users, routes, comments</div></div>
+
+<sc-if value="{{isOverview}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">{{k.label}}</span><span style="font-size: 22px; font-weight: 800; font-stretch: 110%">{{k.v}}</span><span style="font-size: 13px; color: var(--act)">{{k.d}}</span></div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 10px; align-items: start">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 0">
+<div style="display: flex; align-items: center; gap: 8px; padding-bottom: 8px"><span style="font-size: 15px; font-weight: 800; flex: 1">To do</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">{{todoCount}}</span>
+<sc-for list="{{todoTabs}}" as="tt" hint-placeholder-count="3"><button type="button" onClick="{{tt.pick}}" style="{{tt.style}}">{{tt.label}}</button></sc-for></div>
+<sc-for list="{{todo}}" as="t" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; gap: 10px; padding: 7px 2px; border-top: 1px solid var(--ln)">
+<span style="{{t.dot}}"></span>
+<span style="{{t.textStyle}}">{{t.text}}</span>
+<span style="{{t.srcStyle}}">{{t.src}}</span>
+<span style="{{t.dueStyle}}">{{t.due}}</span>
+<button type="button" onClick="{{t.go}}" style="{{t.goStyle}}">{{t.cta}}</button>
+</div>
+</sc-for>
+<div style="display: flex; gap: 8px; padding-top: 8px; border-top: 1px solid var(--ln)"><input placeholder="Add a task…" value="{{draft}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%; flex: 1"><input type="date" value="2026-10-16" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%; width: 140px; color-scheme: dark"><button type="button" onClick="{{addTodo}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 0; background: var(--ac); color: var(--on)">Add</button></div>
+</div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 12px; background: linear-gradient(150deg, #22301F, #1C1F1B)">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); color: var(--act)">LIVE THIS WEEK · 12–18 OCT</span>
+<span style="font-size: 20px; font-weight: 800; font-stretch: 110%">Take a night train</span>
+<div style="display: flex; gap: 24px"><span style="display: flex; flex-direction: column"><b style="font-size: 22px">238</b><span style="font-size: 12px; color: var(--mu)">joined</span></span><span style="display: flex; flex-direction: column"><b style="font-size: 22px">41</b><span style="font-size: 12px; color: var(--mu)">new today</span></span><span style="display: flex; flex-direction: column"><b style="font-size: 22px">3</b><span style="font-size: 12px; color: var(--mu)">featured</span></span></div>
+<button type="button" onClick="{{goQuests}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 0; background: var(--ac); color: var(--on); align-self: flex-start">Review entries</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isQuests}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: 1fr 420px; gap: 10px; min-height: 0">
+<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; overflow: hidden">
+<div style="display: grid; grid-template-columns: 130px 1fr 120px 80px"><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">WEEK</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">SIDEQUEST</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">STATUS</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">JOINED</span></div>
+<sc-for list="{{quests}}" as="q" hint-placeholder-count="5">
+<div onClick="{{q.pick}}" style="display: grid; grid-template-columns: 130px 1fr 120px 80px; align-items: center; {{q.row}}"><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mu)">{{q.week}}</span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-weight: 700">{{q.title}}</span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle"><span style="{{q.statusStyle}}">{{q.status}}</span></span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-family: 'JetBrains Mono', monospace">{{q.joined}}</span></div>
+</sc-for>
+</div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--ln)">
+<span style="font-size: 15px; font-weight: 800; flex: 1">Entries · {{qTitle}} <span style="color: var(--mu); font-weight: 600; font-size: 13px">· {{entryTotal}}</span></span>
+<sc-for list="{{efTabs}}" as="ef" hint-placeholder-count="5"><button type="button" onClick="{{ef.pick}}" style="{{ef.style}}">{{ef.label}}</button></sc-for>
+<div style="display: flex; align-items: center; gap: 6px; width: 170px; height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--ln); box-sizing: border-box; color: var(--mu); font-size: 12px">⌕ Search entries</div>
+</div>
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{ false }}"><div style="display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(185,222,92,.08); border-bottom: 1px solid var(--ln)"><span style="font-size: 13px; font-weight: 700; flex: 1">{{selCount}} selected</span><button type="button" onClick="{{bulkFeature}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 0; background: var(--ac); color: var(--on); height: 26px; font-size: 12px">★ Feature</button><button type="button" onClick="{{bulkHide}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--ln); background: transparent; color: var(--tx); height: 26px; font-size: 12px">Hide</button><button type="button" onClick="{{clearSel}}" style="border: 0; background: none; color: var(--mu); font-family: inherit; font-size: 12px; cursor: pointer">Clear</button></div></sc-if>
+<div style="display: grid; grid-template-columns: 34px 40px 1fr 130px 90px 60px 70px 96px 120px; align-items: center"><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)"></span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)"></span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">STORY</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">BY</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">COUNTRY</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">♥</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">POSTED</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">STATUS</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln); text-align: right">ACTIONS</span></div>
+<sc-for list="{{entries}}" as="e" hint-placeholder-count="10">
+<div style="display: grid; grid-template-columns: 34px 40px 1fr 130px 90px 60px 70px 96px 120px; align-items: center; border-bottom: 1px solid var(--ln); {{e.row}}">
+<span style="padding: 0 0 0 12px"><button type="button" onClick="{{e.pickSel}}" style="{{e.box}}">{{e.tick}}</button></span>
+<span style="padding: 5px 0"><span style="display: block; width: 32px; height: 32px; border-radius: 6px; background: {{e.ph}}"></span></span>
+<span style="padding: 0 12px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{e.text}}</span>
+<span style="padding: 0 12px; font-size: 12px; color: var(--mu); white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{e.who}}</span>
+<span style="padding: 0 12px; font-size: 12px; color: var(--mu)">{{e.country}}</span>
+<span style="padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px">{{e.likes}}</span>
+<span style="padding: 0 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">{{e.ago}}</span>
+<span style="padding: 0 12px"><span style="{{e.statusStyle}}">{{e.status}}</span></span>
+<span style="padding: 0 12px; display: flex; justify-content: flex-end; gap: 6px"><button type="button" onClick="{{e.star}}" style="{{e.starStyle}}">{{e.starLabel}}</button><button type="button" onClick="{{e.hide}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--ln); background: transparent; color: var(--tx); height: 24px; padding: 0 8px; font-size: 11px">{{e.hideLabel}}</button></span>
+</div>
+</sc-for>
+<div style="display: flex; align-items: center; gap: 6px; padding: 8px 12px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu); flex: 1">{{pageInfo}}</span>
+<sc-for list="{{pages}}" as="pg" hint-placeholder-count="4"><button type="button" onClick="{{pg.pick}}" style="{{pg.style}}">{{pg.label}}</button></sc-for></div>
+</div>
+</div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; align-self: start">
+<span style="font-size: 15px; font-weight: 800">{{editTitle}}</span>
+<label style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">TITLE</span><input value="{{qTitle}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%"></label>
+<label style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">THE DARE</span><textarea rows="3" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%; height: auto; padding: 10px 12px; line-height: 1.45; resize: none">{{qDesc}}</textarea></label>
+<div style="display: flex; gap: 10px"><label style="flex: 1; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">GOES LIVE</span><input type="date" value="{{qStart}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%; color-scheme: dark"></label><label style="flex: 1; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">ENDS</span><input type="date" value="{{qEnd}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%; color-scheme: dark"></label></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">COVER</span><div style="height: 110px; border-radius: 12px; border: 1px dashed var(--ln); display: flex; align-items: center; justify-content: center; color: var(--mu); font-size: 13px">Drop an image or pick a featured entry</div></div>
+<label style="display: flex; align-items: center; gap: 10px; font-size: 14px"><span style="width: 40px; height: 24px; border-radius: 999px; background: var(--ac); display: flex; justify-content: flex-end; padding: 3px; box-sizing: border-box"><span style="width: 18px; height: 18px; border-radius: 999px; background: var(--on)"></span></span>Send a push when it goes live</label>
+<div style="display: flex; gap: 8px"><button type="button" onClick="{{saveQ}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--ln); background: transparent; color: var(--tx); flex: 1">{{saveQLabel}}</button><button type="button" onClick="{{scheduleQ}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 0; background: var(--ac); color: var(--on); flex: 1">{{schedLabel}}</button></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isMod}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 8px">
+<sc-for list="{{modTabs}}" as="t" hint-placeholder-count="6">
+<button type="button" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 300px; gap: 10px">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; overflow: hidden">
+<div style="display: grid; grid-template-columns: 110px 1fr 180px 70px 250px"><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">TYPE</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">WHAT</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">WHY FLAGGED</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">AGE</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln); text-align: right">ACTION</span></div>
+<sc-for list="{{flags}}" as="f" hint-placeholder-count="6">
+<div style="display: grid; grid-template-columns: 110px 1fr 180px 70px 250px; align-items: stretch; {{f.row}}"><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle"><span style="{{f.typeStyle}}">{{f.type}}</span></span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; line-height: 1.4">{{f.text}}</span><span style="font-size: 12px; color: var(--mu)">{{f.where}}</span></span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-size: 13px; color: var(--mu)">{{f.why}}</span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mu)">{{f.age}}</span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; display: flex; justify-content: flex-end; align-items: center; gap: 6px"><span style="{{f.doneStyle}}">{{f.done}}</span><sc-if value="{{f.open}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{f.keep}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--ln); background: transparent; color: var(--tx); height: 32px; padding: 0 12px">Keep</button><button type="button" onClick="{{f.hide}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--ln); background: transparent; color: var(--tx); height: 32px; padding: 0 12px; border-color: var(--danger); color: var(--danger)">Hide</button><button type="button" onClick="{{f.warn}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--ln); background: transparent; color: var(--tx); height: 32px; padding: 0 12px">Warn</button></sc-if></span></div>
+</sc-for>
+</div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; align-self: start">
+<span style="font-size: 15px; font-weight: 800">Activity log</span>
+<sc-for list="{{log}}" as="l" hint-placeholder-count="5"><div style="display: flex; flex-direction: column; gap: 2px; padding-top: 8px; border-top: 1px solid var(--ln)"><span style="font-size: 13px">{{l.t}}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">{{l.w}}</span></div></sc-for>
+<span style="font-size: 12px; line-height: 1.45; color: var(--mu)">Auto-flags: the kindness filter, an image safety check on photos, links and spam patterns, 3+ user reports, and SOWO ratings from accounts that never posted a solo route.</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isBadges}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: 1fr 400px; gap: 10px">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; overflow: hidden">
+<div style="display: grid; grid-template-columns: 1.3fr 90px 1.1fr 1.2fr 90px 90px"><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">BADGE</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">TYPE</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">COUNTS</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">BRONZE / SILVER / GOLD</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">HOLDERS</span><span style="text-align: left; padding: 7px 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); border-bottom: 1px solid var(--ln)">STATUS</span></div>
+<sc-for list="{{badgeRows}}" as="b" hint-placeholder-count="10">
+<div onClick="{{b.pick}}" style="display: grid; grid-template-columns: 1.3fr 90px 1.1fr 1.2fr 90px 90px; align-items: stretch; {{b.row}}"><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; display: flex; align-items: center; gap: 10px; padding-top: 7px; padding-bottom: 7px"><svg width="34" height="34" viewBox="0 0 56 56" style="flex: none"><circle cx="28" cy="28" r="25" stroke-width="3" style="fill: rgba(185,222,92,.1); stroke: var(--act)"></circle><g transform="translate(16 16)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="{{b.iconStyle}}"><path d="{{b.icon}}"></path></g></svg><b>{{b.name}}</b></span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-size: 13px; color: var(--mu); display: flex; align-items: center">{{b.type}}</span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-size: 13px; display: flex; align-items: center">{{b.metric}}</span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; font-size: 12px; display: flex; align-items: center">{{b.th}}</span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; font-family: 'JetBrains Mono', monospace; font-size: 12px; display: flex; align-items: center">{{b.holders}}</span><span style="padding: 7px 12px; border-bottom: 1px solid var(--ln); font-size: 13px; vertical-align: middle; display: flex; align-items: center"><span style="{{b.statusStyle}}">{{b.status}}</span></span></div>
+</sc-for>
+</div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; align-self: start">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 15px; font-weight: 800">{{edName}}</span><span style="{{edStatusStyle}}">{{edStatus}}</span></div>
+<div style="display: flex; align-items: center; justify-content: center; gap: 18px; padding: 14px; border-radius: 14px; background: var(--bg)">
+<sc-for list="{{previews}}" as="p" hint-placeholder-count="3"><span style="display: flex; flex-direction: column; align-items: center; gap: 6px"><svg width="56" height="56" viewBox="0 0 56 56" style="flex: none"><circle cx="28" cy="28" r="25" stroke-width="3" style="{{p.ring}}"></circle><g transform="translate(16 16)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="{{p.iconStyle}}"><path d="{{p.icon}}"></path></g></svg><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">{{p.label}}</span></span></sc-for>
+</div>
+<label style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">NAME</span><input value="{{edName}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%"></label>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">ICON</span><div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{iconPick}}" as="i" hint-placeholder-count="10"><button type="button" onClick="{{i.pick}}" style="{{i.style}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{i.d}}"></path></svg></button></sc-for>
+</div></div>
+<div style="display: flex; gap: 4px; background: var(--sf2); border-radius: 999px; padding: 3px">
+<sc-for list="{{types}}" as="t" hint-placeholder-count="2"><button type="button" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button></sc-for>
+</div>
+<label style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">COUNTS AUTOMATICALLY FROM</span><select style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%; -webkit-appearance: none; appearance: none"><option selected>{{edMetric}}</option><option>Distance (km)</option><option>Countries</option><option>Routes posted</option><option>Moments</option><option>Boat legs</option><option>Train legs</option><option>Solo routes</option><option>Spots tagged</option></select></label>
+<sc-if value="{{edLevels}}" hint-placeholder-val="{{ true }}"><div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px"><label style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); color: #C98B5A">BRONZE AT</span><input value="{{edB}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%"></label><label style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); color: #C9D0D8">SILVER AT</span><input value="{{edS}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%"></label><label style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu); color: #E9C35B">GOLD AT</span><input value="{{edG}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%"></label></div></sc-if>
+<sc-if value="{{edOne}}" hint-placeholder-val="{{ false }}"><label style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--mu)">UNLOCKS AT</span><input value="{{edB}}" style="height: 34px; border-radius: 10px; border: 1px solid var(--ln); background: var(--bg); padding: 0 12px; font-family: inherit; font-size: 14px; color: var(--tx); box-sizing: border-box; width: 100%"></label></sc-if>
+<span style="font-size: 12px; line-height: 1.45; color: var(--mu)">{{edNote}}</span>
+<div style="display: flex; gap: 8px"><button type="button" onClick="{{saveB}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--ln); background: transparent; color: var(--tx); flex: 1">{{saveBLabel}}</button><button type="button" onClick="{{edGo}}" style="height: 30px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: 0; background: var(--ac); color: var(--on); flex: 1">{{edCta}}</button></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isLater}}" hint-placeholder-val="{{ false }}">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 12px; max-width: 640px">
+<span style="{{laterLabelStyle}}">{{laterLabel}}</span>
+<span style="font-size: 22px; font-weight: 800">{{title}}</span>
+<span style="font-size: 15px; line-height: 1.55; color: var(--mu)">{{laterText}}</span>
+<span style="font-size: 13px; line-height: 1.5; color: var(--mu)">{{laterMeanwhile}}</span>
+</div>
+</sc-if>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"section":{"editor":"enum","options":["overview","quests","mod","badges","users","explore","pro","content","numbers"],"default":"overview"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { sec: props.section || 'overview', q: props.section === 'quests' ? 1 : 0, star: { 0: true, 1: true, 4: true }, hid: {}, mtab: 'all', res: {}, log: [], b: props.section === 'badges' ? 9 : 0, btype: null, icon: null, savedQ: -1, savedB: -1, doneAt: {}, sched: false, live9: false, tfilter: 'All', added: [], ef: 'All', sel: {}, page: 1 }; }
+renderVals() {
+var self = this;
+var s = this.state;
+var V = {};
+
+var IC = { home: 'M3 11l9-7 9 7v9H3zM9 20v-6h6v6', quest: 'M4 21V4h11l-2 4 2 4H4', star: 'M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z', shield: 'M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z', medal: 'M12 21a6 6 0 100-12 6 6 0 000 12zM8 3l2 6M16 3l-2 6', users: 'M8 11a3 3 0 100-6 3 3 0 000 6zM16 11a3 3 0 100-6 3 3 0 000 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5', card: 'M3 6h18v12H3zM3 10h18', text: 'M4 6h16M4 12h10M4 18h13', chart: 'M4 20V10M10 20V4M16 20v-7M22 20H2' };
+var B = { road: 'M8 3L5 21M16 3l3 18M12 5v3M12 11v3M12 17v3', flag: 'M5 21V4M5 4h11l-2 4 2 4H5', mountain: 'M3 19l6-10 4 6 3-4 5 8z', boat: 'M3 15h18l-3 4H6zM12 4v11M12 5l6 7h-6', bus: 'M5 4h14v12H5zM5 10h14M8 19v-3M16 19v-3', sun: 'M3 18h18M6 18a6 6 0 0112 0M12 6v3M5 10l2 2M19 10l-2 2', peak: 'M3 20l7-12 4 6 2-3 5 9zM10 8V3l4 1.5-4 1.5', fire: 'M12 21c-4 0-6-3-6-6 0-4 4-6 4-10 3 2 4 4 4 6 1-1 2-2 2-3 2 2 2 4 2 7 0 3-2 6-6 6z', train: 'M6 3h12v13H6zM6 10h12M9 19l-2 2M15 19l2 2', bowl: 'M4 11h16a8 8 0 01-16 0zM8 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4' };
+var NAV = [['overview', 'Overview', IC.home, '', 'now'], ['quests', 'Sidequests', IC.quest, '', 'now'], ['explore', 'Explore curation', IC.star, '', 'now'], ['mod', 'Moderation', IC.shield, '9', 'now'], ['badges', 'Badges', IC.medal, '', 'now'], ['users', 'Users', IC.users, '', 'now'], ['pro', 'Pro & promos', IC.card, '', 'later'], ['content', 'App content', IC.text, '', 'later'], ['numbers', 'Numbers', IC.chart, '', 'later']];
+var sec = s.sec;
+V.nav = NAV.map(function (n) { var on = sec === n[0]; return { label: n[1], icon: n[2], badge: n[4] === 'later' ? 'LATER' : n[3], pick: function () { self.setState({ sec: n[0] }); },
+badgeStyle: n[4] === 'later' ? "font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; color: var(--mu);" : (n[3] ? 'min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 999px; background: var(--danger); color: #131512; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center;' : 'display: none;'),
+style: 'display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 8px; border: 0; border-radius: 10px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ' + (on ? 'background: var(--sf2); color: var(--tx);' : 'background: transparent; color: var(--mu);') + (n[4] === 'later' ? ' opacity: .7;' : '') }; });
+var meta = NAV.filter(function (n) { return n[0] === sec; })[0];
+V.title = meta[1];
+V.phase = meta[4] === 'later' ? 'BUILD AFTER LAUNCH' : 'NEEDED AT LAUNCH';
+V.phaseStyle = "font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 5px 10px; border-radius: 999px; " + (meta[4] === 'later' ? 'background: rgba(240,180,90,.15); color: var(--warn);' : 'background: rgba(185,222,92,.12); color: var(--act);');
+V.isOverview = sec === 'overview'; V.isQuests = sec === 'quests'; V.isMod = sec === 'mod'; V.isBadges = sec === 'badges';
+var LATER = {
+explore: ['Pick which routes go into Recommended, Best in [month] and Hidden gems, swap a collection, and pin starred sidequest entries onto Explore. Drag to reorder, schedule a collection for a month.', 'Before this is built: Explore runs on automatic picks (most saved + weather match), and you star entries from the Sidequests page.'],
+users: ['Look anyone up, see their routes, reports and Pro status, verify creators, warn, suspend or ban, and restore a mistaken ban. Every action lands in the activity log.', 'Needed at launch in a basic form: search + suspend. The full profile view can follow.'],
+pro: ['Create promo codes, run offers (e.g. 20% off yearly), change the free trial length and see Pro sign-ups and cancels.', 'Before this is built: prices and the 1-month trial are set in the App Store and Google Play consoles. Refunds always go through them.'],
+content: ['Edit the loading-screen quotes, Must-know categories, bio prompts, the kindness-filter word list and push notification copy, without an app update.', 'Before this is built: these ship inside the app, and changes go out with app updates.'],
+numbers: ['Sign-ups, weekly active travellers, routes posted, sidequest joins, steals, Pro conversion and where people drop off when building a route.', 'Before this is built: use the analytics tool you plug in at launch (e.g. its own dashboard). This page just brings the key numbers in one place.']
+};
+V.isLater = !!LATER[sec] && sec !== 'users' && sec !== 'explore' ? true : (sec === 'users' || sec === 'explore');
+V.laterText = LATER[sec] ? LATER[sec][0] : ''; V.laterMeanwhile = LATER[sec] ? LATER[sec][1] : '';
+var basic = sec === 'users' || sec === 'explore';
+if (basic) { V.phase = 'BASIC AT LAUNCH'; }
+V.laterLabel = basic ? 'BASIC VERSION AT LAUNCH, FULL VERSION AFTER' : 'AFTER LAUNCH';
+V.laterLabelStyle = "font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .5px; color: " + (basic ? 'var(--act)' : 'var(--warn)') + ';';
+V.kpis = [['SIGN-UPS · 7 DAYS', '1,284', '+18% vs last week'], ['ROUTES POSTED', '312', '41 live right now'], ['ACTIVE TRAVELLERS', '8,920', 'opened the app this week'], ['PRO SUBSCRIBERS', '426', '61 on free trial']].map(function (k) { return { label: k[0], v: k[1], d: k[2] }; });
+function go(x) { return function () { self.setState({ sec: x }); }; }
+V.goQuests = go('quests');
+function now() { var d = new Date(); var h = d.getHours(), m = d.getMinutes(); return 'TODAY ' + ((h % 12) || 12) + ':' + (m < 10 ? '0' : '') + m + (h < 12 ? 'AM' : 'PM'); }
+function markDone(k) { if (!s.doneAt[k]) { var o = Object.assign({}, s.doneAt); o[k] = now(); return o; } return s.doneAt; }
+self.markDone = markDone;
+var TD = [
+['flags', 'Review 9 flagged items (2 sidequest entries)', 'Today', 'over', 'AUTO', 'Review', 'mod'],
+['sched', 'Schedule next week\'s sidequest (19–25 Oct)', 'Thu 15 Oct', 'soon', 'AUTO', 'Schedule', 'quests'],
+['sowo', 'Check 2 suspicious SOWO ratings', 'Today', 'over', 'AUTO', 'Check', 'mod'],
+['feature', 'Feature 5 night-train entries on Explore', 'Fri 16 Oct', 'soon', 'AUTO', 'Open', 'quests'],
+['explore', 'Draft "Best in November" collection', 'Sun 25 Oct', 'later', 'ME', 'Open', 'explore'],
+['badge', 'Make Street food badge live', 'Sat 31 Oct', 'later', 'ME', 'Open', 'badges'],
+['review', 'Reply to App Store review about offline maps', 'Yesterday', 'late', 'ME', '', ''],
+['done1', 'Hide spam comments on Bac Ha loop', 'Sat 10 Oct', 'later', 'AUTO', 'Review', 'mod']
+].concat(s.added.map(function (t, j) { return ['add' + j, t, 'Fri 16 Oct', 'soon', 'ME', '', '']; }));
+var doneAt = Object.assign({ done1: 'SAT 10 OCT 9:12PM' }, s.doneAt);
+var tf = s.tfilter;
+var rows = TD.filter(function (t) { var d = !!doneAt[t[0]]; return tf === 'Done' ? d : tf === 'Mine' ? t[4] === 'ME' : true; });
+rows = rows.filter(function (t) { return !doneAt[t[0]]; }).concat(rows.filter(function (t) { return !!doneAt[t[0]]; }));
+V.todoCount = TD.filter(function (t) { return !doneAt[t[0]]; }).length + ' OPEN';
+V.todoTabs = ['All', 'Mine', 'Done'].map(function (l) { var on = tf === l; return { label: l, pick: function () { self.setState({ tfilter: l }); }, style: 'height: 26px; padding: 0 10px; border-radius: 999px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 0; background: var(--tx); color: var(--bg);' : 'border: 1px solid var(--ln); background: transparent; color: var(--mu);') }; });
+var DUE = { late: ['var(--danger)', 'OVERDUE · '], over: ['var(--danger)', ''], soon: ['var(--warn)', ''], later: ['var(--mu)', ''] };
+V.todo = rows.map(function (t) { var d = doneAt[t[0]], dc = DUE[t[3]], manual = !t[6]; return { text: t[1], src: t[4],
+due: d ? 'DONE · ' + d : dc[1] + t[2].toUpperCase(),
+cta: d ? '' : (manual ? 'Mark done' : t[5] + ' →'),
+go: manual ? function () { self.setState({ doneAt: markDone(t[0]) }); } : go(t[6]),
+dot: 'width: 8px; height: 8px; border-radius: 999px; flex: none; background: ' + (d ? 'var(--ln)' : dc[0]) + ';',
+textStyle: 'flex: 1; min-width: 0; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ' + (d ? 'text-decoration: line-through; color: var(--mu); opacity: .6;' : ''),
+srcStyle: "font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 999px; " + (d ? 'opacity: .5; ' : '') + (t[4] === 'AUTO' ? 'background: var(--sf2); color: var(--mu);' : 'background: rgba(185,222,92,.12); color: var(--act);'),
+dueStyle: "width: 170px; text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: " + (d ? 'var(--mu)' : dc[0]) + ';' + (d ? ' opacity: .7;' : ''),
+goStyle: 'width: 76px; border: 0; background: none; padding: 0; text-align: right; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; color: ' + (manual ? 'var(--mu)' : 'var(--act)') + ';' }; });
+V.draft = '';
+V.addTodo = function () { self.setState({ added: s.added.concat(['Post launch update on Instagram']) }); };
+var Q = [['12–18 OCT', 'Take a night train', 'LIVE', '238'], ['19–25 OCT', 'Swim somewhere you didn\'t plan to', 'DRAFT', '—'], ['26 OCT–1 NOV', 'Ask a local where they\'d eat', 'SCHEDULED', '—'], ['5–11 OCT', 'Eat something you can\'t pronounce', 'ENDED', '412'], ['28 SEP–4 OCT', 'Ask a local where they\'d go', 'ENDED', '301']];
+var qs = s.q;
+V.quests = Q.map(function (q, i) { var c = { LIVE: 'var(--act)', DRAFT: 'var(--warn)', SCHEDULED: 'var(--info)', ENDED: 'var(--mu)' }[q[2]]; return { week: q[0], title: q[1], status: q[2], joined: q[3], pick: function () { self.setState({ q: i }); },
+row: 'cursor: pointer; ' + (qs === i ? 'background: var(--sf2);' : ''),
+statusStyle: "font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 999px; border: 1px solid " + c + '; color: ' + c + ';' }; });
+var cq = Q[qs];
+V.scheduleQ = function () { if (qs === 1) self.setState({ sched: true, doneAt: markDone('sched') }); };
+V.schedLabel = qs === 1 && s.sched ? 'Scheduled ✓' : 'Schedule';
+if (s.sched) Q[1][2] = 'SCHEDULED';
+V.saveQ = function () { self.setState({ savedQ: qs }); }; V.saveQLabel = s.savedQ === qs ? 'Draft saved ✓' : 'Save draft';
+V.saveB = function () { self.setState({ savedB: sel }); }; V.saveBLabel = s.savedB === sel ? 'Draft saved ✓' : 'Save draft';
+V.editTitle = cq[2] === 'DRAFT' ? 'Finish next week\'s sidequest' : 'Edit sidequest';
+V.qTitle = cq[1];
+V.qDesc = { 0: 'Fall asleep in one place, wake up somewhere new. Bunk, seat or floor, it all counts. Done one before? That counts too.', 1: 'A river, a lake, a hotel pool you snuck into. If you didn\'t pack for it, even better.', 2: 'Skip the top-10 list. Ask someone who lives there and go where they send you.', 3: 'Point at the menu and trust the universe.', 4: 'The best stops never make the guidebook.' }[qs];
+V.qStart = ['2026-10-12', '2026-10-19', '2026-10-26', '2026-10-05', '2026-09-28'][qs]; V.qEnd = ['2026-10-18', '2026-10-25', '2026-11-01', '2026-10-11', '2026-10-04'][qs];
+var PH = ['var(--ph1)', 'var(--ph2)', 'var(--ph3)', 'var(--ph4)'];
+var TX = ['Hanoi to Hue. The bunk was 40cm wide and I slept like a baby.', 'Woke up to snow outside Harbin.', 'Seat 34, no sleep, best sunrise of my life.', 'Shared a cabin with a grandma who fed me eggs for 9 hours.', 'Missed my stop. Zero regrets.', 'Bangkok to Chiang Mai, top bunk, rain on the window.', 'Trans-Mongolian, day 3. Lost track of time zones.', 'Sleeper bus counts? Asking for me.', 'Overnight to Hampi, chai at every stop.', 'Couchette to Venice with 5 strangers, now group chat.', 'Night train to Jodhpur, someone\'s goat in the corridor.', 'Ate instant noodles at 2am with the conductor.'];
+var WHO = ['@maya.goes', '@twowheelsnorth', '@kellykayaks', '@jun.walks', '@saltandsole', '@vivi.wanders', '@leafandlantern', '@nomadgoblin', '@dunedrifter', '@crater.kid', '@templerun', '@islandhopper'];
+var CO = ['Vietnam', 'China', 'India', 'Thailand', 'Malaysia', 'Thailand', 'Mongolia', 'Laos', 'India', 'Italy', 'India', 'Vietnam'];
+var ALL = [];
+for (var n = 0; n < 238; n++) { var k = n % 12; ALL.push({ id: n, text: TX[k], who: WHO[(n * 7) % 12], country: CO[k], likes: (n * 37 + 11) % 220, ago: (n < 41 ? Math.floor(n / 4 + 1) + 'H' : Math.floor(n / 40 + 1) + 'D'), photo: n % 3 !== 2, ph: PH[n % 4], flagged: n === 3 || n === 17 || n === 58 }); }
+var st = function (e) { if (s.hid[e.id]) return 'Hidden'; if (e.flagged) return 'Flagged'; if (s.star[e.id]) return 'Featured'; return 'Visible'; };
+var ef = s.ef;
+var list = ALL.filter(function (e) { var x = st(e); return ef === 'All' ? true : ef === 'Has photo' ? e.photo : ef === 'Featured' ? x === 'Featured' : ef === 'Flagged' ? x === 'Flagged' : true; });
+if (ef === 'Most liked') list = list.slice().sort(function (a, b) { return b.likes - a.likes; });
+var PER = 10, pages = Math.max(1, Math.ceil(list.length / PER)), pg = Math.min(s.page, pages);
+var slice = list.slice((pg - 1) * PER, pg * PER);
+V.entryTotal = ALL.length + ' entries';
+V.efTabs = ['All', 'Most liked', 'Has photo', 'Featured', 'Flagged · 3'].map(function (l) { var key = l.split(' ·')[0], on = ef === key; return { label: l, pick: function () { self.setState({ ef: key, page: 1 }); }, style: 'height: 26px; padding: 0 10px; border-radius: 999px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 0; background: var(--tx); color: var(--bg);' : key === 'Flagged' ? 'border: 1px solid var(--danger); background: transparent; color: var(--danger);' : 'border: 1px solid var(--ln); background: transparent; color: var(--mu);') }; });
+var SC = { Visible: 'var(--mu)', Featured: 'var(--act)', Flagged: 'var(--danger)', Hidden: 'var(--mu)' };
+V.entries = slice.map(function (e) { var x = st(e), on = x === 'Featured', picked = !!s.sel[e.id]; return { text: e.text, who: e.who, country: e.country, likes: e.likes, ago: e.ago, ph: e.photo ? e.ph : 'var(--sf2)', status: x === 'Featured' ? '★ FEATURED' : x.toUpperCase(),
+statusStyle: "font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; padding: 3px 7px; border-radius: 999px; border: 1px solid " + SC[x] + '; color: ' + SC[x] + ';',
+row: x === 'Hidden' ? 'opacity: .45;' : (picked ? 'background: rgba(185,222,92,.06);' : ''),
+tick: picked ? '✓' : '', box: 'width: 16px; height: 16px; border-radius: 4px; padding: 0; cursor: pointer; font-size: 10px; font-weight: 800; ' + (picked ? 'border: 0; background: var(--ac); color: var(--on);' : 'border: 1.5px solid var(--mu); background: transparent; color: transparent;'),
+pickSel: function () { var o = Object.assign({}, s.sel); o[e.id] = !picked; self.setState({ sel: o }); },
+starLabel: x === 'Flagged' ? 'In moderation' : (on ? '★' : '☆ Feature'),
+starStyle: 'height: 24px; padding: 0 8px; border-radius: 999px; font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; ' + (x === 'Flagged' ? 'border: 0; background: none; color: var(--danger);' : on ? 'border: 0; background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: transparent; color: var(--tx);'),
+star: x === 'Flagged' ? go('mod') : function () { var o = Object.assign({}, s.star); o[e.id] = !on; var n = Object.keys(o).filter(function (k) { return o[k]; }).length; self.setState({ star: o, doneAt: n >= 5 ? markDone('feature') : s.doneAt }); },
+hideLabel: x === 'Hidden' ? 'Unhide' : 'Hide',
+hide: function () { var o = Object.assign({}, s.hid); o[e.id] = !s.hid[e.id]; self.setState({ hid: o }); } }; });
+var nSel = Object.keys(s.sel).filter(function (k) { return s.sel[k]; });
+V.hasSel = nSel.length > 0; V.selCount = nSel.length;
+V.bulkFeature = function () { var o = Object.assign({}, s.star); nSel.forEach(function (k) { o[k] = true; }); var n = Object.keys(o).filter(function (k) { return o[k]; }).length; self.setState({ star: o, sel: {}, doneAt: n >= 5 ? markDone('feature') : s.doneAt }); };
+V.bulkHide = function () { var o = Object.assign({}, s.hid); nSel.forEach(function (k) { o[k] = true; }); self.setState({ hid: o, sel: {} }); };
+V.clearSel = function () { self.setState({ sel: {} }); };
+V.pageInfo = ((pg - 1) * PER + 1) + '–' + Math.min(pg * PER, list.length) + ' OF ' + list.length;
+V.pages = ['‹'].concat([1, 2, 3].filter(function (p) { return p <= pages; }).map(String)).concat(pages > 3 ? ['…', String(pages)] : []).concat(['›']).map(function (l) { var num = +l, on = num === pg; return { label: l, pick: function () { var p = l === '‹' ? pg - 1 : l === '›' ? pg + 1 : num; if (p >= 1 && p <= pages) self.setState({ page: p }); }, style: 'min-width: 26px; height: 26px; padding: 0 6px; border-radius: 8px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 0; background: var(--tx); color: var(--bg);' : 'border: 1px solid var(--ln); background: transparent; color: var(--mu);') }; });
+var F = [['SIDEQUEST', 'Photo flagged by image check', 'Take a night train · @spamtravelz', 'Image safety check', '40 MIN'], ['SIDEQUEST', 'Book cheap sleeper tickets at my link 👉', 'Take a night train · @promo.trips', 'Contains a link', '1 H'], ['COMMENT', 'lol this route is so overrated, did you even go', 'Campfire · Ha Giang, the long way', 'Kindness filter', '12 MIN'], ['UPDATE', 'Road closed forever, don\'t bother', 'Heads up · Nho Que river', '3 people say it\'s open', '2 H'], ['SOWO', 'Rated 0% on 6 routes in one hour', '@throwaway_221', 'Never posted a solo route', '3 H'], ['COMMENT', 'DM me for cheaper easy riders 👉 link', 'Campfire · Bac Ha loop', 'Contains a link', '5 H'], ['USER', '@spamtravelz', '14 comments in 10 minutes', '3 user reports', '6 H'], ['SOWO', 'Rated 0% on Sapa trek', '@sofia.k', 'Never posted a solo route', '1 D'], ['COMMENT', 'You clearly don\'t know Vietnam', 'Campfire · Vietnam, south to north', 'Kindness filter', '1 D']];
+var tab = s.mtab;
+var typeCol = { SIDEQUEST: 'var(--act)', COMMENT: 'var(--info)', UPDATE: 'var(--warn)', SOWO: '#F0A6C8', USER: 'var(--danger)' };
+V.modTabs = [['all', 'Open · ' + F.filter(function (f, i) { return !s.res[i]; }).length], ['COMMENT', 'Comments'], ['SIDEQUEST', 'Sidequests'], ['UPDATE', 'Updates'], ['SOWO', 'SOWO'], ['USER', 'Users']].map(function (t) { var on = tab === t[0]; return { label: t[1], pick: function () { self.setState({ mtab: t[0] }); }, style: 'height: 28px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);') }; });
+function act(i, label) { return function () { var r = Object.assign({}, s.res); r[i] = label; var da = s.doneAt; if (F.every(function (_, j) { return r[j]; })) da = Object.assign({}, da, { flags: da.flags || now() }); if (r[4] && r[7]) da = Object.assign({}, da, { sowo: da.sowo || now() }); self.setState({ res: r, doneAt: da, log: [label + ': ' + F[i][1].slice(0, 38) + '…'].concat(s.log) }); }; }
+V.flags = F.map(function (f, i) { return { f: f, i: i }; }).filter(function (x) { return tab === 'all' || x.f[0] === tab; }).map(function (x) { var f = x.f, i = x.i, done = s.res[i]; return { type: f[0], text: f[1], where: f[2], why: f[3], age: f[4], open: !done, done: done || '', doneStyle: done ? "font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu);" : 'display: none;',
+row: done ? 'opacity: .5;' : '',
+typeStyle: "font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 999px; border: 1px solid " + typeCol[f[0]] + '; color: ' + typeCol[f[0]] + ';',
+keep: act(i, 'Kept'), hide: act(i, 'Hidden'), warn: act(i, 'Warned') }; });
+V.log = s.log.concat(['Hidden: "Seriously who rides like this" · Vivi · yesterday', 'Kept: Update on Ma Pi Leng · Vivi · 2 days ago', 'Suspended @promo.trips · Vivi · 3 days ago']).slice(0, 6).map(function (t) { var p = t.split(' · '); return { t: p[0], w: (p.slice(1).join(' · ') || 'Vivi · just now').toUpperCase() }; });
+var BD = [['Distance', B.road, 'Levels', 'Distance (km)', '500 / 2,000 / 10,000', '41,208', 'LIVE'], ['Countries', B.flag, 'Levels', 'Countries', '3 / 10 / 25', '28,950', 'LIVE'], ['Routes posted', B.mountain, 'Levels', 'Routes posted', '1 / 5 / 20', '19,402', 'LIVE'], ['Moments', B.sun, 'Levels', 'Moments', '25 / 100 / 500', '22,117', 'LIVE'], ['Boat legs', B.boat, 'Levels', 'Boat legs', '3 / 10 / 30', '9,830', 'LIVE'], ['First train ride', B.train, 'One-off', 'Train legs', 'at 1', '31,044', 'LIVE'], ['First boat ride', B.boat, 'One-off', 'Boat legs', 'at 1', '27,610', 'LIVE'], ['Lone wolf', B.mountain, 'One-off', 'Solo routes', 'at 5', '3,212', 'LIVE'], ['Sunrise chaser', B.sun, 'One-off', 'Moments before 6am', 'at 1', '6,480', 'LIVE'], ['Street food', B.bowl, 'Levels', 'Food spots tagged', '10 / 50 / 200', '—', 'DRAFT']];
+var sel = s.b;
+V.badgeRows = BD.map(function (b, i) { var c = b[6] === 'LIVE' ? 'var(--act)' : 'var(--warn)'; return { name: b[0], icon: b[1], type: b[2], metric: b[3], th: b[4], holders: b[5], status: b[6], pick: function () { self.setState({ b: i }); },
+iconStyle: 'stroke: var(--act)', row: 'cursor: pointer; ' + (sel === i ? 'background: var(--sf2);' : ''),
+statusStyle: "font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 999px; border: 1px solid " + c + '; color: ' + c + ';' }; });
+var cb = BD[sel];
+var lv = (s.btype || cb[2]) === 'Levels';
+var ths = cb[4].replace('at ', '').split(' / ');
+V.edName = cb[0]; V.edStatus = cb[6]; V.edMetric = cb[3]; V.edB = ths[0]; V.edS = ths[1] || ''; V.edG = ths[2] || ''; V.edLevels = lv; V.edOne = !lv; V.metricOpts = '';
+V.edStatusStyle = "font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 999px; border: 1px solid " + (cb[6] === 'LIVE' ? 'var(--act)' : 'var(--warn)') + '; color: ' + (cb[6] === 'LIVE' ? 'var(--act)' : 'var(--warn)') + ';';
+if (s.live9) BD[9][6] = 'LIVE';
+V.edCta = cb[6] === 'LIVE' ? 'Save changes' : 'Make it live';
+V.edGo = function () { if (sel === 9) self.setState({ live9: true, doneAt: markDone('badge') }); };
+V.edNote = cb[6] === 'LIVE' ? 'Changing numbers on a live badge never takes a badge away from anyone who already has it.' : 'When it goes live, everyone who already qualifies gets it straight away, with a notification.';
+var icon = s.icon || cb[1];
+V.previews = (lv ? [['#C98B5A', 'BRONZE'], ['#C9D0D8', 'SILVER'], ['#E9C35B', 'GOLD']] : [['var(--act)', 'EARNED'], ['var(--mu)', 'NOT YET']]).map(function (p, j) { var earned = p[1] !== 'NOT YET'; return { icon: icon, label: p[1], ring: 'fill: ' + (earned ? 'rgba(185,222,92,.1)' : 'var(--sf2)') + '; stroke: ' + (earned ? 'var(--act)' : 'var(--ln)'), iconStyle: 'stroke: ' + p[0] }; });
+V.iconPick = Object.keys(B).map(function (k) { var on = B[k] === icon; return { d: B[k], pick: function () { self.setState({ icon: B[k] }); }, style: 'width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--bg); color: var(--tx);') }; });
+V.types = ['Levels', 'One-off'].map(function (t) { var on = (s.btype || cb[2]) === t; return { label: t === 'Levels' ? 'Bronze · Silver · Gold' : 'One-off', pick: function () { self.setState({ btype: t }); }, style: 'flex: 1; height: 34px; border: 0; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ' + (on ? 'background: var(--tx); color: var(--bg);' : 'background: transparent; color: var(--mu);') }; });
+
+V.rootStyle = 'width: 1440px; height: 900px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); --bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --info: #8FB9E6; --warn: #F0B45A; --danger: #F08A7E; --map: #253126; --cnt: #34453A; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000;';
+return V;
+}
+}
+</script>
+</body>
+</html>

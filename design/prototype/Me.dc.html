@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · My profile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 0 16px; display: flex; flex-direction: column; gap: 12px">
+<sc-if value="{{owner}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-size: 22px; font-weight: 800; font-stretch: 110%">Your atlas</span>
+<a href="Settings.dc.html" aria-label="Settings" style="width: 44px; height: 44px; margin-right: -10px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"></path></svg></a>
+</div>
+</sc-if>
+<sc-if value="{{visitor}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<a href="Route.dc.html" aria-label="Back" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--mu)">{{handle}}</span>
+<a href="ShareAtlas.dc.html" aria-label="Share profile" style="width: 44px; height: 44px; margin-right: -12px; color: var(--tx); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"></path><path d="M5 12v8h14v-8"></path></svg></a>
+</div>
+</sc-if>
+
+<div style="display: flex; gap: 14px; align-items: center">
+<div style="width: 64px; height: 64px; border-radius: 999px; background: {{avatarBg}}; border: 3px solid var(--act); box-sizing: border-box; flex: none"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<div style="font-size: 20px; font-weight: 800; line-height: 1.2; white-space: nowrap">{{name}}</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">{{handleLine}}</div>
+<div style="font-size: 14px; line-height: 1.4; color: var(--mu)">{{bio}}</div>
+</div>
+</div>
+
+<div style="display: flex; gap: 8px; align-items: center">
+<sc-for list="{{links}}" as="lk" hint-placeholder-count="4">
+<a href="{{lk.href}}" aria-label="{{lk.aria}}" style="width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); text-decoration: none; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--act); flex: none"><path d="{{lk.icon}}"></path></svg></a>
+</sc-for>
+<sc-if value="{{owner}}" hint-placeholder-val="{{ true }}"><a href="EditProfile.dc.html" aria-label="Add a link" style="width: 38px; height: 38px; border-radius: 999px; border: 1px dashed var(--ln); color: var(--mu); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 18px; box-sizing: border-box">+</a></sc-if>
+</div>
+
+<sc-if value="{{owner}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 8px">
+<a href="EditProfile.dc.html" style="flex: 1; height: 44px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; box-sizing: border-box">Edit profile</a>
+<a href="ShareAtlas.dc.html" style="flex: 1; height: 44px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; box-sizing: border-box">Share atlas</a>
+</div>
+</sc-if>
+<sc-if value="{{visitor}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 8px">
+<button type="button" aria-pressed="{{followPressed}}" onClick="{{toggleFollow}}" style="{{followStyle}}">{{followLabel}}</button>
+<button type="button" aria-label="Notify me about new routes" onClick="{{toggleBell}}" style="width: 52px; height: 44px; border-radius: 999px; border: 1px solid {{bellBorder}}; background: var(--sf); color: {{bellColor}}; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0112 0v5l2 2H4z"></path><path d="M10 21h4"></path></svg></button>
+</div>
+</sc-if>
+
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">{{st0}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">ROUTES</div></div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">{{st1}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">COUNTRIES</div></div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">{{st2}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">KM</div></div>
+<div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; padding: 8px 10px"><div style="font-size: 16px; font-weight: 700">{{st3}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">BADGES</div></div>
+</div>
+
+<sc-if value="{{unpackedOn}}" hint-placeholder-val="{{ false }}"><a href="Unpacked.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 18px; background: radial-gradient(120% 120% at 0% 0%, #2B3A2A 0%, #1C1F1B 70%); border: 1px solid var(--act); color: var(--tx); text-decoration: none"><span style="font-size: 24px; flex: none">✦</span><span style="flex: 1; display: flex; flex-direction: column; gap: 1px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--act)">YOUR YEAR IS READY</span><span style="font-size: 16px; font-weight: 800">2026 Unpacked</span></span><span style="height: 32px; padding: 0 12px; border-radius: 999px; background: var(--ac); color: var(--on); font-size: 13px; font-weight: 700; display: flex; align-items: center">Open</span></a></sc-if>
+<a href="Atlas.dc.html" aria-label="Open the atlas full screen" style="display: block; border-radius: 20px; overflow: hidden; background: var(--sea); border: 1px solid var(--ln); position: relative; height: 140px; color: var(--tx); text-decoration: none">
+<svg viewBox="40 18 300 120" width="358" height="140" preserveAspectRatio="xMidYMid slice" style="display: block"><path d="M12 24 L40 20 L85 18 L100 28 L120 35 L128 43 L114 46 L105 55 L99 65 L83 64 L83 72 L93 76 L100 82 L97 81 L88 75 L75 70 L68 60 L62 56 L56 50 L56 42 L45 32 L30 30 L15 28 Z M107 12 L140 7 L160 14 L140 28 L125 26 Z M100 81 L120 80 L130 90 L145 96 L140 112 L132 118 L122 128 L115 145 L106 140 L109 120 L110 108 L102 95 Z M171 53 L171 47 L179 44 L176 42 L182 39 L188 36 L190 33 L185 29 L195 21 L210 19 L240 20 L260 17 L290 13 L320 17 L350 20 L360 24 L350 30 L340 32 L320 36 L315 47 L309 55 L306 53 L302 50 L301 59 L297 66 L290 69 L288 74 L289 79 L285 81 L283 77 L280 77 L280 83 L283 88.5 L278 82 L277 74 L272 68 L268 68 L260 75 L257 82 L253 72 L247 65 L237 65 L232 62 L228 60 L236 65 L239 68 L232 74 L223 77 L215 62 L213 59 L215 54 L208 53 L206 49 L203 54 L200 50 L194 48 L198 50 L196 52 L192 46 L188 46 L183 47 L179 53 Z M163 69 L163 76 L172 85 L185 86 L189 86 L192 95 L193 108 L198 124 L206 124 L213 116 L220 105 L220 93 L231 79 L223 78 L217 68 L212 59 L200 58 L190 53 L175 54 L170 60 Z M174 40 L182 39 L178 34 L175 31 L174 34 Z M310 59 L315 56 L320 55 L322 50 L321 45 L319 50 L316 54 Z M275 85 L278 86 L284 92 L286 96 L284 95 L278 88 Z M285 96 L290 96.5 L295 98 L290 98.2 L286 97.2 Z M289 89 L297 83 L299 89 L296 94 L290 93 Z M300 72 L302 77 L306 83 L302 83 L301 77 Z M311 91 L330 96 L321 99 Z M294 112 L309 105 L317 102 L322 101 L333 115 L330 127 L321 128 L311 121 L295 124 Z M352 125 L358 128 L351 135 L347 136 Z M224 102 L230 105 L227 115 L224 112 Z M300.2 67.5 L301.9 64.9 L301 64.7 L300 66.5 Z M260 80.2 L261.8 82.5 L260.2 84 Z" stroke-width="0.6" stroke-linejoin="round" style="fill: var(--land); stroke: var(--bd)"></path><polyline points="286.7,79.2 288.1,79.1 288.4,78.1 289.2,77.8 289.2,76.2 288.3,74.1 287.6,73.5 286.3,72.4 286,69.7 285.8,69 285,67.2" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="stroke: var(--rt)"></polyline><polyline points="286.7,79.2 288.1,79.1 288.4,78.1 289.2,77.8 289.2,76.2 288.3,74.1 287.6,73.5 286.3,72.4 286,69.7 285.8,69 285,67.2" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><polyline points="264,61.8 264.2,61.45 263.95,61.2 263.6,61.5" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="stroke: var(--rt)"></polyline><polyline points="264,61.8 264.2,61.45 263.95,61.2 263.6,61.5" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><polyline points="286.8,96.2 287.6,96.9 290.4,97.8 292.7,97.25 294.4,98.2" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="stroke: var(--rt)"></polyline><polyline points="286.8,96.2 287.6,96.9 290.4,97.8 292.7,97.25 294.4,98.2" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><polyline points="280.5,76.25 283.86,76.64 284.9,78.45 286.7,79.2" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="stroke: var(--rt)"></polyline><polyline points="280.5,76.25 283.86,76.64 284.9,78.45 286.7,79.2" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><polyline points="280.1,69.7 281.2,70.1 282.13,70.11" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="stroke: var(--rt)"></polyline><polyline points="280.1,69.7 281.2,70.1 282.13,70.11" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><polyline points="315.77,54.99 316.9,54.82 318.2,53.8 319.7,54.32" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="stroke: var(--rt)"></polyline><polyline points="315.77,54.99 316.9,54.82 318.2,53.8 319.7,54.32" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><polyline points="301.56,64.97 301.6,66 301.15,67.25" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="stroke: var(--rt)"></polyline><polyline points="301.56,64.97 301.6,66 301.15,67.25" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline><polyline points="283.85,88.71 284.03,88.87 284.1,88.95" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="stroke: var(--rt)"></polyline><polyline points="283.85,88.71 284.03,88.87 284.1,88.95" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--rt)"></polyline></svg>
+<div style="position: absolute; left: 12px; bottom: 10px; display: flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 999px; background: var(--scrim)"><span style="width: 14px; height: 4px; border-radius: 999px; background: var(--rt)"></span><span style="font-size: 13px; font-weight: 600">{{atlasLine}}</span></div>
+<span style="position: absolute; right: 12px; bottom: 10px; display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: var(--scrim); font-size: 12px; font-weight: 700; color: var(--act)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>Explore</span>
+</a>
+
+<div role="tablist" aria-label="Profile sections" style="display: flex; gap: 4px; background: var(--sf2); border-radius: 999px; padding: 4px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{showRoutes}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{owner}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<a href="Live.dc.html" style="display: flex; gap: 12px; align-items: center; background: var(--sf); border: 1px solid var(--act); border-radius: 16px; padding: 12px 14px; color: var(--tx); text-decoration: none">
+<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--ph1); flex: none"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="align-self: flex-start; background: var(--ac); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px">IN PROGRESS · DAY 12</span><span style="font-size: 15px; font-weight: 700; white-space: nowrap">Vietnam, south to north</span><span style="font-size: 13px; color: var(--mu)">Private · add today's day</span></div>
+</a>
+<div style="display: flex; gap: 8px; margin-top: -4px">
+<a href="Share.dc.html" style="flex: 1; height: 44px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"></path><path d="M5 12v8h14v-8"></path></svg>Share route</a>
+<a href="EditPlace.dc.html" style="flex: 1; height: 44px; border-radius: 999px; border: 1px solid var(--ln); background: var(--sf); color: var(--tx); text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">Tags &amp; moments</a>
+</div>
+<a href="Create.dc.html" style="display: flex; gap: 12px; align-items: center; background: var(--sf); border: 1px dashed var(--ln); border-radius: 16px; padding: 12px 14px; color: var(--tx); text-decoration: none">
+<div style="width: 44px; height: 44px; border-radius: 12px; border: 1px dashed var(--mu); box-sizing: border-box; flex: none"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--mu)">DRAFT</span><span style="font-size: 15px; font-weight: 700; white-space: nowrap">Penang hawker crawl</span><span style="font-size: 13px; color: var(--mu)">3 legs · finish and post</span></div>
+</a>
+</div>
+</sc-if>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu); margin-top: 4px">{{completedLine}}</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{routes}}" as="r" hint-placeholder-count="4">
+<a href="Route.dc.html" style="display: flex; flex-direction: column; justify-content: space-between; height: 120px; padding: 10px; box-sizing: border-box; background: {{r.color}}; border-radius: 16px; color: var(--tx); text-decoration: none">
+<span style="align-self: flex-start; background: var(--scrim); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 999px">{{r.tag}}</span>
+<div><div style="font-size: 14px; font-weight: 700; line-height: 1.25">{{r.title}}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; opacity: 0.85">{{r.meta}}</div></div>
+</a>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showSaved}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<div style="display: flex; gap: 6px">
+<sc-for list="{{savedFilters}}" as="f" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{f.pressed}}" onClick="{{f.pick}}" style="{{f.style}}">{{f.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 12px; color: var(--mu)">From creators you love</span>
+</div>
+<sc-for list="{{saved}}" as="r" hint-placeholder-count="4">
+<a href="{{r.href}}" style="display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln); color: var(--tx); text-decoration: none">
+<div style="flex: none; width: 64px; height: 64px; border-radius: 12px; background: {{r.color}}"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.title}}</span>
+<span style="font-size: 13px; color: var(--mu)">{{r.who}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mu)">{{r.meta}}</span>
+</div>
+<div style="flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<svg width="18" height="18" viewBox="0 0 24 24" style="fill: var(--act)"><path d="M6 3h12v18l-6-4-6 4z"></path></svg>
+<span style="font-size: 11px; color: var(--mu); white-space: nowrap">{{r.list}}</span>
+</div>
+</a>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{showBadges}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 16px; font-weight: 700">Personal bests</span></div>
+<div style="display: flex; flex-direction: column; background: var(--sf); border: 1px solid var(--ln); border-radius: 16px">
+<sc-for list="{{bests}}" as="p" hint-placeholder-count="4">
+<div style="display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--ln)">
+<span style="width: 40px; height: 40px; border-radius: 999px; background: var(--sf2); color: var(--act); display: flex; align-items: center; justify-content: center; flex: none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{p.icon}}"></path></svg></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--mu)">{{p.label}}</span><span style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.where}}</span></span>
+<span style="font-size: 18px; font-weight: 800; white-space: nowrap">{{p.value}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; gap: 12px; align-items: center; background: var(--sf); border: 1px solid var(--act); border-radius: 16px; padding: 12px 14px">
+<svg width="56" height="56" viewBox="0 0 56 56" style="flex: none"><circle cx="28" cy="28" r="26" stroke-width="2" style="fill: var(--ac); stroke: var(--ring)"></circle><circle cx="28" cy="28" r="20" fill="none" stroke-width="1" stroke-dasharray="2 3" style="stroke: var(--on); opacity: 0.5"></circle><g transform="translate(16 16)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--on)"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"></path><path d="M12 7v5M9.5 9.5h5"></path></g></svg>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--act)">NEW ACHIEVEMENT · 2 DAYS AGO</span><span style="font-size: 16px; font-weight: 700">Distance · Silver</span><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">You passed 2,000 km on Sightquest routes.</span></div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 2px"><span style="font-size: 16px; font-weight: 700">Badges</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{badges}}" as="b" hint-placeholder-count="9">
+<div style="{{b.card}}">
+<svg width="54" height="54" viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" stroke-width="3" style="{{b.ringStyle}}"></circle><circle cx="28" cy="28" r="20" fill="none" stroke-width="1" stroke-dasharray="2 3" style="{{b.dashStyle}}"></circle><g transform="translate(16 16)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{b.iconStyle}}"><path d="{{b.icon}}"></path></g></svg>
+<span style="height: 32px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; line-height: 1.2; text-align: center; overflow: hidden">{{b.name}}</span>
+<span style="{{b.barWrap}}"><span style="{{b.bar}}"></span></span>
+</div>
+</sc-for>
+</div>
+<button type="button" onClick="{{toggleAch}}" style="height: 42px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">{{achBtn}}</button>
+</div>
+</sc-if>
+
+
+</div>
+
+<nav aria-label="Main" style="position: absolute; left: 12px; right: 12px; bottom: 12px; height: 60px; border-radius: 999px; background: var(--sf); border: 1px solid var(--ln); display: flex; justify-content: space-evenly; align-items: center; padding: 0 14px; box-sizing: border-box">
+<a href="Main.dc.html" aria-label="Explore" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 10a4.5 4.5 0 014.5-4.5h4a4.5 4.5 0 014.5 4.5v9a2 2 0 01-2 2h-9a2 2 0 01-2-2z"></path><path d="M9.5 5.5V4.5a2.5 2.5 0 015 0v1"></path><path d="M8.5 21v-4a1.5 1.5 0 011.5-1.5h4a1.5 1.5 0 011.5 1.5v4"></path></svg></a>
+<a href="Search.dc.html" aria-label="Search" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg></a>
+<a href="Create.dc.html" aria-label="Build a route" style="flex: none; width: 66px; height: 66px; border-radius: 999px; background: var(--ac); color: var(--on); box-shadow: 0 6px 18px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><path d="M2.3 10.4c3.4-2.6 6.6 1.8 9.8-.6s5.8-2.8 9.6.2"></path><path d="M2.2 14c3.4-2.2 6.8 1.8 10.2-.3s5.4-2.1 9.4.4"></path><path d="M4.6 18c2.8-1.5 5.8 1.2 8.6-.2s4.2-1.3 6.4.2"></path><path d="M5.2 6.1c2.4-1 4.6.8 7-.2s3.6-1 6 .2"></path></svg></a>
+<a href="Following.dc.html" aria-label="Friends" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: var(--mu)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.8"></circle><ellipse cx="12" cy="12" rx="10" ry="4"></ellipse><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"></ellipse><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"></ellipse></svg></a>
+<a href="Me.dc.html" aria-label="My profile" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: {{navAtlas}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg></a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"unpackedSeason":{"editor":"boolean","default":false},"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"view":{"editor":"enum","options":["owner","visitor"],"default":"owner"},"tab":{"editor":"enum","options":["Routes","Saved","Badges"],"default":"Badges"},"$preview":{"width":390,"height":1660}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { tab: props.tab || (props.view === 'visitor' ? 'Routes' : 'Badges'), following: false };
+}
+renderVals() {
+var self = this;
+var s = this.state;
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --cnt: #31362F; --rt: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --ph4: #4A4652; --scrim: rgba(19,21,18,0.78); --ring: #000000; --sea: #131A1D; --land: #27312B; --bd: #3A4A3F;',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --sf2: #E9E8E1; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212; --cnt: #D6D9CE; --rt: #5E8A0F; --ph1: #C8D4C0; --ph2: #DCCFC0; --ph3: #C5D2DB; --ph4: #D3CEDA; --scrim: rgba(255,255,255,0.86); --ring: #1B1D19; --sea: #D2E1EA; --land: #F2F5EC; --bd: #AFBDA5;'
+};
+var t = this.props.theme === 'light' ? 'light' : 'dark';
+var I = {
+mountain: 'M3 19l6-10 4 6 3-4 5 8z',
+road: 'M8 3L5 21M16 3l3 18M12 5v3M12 11v3M12 17v3',
+flag: 'M5 21V4M5 4h11l-2 4 2 4H5',
+bus: 'M5 4h14v12H5zM5 10h14M8 19v-3M16 19v-3',
+boat: 'M3 15h18l-3 4H6zM12 4v11M12 5l6 7h-6',
+remix: 'M6 3v4a3 3 0 003 3h6a3 3 0 003-3V3M12 10v11',
+check: 'M5 12l4 4 10-10',
+sun: 'M3 18h18M6 18a6 6 0 0112 0M12 6v3M5 10l2 2M19 10l-2 2',
+calendar: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',
+bowl: 'M4 11h16a8 8 0 01-16 0zM8 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4',
+peak: 'M3 20l7-12 4 6 2-3 5 9zM10 8V3l4 1.5-4 1.5',
+clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+fire: 'M12 21c-4 0-6-3-6-6 0-4 4-6 4-10 3 2 4 4 4 6 1-1 2-2 2-3 2 2 2 4 2 7 0 3-2 6-6 6z'
+};
+var TIER = { bronze: '#C98B5A', silver: '#C9D0D8', gold: '#E9C35B' };
+var ACH = [
+['Distance', I.road, 'km', 500, 2000, 10000, V ? 3240 : 6412],
+['Countries', I.flag, '', 3, 10, 25, V ? 11 : 9],
+['Routes posted', I.mountain, '', 1, 5, 20, V ? 23 : 14],
+['Days on the road', I.calendar, 'days', 30, 100, 365, V ? 140 : 96],
+['Ways to travel', I.bus, 'modes', 3, 6, 9, V ? 7 : 6],
+['Moments', I.sun, '', 25, 100, 500, V ? 410 : 188],
+['Spots tagged', I.bowl, '', 10, 50, 200, V ? 96 : 41],
+['Highest point', I.peak, 'm', 2000, 4000, 5500, V ? 5416 : 3700],
+['Routes stolen', I.remix, '', 5, 25, 100, V ? 58 : 23],
+['Live streak', I.fire, 'days', 7, 30, 90, V ? 18 : 12],
+['Boat legs', I.boat, '', 3, 10, 30, V ? 4 : 11],
+['Updates posted', I.check, '', 3, 15, 50, V ? 21 : 7],
+['Campfire answers', I.check, '', 5, 25, 100, V ? 64 : 3],
+['Co-built routes', I.remix, '', 1, 3, 10, V ? 0 : 1],
+['Must-knows complete', I.flag, 'routes', 1, 5, 20, V ? 6 : 0]
+];
+function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+var badgesAll = ACH.map(function (a) {
+var v = a[6], th = [a[3], a[4], a[5]], names = ['bronze', 'silver', 'gold'];
+var lvl = v >= th[2] ? 3 : v >= th[1] ? 2 : v >= th[0] ? 1 : 0;
+var tier = lvl ? names[lvl - 1] : null;
+var nextT = lvl < 3 ? th[lvl] : th[2], prevT = lvl ? th[lvl - 1] : 0;
+var pct = lvl === 3 ? 100 : Math.round((v - prevT) / (nextT - prevT) * 100);
+var col = tier ? TIER[tier] : 'var(--ln)';
+var unit = a[2] ? ' ' + a[2] : '';
+return { name: a[0], icon: a[1], lvl: lvl, lit: lvl > 0, barWrap: 'width: 100%; height: 5px; border-radius: 999px; background: var(--sf2); overflow: hidden; display: block;',
+tier: tier ? tier.toUpperCase() : 'LOCKED',
+tierStyle: "font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: .6px; padding: 2px 7px; border-radius: 999px; " + (tier ? 'background: ' + col + '; color: #131512;' : 'background: var(--sf2); color: var(--mu);'),
+ringStyle: 'fill: ' + (tier ? 'rgba(185,222,92,.10)' : 'var(--sf2)') + '; stroke: ' + (tier ? 'var(--act)' : 'var(--ln)'),
+dashStyle: 'stroke: ' + (tier ? 'var(--act)' : 'var(--ln)') + '; opacity: ' + (tier ? 0.5 : 0.3),
+iconStyle: 'stroke: ' + (tier ? col : 'var(--mu)') + '; stroke-width: ' + (tier ? 2.4 : 2) + ';',
+bar: 'display: block; height: 100%; border-radius: 999px; width: ' + pct + '%; background: ' + (lvl === 3 ? TIER.gold : (lvl ? TIER[names[lvl]] : TIER.bronze)) + ';',
+progress: lvl === 3 ? 'MAXED · ' + fmt(v) + unit : fmt(v) + ' / ' + fmt(nextT) + unit + ' → ' + names[lvl].toUpperCase()
+};
+});
+badgesAll.forEach(function (b) { b.card = 'display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 8px 10px 8px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln); min-width: 0; height: 140px; box-sizing: border-box; justify-content: center;' + (b.lit ? '' : ' opacity: .55;'); });
+var earned = badgesAll.filter(function (b) { return b.lvl > 0; }).length;
+var sorted = badgesAll.slice().sort(function (x, y) { return y.lvl - x.lvl; });
+var MS = [
+['First boat ride', I.boat, '1 boat leg', 'DONE · DAY 6 HA GIANG', true],
+['First train ride', 'M6 3h12v13H6zM6 10h12M9 19l-2 2M15 19l2 2M9 16v.01M15 16v.01', '1 train leg', 'DONE · VIETNAM', true],
+['First flight', 'M2 16l20-8-20-8 4 8zM6 8h8', '1 plane leg', 'DONE · BALI', true],
+['First moto ride', I.road, '1 moto leg', 'DONE · HA GIANG', true],
+['First day trip', 'M4 12a8 8 0 1116 0M12 4v8l4 2', '1 day-trip leg', 'DONE · KY CO', true],
+['Border crosser', I.flag, '2 countries, 1 route', 'DONE · LAOS', true],
+['Off the map', 'M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z', '1 dropped-pin spot', 'DONE · BAC HA', true],
+['First steal', I.remix, '1 route stolen', 'DONE', true],
+['Lone wolf', I.mountain, '5 solo routes', '3 OF 5 SOLO ROUTES', false, 60],
+['Live from day 1', I.fire, 'Post a whole route live', 'IN PROGRESS · VIETNAM', false, 40],
+['Above the clouds', I.peak, 'A spot over 3,000 m', 'DONE · ANNAPURNA', true],
+['Sunrise chaser', I.sun, 'A moment before 6am', '0 OF 1', false],
+['Co-pilot', 'M8 11a3 3 0 100-6 3 3 0 000 6zM16 11a3 3 0 100-6 3 3 0 000 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5', 'Build a route together', 'DONE · WITH @MAYA.GOES', true],
+['Night mover', I.bus, 'A leg after midnight', '0 OF 1', false],
+['Full house', I.check, 'All 12 must-knows on a route', '7 OF 12', false, 58]
+];
+var msBadges = MS.map(function (m) { var on = m[4]; return { name: m[0], icon: m[1], lvl: on ? 0.5 : 0, lit: on,
+tier: 'LOCKED', tierStyle: "font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: .6px; padding: 2px 7px; border-radius: 999px; visibility: hidden;",
+ringStyle: 'fill: ' + (on ? 'rgba(185,222,92,.12)' : 'var(--sf2)') + '; stroke: ' + (on ? 'var(--act)' : 'var(--ln)'),
+dashStyle: 'stroke: ' + (on ? 'var(--act)' : 'var(--ln)') + '; opacity: ' + (on ? 0.6 : 0.3),
+iconStyle: 'stroke: ' + (on ? 'var(--act)' : 'var(--mu)'),
+barWrap: 'width: 100%; height: 5px; border-radius: 999px; background: var(--sf2); overflow: hidden; display: block;', bar: 'display: block; height: 100%; border-radius: 999px; background: var(--ac); width: ' + (on ? 100 : (m[5] || 0)) + '%;',
+progress: m[2].toUpperCase(), card: 'display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 8px 10px 8px; border-radius: 16px; background: var(--sf); border: 1px solid var(--ln); min-width: 0; height: 140px; box-sizing: border-box; justify-content: center;' + (on ? '' : ' opacity: .55;') }; });
+var allB = badgesAll.concat(msBadges);
+var earnedAll = allB.filter(function (b) { return b.lit; }).length;
+var tL = badgesAll.filter(function (b) { return b.lit; }).sort(function (x, y) { return y.lvl - x.lvl; }), mL = msBadges.filter(function (b) { return b.lit; }), sortedAll = [];
+for (var q = 0; q < Math.max(tL.length, mL.length); q++) { if (tL[q]) sortedAll.push(tL[q]); if (mL[q]) sortedAll.push(mL[q]); }
+sortedAll = sortedAll.concat(allB.filter(function (b) { return !b.lit; }));
+var future = [];
+var bests = [
+{ label: 'LONGEST ROUTE', where: 'Vietnam, south to north (live)', value: '1,840 km', icon: I.road },
+{ label: 'LONGEST TRIP', where: 'Java end to end', value: '21 days', icon: I.calendar },
+{ label: 'HIGHEST POINT', where: 'Thorong La · Annapurna', value: '5,416 m', icon: I.peak },
+{ label: 'LONGEST DAY ON THE ROAD', where: 'Hanoi → Ha Giang sleeper bus', value: '11 h', icon: I.clock },
+{ label: 'MOST COUNTRIES, ONE TRIP', where: 'Bangkok → Siem Reap → Saigon', value: '3', icon: I.flag },
+{ label: 'POSTING STREAK', where: 'Current · Vietnam live route', value: '12 days', icon: I.fire }
+];
+var V = this.props.view === 'visitor';
+if (V) bests = [
+{ label: 'LONGEST ROUTE', where: 'Ha Giang, the long way', value: '640 km', icon: I.road },
+{ label: 'LONGEST TRIP', where: 'Annapurna, no jeep', value: '14 days', icon: I.calendar },
+{ label: 'HIGHEST POINT', where: 'Thorong La · Annapurna', value: '5,416 m', icon: I.peak },
+{ label: 'MOST STOLEN', where: 'Ha Giang, the long way', value: '58', icon: I.remix }
+];
+var tabs = (V ? ['Routes', 'Badges'] : ['Routes', 'Saved', 'Badges']).map(function (label) {
+var on = s.tab === label;
+return { label: label === 'Badges' ? 'Achievements' : label, selected: on ? 'true' : 'false', style: 'flex: 1; min-height: 44px; border: 0; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ' + (on ? 'background: var(--tx); color: var(--bg);' : 'background: transparent; color: var(--mu);'), pick: function () { self.setState({ tab: label }); } };
+});
+var fb = 'flex: 1; height: 44px; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+return {
+owner: !V, visitor: V,
+name: V ? 'Mai Tran' : 'Vivi',
+handle: '@nomadgoblin',
+handleLine: V ? '@nomadgoblin · HANOI' : '@vivi.wanders · SINGAPORE',
+links: (V ? [['TikTok', 'https://www.tiktok.com/', 'M14 3v11.5a4 4 0 11-4-4M14 3c.6 2.6 2.6 4.6 5.5 4.8'], ['Instagram', 'https://www.instagram.com/', 'M4 4h16v16H4zM8 12a4 4 0 108 0 4 4 0 10-8 0M17 7v.01'], ['YouTube', 'https://www.youtube.com/', 'M3 7.5C3 6 4 5 5.5 5h13C20 5 21 6 21 7.5v9c0 1.5-1 2.5-2.5 2.5h-13C4 19 3 18 3 16.5zM10 9v6l5-3z'], ['AllTrails', 'https://www.alltrails.com/', 'M2 20l7-12 4 6 3-4 6 10zM9 8l1.5 2.5'], ['Strava', 'https://www.strava.com/', 'M9 3L4 13h3.5L9 9.8 10.6 13H14zM14 13l-1.7 3.4L10.6 13H8.6l3.7 7.5 3.7-7.5z']] : [['TikTok', 'https://www.tiktok.com/', 'M14 3v11.5a4 4 0 11-4-4M14 3c.6 2.6 2.6 4.6 5.5 4.8'], ['Instagram', 'https://www.instagram.com/', 'M4 4h16v16H4zM8 12a4 4 0 108 0 4 4 0 10-8 0M17 7v.01']]).map(function (l) { return { label: l[0], href: l[1], icon: l[2], aria: l[0] + ' (opens outside Sightquest)' }; }),
+bio: V ? 'Ex-accountant. Now I count mountains and noodle stalls.' : 'Weekend sidequests, month-long detours.',
+avatarBg: V ? 'var(--ph2)' : 'var(--ph2)',
+followPressed: s.following ? 'true' : 'false',
+followLabel: s.following ? 'Following' : 'Follow',
+followStyle: s.following ? fb + 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);' : fb + 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);',
+toggleFollow: function () { self.setState({ following: !s.following }); },
+st0: V ? 23 : 14, st1: V ? 11 : 9, st2: V ? '9.1k' : '6.4k', st3: V ? 17 : 11,
+atlasLine: V ? '23 trips · 11 countries' : '8 trips · 9 countries · 1 live',
+completedLine: V ? 'ROUTES · 23' : 'COMPLETED · 12',
+navAtlas: V ? 'var(--mu)' : 'var(--act)',
+showSaved: s.tab === 'Saved' && !V,
+savedFilters: ['All', 'Next trip', 'Someday'].map(function (f) { var on = (s.sf || 'All') === f; return { label: f, pressed: on ? 'true' : 'false', style: 'min-height: 36px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--sf); color: var(--tx);'), pick: function () { self.setState({ sf: f }); } }; }),
+saved: [
+{ title: 'Ha Giang, the long way', who: '@nomadgoblin', meta: 'VIETNAM · MAR · 9D · $$', list: 'Next trip', note: 'Saved 2 days ago', color: 'var(--ph1)', href: 'Route.dc.html' },
+{ title: 'Pamir Highway by any truck', who: '@dustbunny', meta: 'TAJIKISTAN · JUL · 14D · $', list: 'Someday', note: 'Saved last month', color: 'var(--ph2)', href: 'Route.dc.html' },
+{ title: 'Island hopping the Togeans', who: '@dustbunny', meta: 'INDONESIA · AUG · 8D · $$', list: 'Next trip', note: 'Saved 3 weeks ago', color: 'var(--ph3)', href: 'Route.dc.html' },
+{ title: 'Laos by slow boat', who: '@saltandsole', meta: 'LAOS · NOV · 3D · $', list: 'Someday', note: 'You did a version of this', color: 'var(--ph4)', href: 'Route.dc.html' }
+].filter(function (r) { return (s.sf || 'All') === 'All' || r.list === s.sf; }),
+rootStyle: 'width: 390px; height: ' + (s.allAch ? 2400 : 1660) + 'px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[t],
+tabs: tabs,
+toggleBell: function () { self.setState({ bell: !s.bell }); }, bellColor: s.bell ? 'var(--act)' : 'var(--tx)', bellBorder: s.bell ? 'var(--act)' : 'var(--ln)',
+unpackedOn: !V && (this.props.unpackedSeason === true || this.props.unpackedSeason === 'true'),
+showRoutes: s.tab === 'Routes',
+showBadges: s.tab === 'Badges',
+
+badges: s.allAch ? sortedAll : sortedAll.slice(0, 12),
+badgeSummary: earnedAll + ' of ' + allB.length + ' earned',
+bests: s.allAch ? bests : bests.slice(0, 3),
+future: future,
+allAch: !!s.allAch,
+achBtn: s.allAch ? 'Show less' : 'See all badges and bests',
+toggleAch: function () { self.setState({ allAch: !s.allAch }); },
+routes: V ? [
+{ title: 'Ha Giang, the long way', meta: 'VIETNAM · MAR · 9D', tag: 'SCENIC ●●●○○', color: 'var(--ph1)' },
+{ title: 'Laos by slow boat', meta: 'LAOS · NOV · 3D', tag: 'CHILL ●○○○○', color: 'var(--ph3)' },
+{ title: 'Hoi An by bicycle', meta: 'VIETNAM · FEB · 2D', tag: 'FOODIE ●●○○○', color: 'var(--ph2)' },
+{ title: 'Annapurna, no jeep', meta: 'NEPAL · OCT · 14D', tag: 'WILD ●●●●●', color: 'var(--ph4)' }
+] : [
+{ title: 'Annapurna, no jeep', meta: 'NEPAL · OCT · 14D', tag: 'WILD ●●●●●', color: 'var(--ph4)' },
+{ title: 'Java end to end', meta: 'INDONESIA · JUL · 21D', tag: 'MIXED ●●●○○', color: 'var(--ph1)' },
+{ title: 'Bangkok to Saigon', meta: '3 COUNTRIES · JAN · 16D', tag: 'SOCIAL ●●○○○', color: 'var(--ph3)' },
+{ title: 'Batam by bike', meta: 'INDONESIA · MAY · 1D', tag: 'CHILL ●○○○○', color: 'var(--ph2)' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

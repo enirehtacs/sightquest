@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sightquest · Add to your route</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<div style="padding: 8px 16px 24px 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="Live.dc.html" aria-label="Back" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></a>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span style="display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--mu)">VIETNAM, SOUTH TO NORTH<sc-if value="{{pro}}" hint-placeholder-val="{{ false }}"><span style="background: var(--ac); color: var(--on); font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 999px">PRO</span></sc-if></span>
+<h1 style="margin: 0; font-size: 22px; line-height: 1.2; font-weight: 800; font-stretch: 110%; white-space: nowrap">{{placeName}}</h1>
+</div>
+<a href="Live.dc.html" style="height: 40px; padding: 0 16px; border-radius: 999px; background: var(--ac); color: var(--on); text-decoration: none; display: flex; align-items: center; font-size: 14px; font-weight: 700">Done</a>
+</div>
+
+<div role="radiogroup" aria-label="Stop on your route" style="display: flex; gap: 6px; overflow: hidden">
+<sc-for list="{{stops}}" as="p" hint-placeholder-count="4">
+<button type="button" role="radio" aria-checked="{{p.checked}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.n}}</button>
+</sc-for>
+</div>
+<span style="font-size: 13px; color: var(--mu)">{{placeMeta}}</span>
+
+<div role="tablist" aria-label="What to add" style="display: flex; gap: 4px; background: var(--sf2); border-radius: 999px; padding: 4px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{tabRec}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-if value="{{hasRecs}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; background: var(--sf); border: 1px solid var(--ln); border-radius: 16px">
+<sc-for list="{{recs}}" as="r" hint-placeholder-count="3">
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; border-bottom: 1px solid var(--ln)">
+<span style="flex: none; margin-top: 2px; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--sf2); color: var(--act); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; display: flex; align-items: center">{{r.tagU}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 700">{{r.n}}</span><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">{{r.note}}</span><span style="display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--mu)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; color: var(--act)"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>{{r.addr}}</span></span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{noRecs}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 14px; color: var(--mu)">Nothing recommended here yet. What would you tell a friend?</span>
+</sc-if>
+
+<div style="background: var(--sf); border: 1px solid var(--act); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 16px; font-weight: 700">Recommend a place</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rec-name" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">NAME</label>
+<input id="rec-name" value="{{recName}}" onChange="{{onRecName}}" placeholder="What should people look for?" style="height: 46px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg); padding: 0 14px; font-family: inherit; font-size: 15px; color: var(--tx)">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">WHERE IS IT</span>
+<sc-if value="{{locSearch}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg)">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; color: var(--act)"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<input aria-label="Search a place or address" value="{{locQ}}" onChange="{{onLocQ}}" placeholder="Search a place name or address" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-family: inherit; font-size: 15px; color: var(--tx)">
+</div>
+<div role="listbox" style="display: flex; flex-direction: column; border: 1px solid var(--ln); border-radius: 14px; overflow: hidden; background: var(--bg)">
+<sc-for list="{{locResults}}" as="p" hint-placeholder-count="3">
+<button type="button" role="option" onClick="{{p.pick}}" style="display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 6px 12px; border: 0; border-bottom: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; text-align: left; cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; color: var(--mu)"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">{{p.n}}</span><span style="font-size: 12px; color: var(--mu)">{{p.addr}}</span></span>
+</button>
+</sc-for>
+<button type="button" onClick="{{startPin}}" style="display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 6px 12px; border: 0; background: var(--sf2); color: var(--tx); font-family: inherit; text-align: left; cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="flex: none; color: var(--act)"><path d="M12 5v14M5 12h14"></path></svg>
+<span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">Can't find it? Drop a pin</span><span style="font-size: 12px; color: var(--mu)">For stalls and spots with no address</span></span>
+</button>
+</div>
+</sc-if>
+
+<sc-if value="{{locPinning}}" hint-placeholder-val="{{ false }}">
+<div onPointerDown="{{pDown}}" onPointerMove="{{pMove}}" onPointerUp="{{pUp}}" onPointerLeave="{{pUp}}" style="height: 180px; border-radius: 14px; overflow: hidden; border: 1px solid var(--act); background: var(--land); touch-action: none; cursor: crosshair">
+<svg width="100%" height="100%" viewBox="0 0 330 170" preserveAspectRatio="xMidYMid slice" style="display: block; pointer-events: none"><rect x="-400" y="-400" width="1200" height="1000" style="fill: var(--land)"></rect><path d="M-60 134 C60 122 170 148 400 128 L400 300 L-60 300 Z" style="fill: var(--water)"></path><g fill="none" stroke-width="7" stroke-linecap="round" style="stroke: var(--road)"><path d="M-20 52 L360 44"></path><path d="M-20 80 L360 72"></path><path d="M-20 108 L360 100"></path><path d="M-20 124 C80 116 200 132 360 118"></path><path d="M92 8 L98 122"></path><path d="M172 6 L174 118"></path><path d="M252 4 L248 114"></path></g><g font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" letter-spacing="1" style="fill: var(--mu)"><text x="104" y="40">PHAN CHAU TRINH</text><text x="104" y="68">TRAN PHU</text><text x="104" y="96">NGUYEN THAI HOC</text><text x="186" y="160">THU BON RIVER</text></g><g style="fill: var(--mu)"><circle cx="62" cy="46" r="3"></circle><circle cx="132" cy="102" r="3"></circle><circle cx="212" cy="75" r="3"></circle><circle cx="282" cy="140" r="3"></circle><circle cx="300" cy="40" r="3"></circle></g><path d="{{pinPath}}" stroke-width="2" style="fill: var(--ac); stroke: var(--ring)"></path><circle cx="{{pinX}}" cy="{{pinDotY}}" r="3.5" style="fill: var(--on)"></circle></svg>
+</div>
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="flex: 1; font-size: 13px; line-height: 1.4; color: var(--mu)">Drag the map pin to the exact spot.<br><span style="color: var(--tx)">{{pinAddr}}</span></span>
+<button type="button" onClick="{{usePin}}" style="height: 44px; padding: 0 14px; border-radius: 999px; border: 0; background: var(--tx); color: var(--bg); font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer">Use this spot</button>
+</div>
+</sc-if>
+
+<sc-if value="{{locChosen}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg)">
+<div style="flex: none; width: 84px; height: 64px; border-radius: 10px; overflow: hidden; background: var(--land)">
+<svg width="84" height="64" viewBox="{{thumbVb}}" preserveAspectRatio="xMidYMid slice" style="display: block"><rect x="-400" y="-400" width="1200" height="1000" style="fill: var(--land)"></rect><path d="M-60 134 C60 122 170 148 400 128 L400 300 L-60 300 Z" style="fill: var(--water)"></path><g fill="none" stroke-width="7" stroke-linecap="round" style="stroke: var(--road)"><path d="M-20 52 L360 44"></path><path d="M-20 80 L360 72"></path><path d="M-20 108 L360 100"></path><path d="M-20 124 C80 116 200 132 360 118"></path><path d="M92 8 L98 122"></path><path d="M172 6 L174 118"></path><path d="M252 4 L248 114"></path></g><g font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" letter-spacing="1" style="fill: var(--mu)"><text x="104" y="40">PHAN CHAU TRINH</text><text x="104" y="68">TRAN PHU</text><text x="104" y="96">NGUYEN THAI HOC</text><text x="186" y="160">THU BON RIVER</text></g><g style="fill: var(--mu)"><circle cx="62" cy="46" r="3"></circle><circle cx="132" cy="102" r="3"></circle><circle cx="212" cy="75" r="3"></circle><circle cx="282" cy="140" r="3"></circle><circle cx="300" cy="40" r="3"></circle></g><path d="{{pinPath}}" stroke-width="2" style="fill: var(--ac); stroke: var(--ring)"></path><circle cx="{{pinX}}" cy="{{pinDotY}}" r="3.5" style="fill: var(--on)"></circle></svg>
+</div>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{locName}}</span><span style="font-size: 12px; line-height: 1.35; color: var(--mu)">{{locAddr}}</span></span>
+<button type="button" onClick="{{clearLoc}}" style="height: 36px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">Change</button>
+</div>
+</sc-if>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">WHAT KIND OF PLACE</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{tagOpts}}" as="o" hint-placeholder-count="13">
+<button type="button" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rec-note" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">WHY GO</label>
+<input id="rec-note" value="{{recNote}}" onChange="{{onRecNote}}" placeholder="One line. What to order, when to go…" style="height: 46px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg); padding: 0 14px; font-family: inherit; font-size: 15px; color: var(--tx)">
+</div>
+<button type="button" onClick="{{addRec}}" disabled="{{recDisabled}}" style="{{recBtn}}">{{recBtnLabel}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{tabMom}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{moms}}" as="m" hint-placeholder-count="2">
+<div style="display: flex; gap: 12px; align-items: center; background: var(--sf); border: 1px solid var(--ln); border-radius: 16px; padding: 10px">
+<div style="{{m.thumb}}"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--act)">{{m.when}}</span><span style="font-size: 14px; line-height: 1.4">{{m.cap}}</span></div>
+</div>
+</sc-for>
+<div style="background: var(--sf); border: 1px solid var(--act); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 16px; font-weight: 700">Add a story moment</span>
+<div style="display: flex; gap: 8px">
+<button type="button" onClick="{{pickPhotos}}" style="flex: none; width: 76px; height: 76px; border-radius: 14px; border: 1.5px dashed var(--mu); background: transparent; color: var(--tx); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Photos</button>
+<sc-if value="{{hasPhotos}}" hint-placeholder-val="{{ false }}">
+<div style="width: 76px; height: 76px; border-radius: 14px; background: var(--ph2)"></div>
+<div style="width: 76px; height: 76px; border-radius: 14px; background: var(--ph1)"></div>
+<div style="width: 76px; height: 76px; border-radius: 14px; background: var(--ph3); display: flex; align-items: flex-end; justify-content: flex-end; padding: 6px; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600">3</div>
+</sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">WHICH DAY</span>
+<div style="display: flex; gap: 6px">
+<sc-for list="{{dayOpts}}" as="o" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="mom-cap" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">WHAT HAPPENED</label>
+<input id="mom-cap" value="{{momCap}}" onChange="{{onMomCap}}" placeholder="One or two lines for your diary" style="height: 46px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg); padding: 0 14px; font-family: inherit; font-size: 15px; color: var(--tx)">
+</div>
+<span style="font-size: 13px; line-height: 1.4; color: var(--mu)">Moments pin to the map where the photo was taken, so they show up in your map diary.</span>
+<button type="button" onClick="{{addMom}}" disabled="{{momDisabled}}" style="{{momBtn}}">Add to diary</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{tabPost}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="background: var(--sf); border: 1px solid var(--act); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 16px; font-weight: 700">Link a post</span>
+<div style="display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--ln); background: var(--bg)">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; color: var(--mu)"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"></path></svg>
+<input aria-label="Post link" value="{{url}}" onChange="{{onUrl}}" placeholder="Paste an Instagram or TikTok link" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-family: inherit; font-size: 14px; color: var(--tx)">
+</div>
+<sc-if value="{{urlOk}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 14px; background: var(--bg); border: 1px solid var(--ln)">
+<div style="flex: none; width: 52px; height: 74px; border-radius: 10px; background: var(--ph2); display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="align-self: flex-start; height: 20px; padding: 0 8px; border-radius: 999px; background: var(--ac); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; display: flex; align-items: center">{{platU}} · FOUND</span>
+<span style="font-size: 14px; font-weight: 600">@vivi.wanders</span>
+<span style="font-size: 12px; line-height: 1.35; color: var(--mu)">Thumbnail, caption and views pulled from the link</span>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{urlBad}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 13px; color: var(--danger)">That link doesn't look like Instagram, TikTok or YouTube Shorts.</span>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--mu)">ATTACH TO</span>
+<div role="radiogroup" aria-label="Attach post to" style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{scopeOpts}}" as="o" hint-placeholder-count="4">
+<button type="button" role="radio" aria-checked="{{o.checked}}" onClick="{{o.pick}}" style="{{o.style}}"><sc-if value="{{o.locked}}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg></sc-if>{{o.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{scopeHintOn}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: var(--mu)">{{scopeHint}}</span></sc-if>
+</div>
+<sc-if value="{{upsell}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; background: var(--bg); border: 1px dashed var(--act)">
+<span style="flex: none; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--ac); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; display: flex; align-items: center">PRO</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700">Link posts to a single day</span><span style="font-size: 13px; line-height: 1.4; color: var(--mu)">Each post sits on the day it happened, so long trips with lots of stops stay tidy.</span><a href="Pro.dc.html" style="font-size: 14px; font-weight: 700; color: var(--act)">See Sightquest Pro</a></span>
+</div>
+</sc-if>
+<button type="button" onClick="{{addPost}}" disabled="{{postDisabled}}" style="{{postBtn}}">{{postBtnLabel}}</button>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Linked posts</h2><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--mu)">{{postCount}}</span></div>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="{{g.box}}">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700">{{g.title}}</span><span style="font-size: 12px; color: var(--mu)">{{g.sub}}</span></span>
+<sc-if value="{{g.canAdd}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{g.target}}" style="height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{g.addLabel}}</button></sc-if>
+<sc-if value="{{g.locked}}" hint-placeholder-val="{{ false }}"><a href="Pro.dc.html" style="height: 34px; padding: 0 10px; border-radius: 999px; border: 1px dashed var(--ln); color: var(--mu); text-decoration: none; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px">Link to this day<span style="background: var(--ac); color: var(--on); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 999px">PRO</span></a></sc-if>
+</div>
+<sc-for list="{{g.items}}" as="p" hint-placeholder-count="1">
+<div style="display: flex; gap: 10px; align-items: center; padding-top: 10px; border-top: 1px solid var(--ln)">
+<div style="flex: none; width: 40px; height: 56px; border-radius: 8px; background: {{p.bg}}; display: flex; align-items: center; justify-content: center; color: var(--tx)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="align-self: flex-start; height: 18px; padding: 0 7px; border-radius: 999px; background: var(--sf2); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; display: flex; align-items: center">{{p.platU}}</span>
+<span style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.cap}}</span>
+<span style="font-size: 12px; color: var(--mu)">{{p.views}}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+<span style="font-size: 13px; line-height: 1.45; color: var(--mu)">Viewers see a preview on your route. Tapping it opens the post in Instagram or TikTok, so the views count on your account.</span>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark"},"tab":{"editor":"enum","options":["Recommend","Moments","Posts"],"default":"Recommend"},"pro":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+var pro = props.pro === true || props.pro === 'true';
+this.spots = {
+'Hoi An': [
+{ n: 'Banh Mi Phuong', addr: '2B Phan Chau Trinh, Hoi An', x: 62, y: 46 },
+{ n: 'Morning Glory', addr: '106 Nguyen Thai Hoc, Hoi An', x: 132, y: 102 },
+{ n: 'Reaching Out Tea House', addr: '131 Tran Phu, Hoi An', x: 212, y: 75 },
+{ n: 'Hoi An Night Market', addr: 'Nguyen Hoang, An Hoi islet', x: 282, y: 140 },
+{ n: 'Precious Heritage Museum', addr: '26 Phan Boi Chau, Hoi An', x: 300, y: 40 },
+{ n: 'An Bang Beach', addr: 'Cam An, Hoi An · 4 km north', x: 318, y: 14 }
+]
+};
+this.state = {
+tab: props.tab || 'Recommend', place: 'Hoi An',
+tag: 'Food', recName: '', recNote: '',
+locQ: 'Mor', loc: null, pinning: false, pin: { x: 160, y: 88 }, drag: false,
+photos: false, day: 13, momCap: '',
+url: 'https://www.tiktok.com/@vivi.wanders/video/7425', scope: pro ? 'd13' : 'route',
+data: {
+'Da Lat': { days: [4, 5], region: 'Lam Dong', titles: {}, recs: [{ tag: 'Hike', n: 'Datanla Falls canyoning', note: 'Book the morning slot.', addr: 'Prenn Pass, Da Lat' }], moms: [], posts: [] },
+'Nha Trang': { days: [6, 7, 8], region: 'Khanh Hoa', titles: {}, recs: [], moms: [], posts: [] },
+'Quy Nhon': { days: [9, 10, 11], region: 'Binh Dinh', titles: {}, recs: [{ tag: 'Beach', n: 'Ky Co Beach', note: 'Boat out from the harbour. Go early, the sea gets choppy.', addr: 'Nhon Ly, Quy Nhon' }], moms: [{ day: 11, time: '11:00am', cap: 'Ky Co. Swam until my fingers went wrinkly.', ph: 'ph3' }], posts: [] },
+'Hoi An': { days: [12, 13, 14], region: 'Quang Nam', titles: { 12: 'Quy Nhon → Hoi An by train', 13: 'Rice paddies and the old town', 14: 'Day trip to My Son' }, recs: [
+{ tag: 'Food', n: 'Banh Mi Phuong', note: 'Go at 3pm, no queue.', addr: '2B Phan Chau Trinh, Hoi An' },
+{ tag: 'Cafe', n: 'Reaching Out Tea House', note: 'Silent tea house run by deaf staff. Calm in the chaos.', addr: '131 Tran Phu, Hoi An' },
+{ tag: 'Beach', n: 'An Bang Beach', note: 'Rent a bike, 15 minutes. Go before 9.', addr: 'Cam An, Hoi An' }
+], moms: [
+{ day: 12, time: '6:10pm', cap: 'Lantern night on the river. Touristy, still magic.', ph: 'ph2' },
+{ day: 13, time: '7:30am', cap: 'Cycled to the rice paddies before the heat. Buffalo had right of way.', ph: 'ph1' }
+], posts: [{ plat: 'TikTok', cap: 'Lantern night in Hoi An', views: '12.4k views', ph: 'ph2', day: 12 }].concat(pro ? [{ plat: 'Instagram', cap: 'Old town at 6am, nobody around', views: '1.8k likes', ph: 'ph1', day: 13 }] : []) }
+},
+routePosts: [{ plat: 'Instagram', cap: 'Vietnam, south to north · week one', views: '3.1k likes', ph: 'ph1' }]
+};
+}
+toMap(e) {
+var r = e.currentTarget.getBoundingClientRect();
+var sx = 330 / r.width, sy = 170 / r.height;
+var sc = Math.max(sx, sy);
+var ox = (r.width * sc - 330) / 2, oy = (r.height * sc - 170) / 2;
+return { x: Math.max(8, Math.min(322, Math.round((e.clientX - r.left) * sc - ox))), y: Math.max(14, Math.min(160, Math.round((e.clientY - r.top) * sc - oy))) };
+}
+street(y) { return y < 60 ? 'Phan Chau Trinh' : y < 88 ? 'Tran Phu' : y < 116 ? 'Nguyen Thai Hoc' : 'Bach Dang'; }
+renderVals() {
+var self = this;
+var s = this.state;
+var T = {
+dark: '--bg: #131512; --sf: #1C1F1B; --sf2: #262A24; --ln: #31362F; --tx: #E6E8E1; --mu: #9CA295; --ac: #B9DE5C; --on: #131512; --act: #B9DE5C; --ph1: #3A4838; --ph2: #4A3F35; --ph3: #35434C; --danger: #F08A7E; --land: #222A24; --road: #3A443C; --water: #1A2A33; --ring: #000000;',
+light: '--bg: #F3F2EC; --sf: #FFFFFF; --sf2: #E9E8E1; --ln: #DCDBD2; --tx: #1B1D19; --mu: #5D6257; --ac: #C6E86E; --on: #1B1D19; --act: #4F7212; --ph1: #C8D4C0; --ph2: #DCCFC0; --ph3: #C5D2DB; --danger: #B3261E; --land: #F2F5EC; --road: #DCDBD2; --water: #D2E1EA; --ring: #1B1D19;'
+};
+var t = this.props.theme === 'light' ? 'light' : 'dark';
+var pro = this.props.pro === true || this.props.pro === 'true';
+var P = s.data[s.place];
+var chipBase = 'min-height: 40px; padding: 0 12px; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ';
+function chip(on) { return chipBase + (on ? 'border: 1px solid var(--ac); background: var(--ac); color: var(--on);' : 'border: 1px solid var(--ln); background: var(--bg); color: var(--tx);'); }
+function btn(ok) { return 'height: 46px; border-radius: 999px; border: 0; font-family: inherit; font-size: 15px; font-weight: 700; ' + (ok ? 'background: var(--ac); color: var(--on); cursor: pointer;' : 'background: var(--sf2); color: var(--mu); cursor: not-allowed;'); }
+function upd(fn) { var d = JSON.parse(JSON.stringify(s.data)); fn(d[s.place]); return d; }
+var tags = ['Food', 'Cafe', 'Bar', 'Arts', 'History', 'Culture', 'Entertainment', 'Wellness', 'Viewpoint', 'Beach', 'Hike', 'Shopping', 'Accommodation'];
+var spots = this.spots[s.place] || [];
+var q = (s.locQ || '').trim().toLowerCase();
+var results = q ? spots.filter(function (p) { return p.n.toLowerCase().indexOf(q) !== -1 || p.addr.toLowerCase().indexOf(q) !== -1; }).slice(0, 3) : [];
+var pinAddr = 'Near ' + this.street(s.pin.y) + ' St, ' + s.place;
+var url = (s.url || '').trim();
+var plat = /instagram\.com/i.test(url) ? 'Instagram' : /tiktok\.com/i.test(url) ? 'TikTok' : /(youtube\.com|youtu\.be)/i.test(url) ? 'YouTube' : '';
+var dayScope = s.scope !== 'route';
+var scopeDay = dayScope ? +s.scope.slice(1) : 0;
+function item(p) { return { platU: p.plat.toUpperCase(), cap: p.cap, views: p.views, bg: 'var(--' + p.ph + ')' }; }
+var groups = [{ title: 'Whole route', sub: 'Shows at the top of your route · free', items: s.routePosts.map(item), canAdd: s.scope !== 'route', addLabel: 'Link here', locked: false, target: function () { self.setState({ scope: 'route' }); }, on: s.scope === 'route' }]
+.concat(P.days.map(function (d) {
+var its = P.posts.filter(function (p) { return p.day === d; }).map(item);
+return {
+title: 'Day ' + d, sub: (P.titles[d] || s.place) + ' · ' + (its.length ? its.length + (its.length === 1 ? ' post' : ' posts') : 'no posts yet'),
+items: its, canAdd: pro && s.scope !== 'd' + d, addLabel: its.length ? 'Add another' : 'Link here', locked: !pro,
+target: function () { self.setState({ scope: 'd' + d }); }, on: pro && s.scope === 'd' + d
+};
+})).map(function (g) { g.box = 'display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border-radius: 16px; background: var(--sf); border: ' + (g.on ? '1px solid var(--act)' : '1px solid var(--ln)') + ';'; return g; });
+var total = s.routePosts.length + P.posts.length;
+var count = { Recommend: P.recs.length, Moments: P.moms.length, Posts: total };
+var recOk = s.recName.trim().length > 0 && !!s.loc, momOk = s.momCap.trim().length > 0, postOk = !!plat && (!dayScope || pro);
+var lx = s.loc ? s.loc.x : s.pin.x, ly = s.loc ? s.loc.y : s.pin.y;
+return {
+rootStyle: 'width: 390px; height: 1500px; position: relative; overflow: hidden; font-family: Archivo, sans-serif; background: var(--bg); color: var(--tx); ' + T[t],
+pro: pro,
+placeName: s.place,
+placeMeta: 'Day ' + P.days[0] + '–' + P.days[P.days.length - 1] + ' · ' + P.region + ' · ' + P.recs.length + ' tags · ' + P.moms.length + ' moments',
+stops: Object.keys(s.data).map(function (n) { var on = n === s.place; return { n: n, checked: on ? 'true' : 'false', style: 'flex: none; ' + chip(on), pick: function () { self.setState({ place: n, day: s.data[n].days[0], scope: pro ? 'd' + s.data[n].days[0] : 'route', loc: null, locQ: '', pinning: false }); } }; }),
+tabs: (s.tab === 'Moments' ? [] : ['Recommend', 'Posts']).map(function (l) { var on = s.tab === l; return { label: (l === 'Recommend' ? 'Spots' : l) + ' · ' + count[l], selected: on ? 'true' : 'false', style: 'flex: 1; min-height: 42px; border: 0; border-radius: 999px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ' + (on ? 'background: var(--tx); color: var(--bg);' : 'background: transparent; color: var(--mu);'), pick: function () { self.setState({ tab: l }); } }; }),
+tabRec: s.tab === 'Recommend', tabMom: s.tab === 'Moments', tabPost: s.tab === 'Posts',
+hasRecs: P.recs.length > 0, noRecs: P.recs.length === 0,
+recs: P.recs.map(function (r) { return { tagU: r.tag.toUpperCase(), n: r.n, note: r.note, addr: r.addr }; }),
+tagOpts: tags.map(function (g) { return { label: g, pressed: s.tag === g ? 'true' : 'false', style: chip(s.tag === g), pick: function () { self.setState({ tag: g }); } }; }),
+locSearch: !s.loc && !s.pinning, locPinning: s.pinning, locChosen: !!s.loc,
+locQ: s.locQ,
+onLocQ: function (e) { self.setState({ locQ: e.target.value }); },
+locResults: results.map(function (p) { return { n: p.n, addr: p.addr, pick: function () { self.setState({ loc: { n: p.n, addr: p.addr, x: p.x, y: p.y }, recName: s.recName || p.n }); } }; }),
+startPin: function () { self.setState({ pinning: true }); },
+pinAddr: pinAddr,
+usePin: function () { self.setState({ pinning: false, loc: { n: s.recName.trim() || 'Pinned spot', addr: pinAddr + ' · pinned by you', x: s.pin.x, y: s.pin.y } }); },
+clearLoc: function () { self.setState({ loc: null, locQ: '' }); },
+locName: s.loc ? s.loc.n : '', locAddr: s.loc ? s.loc.addr : '',
+pinX: lx, pinY: ly, pinPath: 'M' + lx + ' ' + ly + ' c -3 -7 -10 -11 -10 -18 a 10 10 0 1 1 20 0 c 0 7 -7 11 -10 18 z', pinDotY: ly - 18,
+thumbVb: (lx - 60) + ' ' + (ly - 46) + ' 120 92',
+pDown: function (e) { if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {} } self.setState({ drag: true, pin: self.toMap(e) }); },
+pMove: function (e) { if (s.drag) self.setState({ pin: self.toMap(e) }); },
+pUp: function () { if (s.drag) self.setState({ drag: false }); },
+recName: s.recName, recNote: s.recNote,
+onRecName: function (e) { self.setState({ recName: e.target.value }); },
+onRecNote: function (e) { self.setState({ recNote: e.target.value }); },
+recDisabled: !recOk, recBtn: btn(recOk),
+recBtnLabel: !s.recName.trim() ? 'Add a name first' : !s.loc ? 'Choose where it is first' : 'Add ' + s.tag.toLowerCase() + ' recommendation',
+addRec: function () { if (!recOk) return; self.setState({ data: upd(function (p) { p.recs.push({ tag: s.tag, n: s.recName.trim(), note: s.recNote.trim() || 'Recommended by you', addr: s.loc.addr }); }), recName: '', recNote: '', loc: null, locQ: '' }); },
+moms: P.moms.map(function (m) { return { when: 'DAY ' + m.day + ' · ' + m.time.toUpperCase(), cap: m.cap, thumb: 'flex: none; width: 64px; height: 64px; border-radius: 12px; background: var(--' + m.ph + ');' }; }),
+hasPhotos: s.photos,
+pickPhotos: function () { self.setState({ photos: true }); },
+dayOpts: P.days.map(function (d) { return { label: 'Day ' + d, pressed: s.day === d ? 'true' : 'false', style: chip(s.day === d), pick: function () { self.setState({ day: d }); } }; }),
+momCap: s.momCap,
+onMomCap: function (e) { self.setState({ momCap: e.target.value }); },
+momDisabled: !momOk, momBtn: btn(momOk),
+addMom: function () { if (!momOk) return; self.setState({ data: upd(function (p) { p.moms.push({ day: s.day, time: 'just now', cap: s.momCap.trim(), ph: s.photos ? 'ph2' : 'ph3' }); }), momCap: '', photos: false }); },
+url: s.url,
+onUrl: function (e) { self.setState({ url: e.target.value }); },
+urlOk: !!plat, urlBad: url.length > 8 && !plat, platU: plat.toUpperCase(),
+scopeOpts: [['route', 'Whole route']].concat(P.days.map(function (d) { return ['d' + d, 'Day ' + d]; })).map(function (o) { var on = s.scope === o[0]; var locked = o[0] !== 'route' && !pro; return { label: o[1], locked: locked, checked: on ? 'true' : 'false', style: chip(on) + ' display: flex; align-items: center; gap: 6px;' + (locked && !on ? ' color: var(--mu);' : ''), pick: function () { self.setState({ scope: o[0] }); } }; }),
+scopeHintOn: pro && dayScope,
+scopeHint: dayScope ? 'Day ' + scopeDay + ' · ' + (P.titles[scopeDay] || s.place) : '',
+upsell: dayScope && !pro,
+postDisabled: !postOk, postBtn: btn(postOk),
+postBtnLabel: dayScope ? 'Link to Day ' + scopeDay : 'Link to whole route',
+postCount: total + (total === 1 ? ' POST' : ' POSTS'),
+groups: groups,
+addPost: function () {
+if (!postOk) return;
+var it = { plat: plat, cap: 'New ' + plat + ' post', views: 'Views update daily', ph: 'ph3' };
+if (!dayScope) self.setState({ routePosts: s.routePosts.concat([it]), url: '' });
+else { it.day = scopeDay; self.setState({ data: upd(function (p) { p.posts.push(it); }), url: '' }); }
+}
+};
+}
+}
+</script>
+</body>
+</html>

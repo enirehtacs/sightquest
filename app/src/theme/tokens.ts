@@ -75,6 +75,13 @@ const light: Colors = {
 
 export const palettes: Record<Scheme, Colors> = { dark, light };
 
+/** A token colour at lower opacity, for glows and tints (e.g. `alpha(c.ac, 0.15)`). */
+export function alpha(hex: string, a: number): string {
+  const h = hex.replace('#', '');
+  const n = parseInt(h.length === 3 ? h.replace(/./g, '$&$&') : h, 16);
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+}
+
 // Font family names as registered with expo-font in the root layout.
 export const fonts = {
   regular: 'Archivo_400Regular',

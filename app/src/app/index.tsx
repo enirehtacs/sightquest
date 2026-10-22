@@ -14,9 +14,11 @@ export default function Home() {
   useEffect(() => {
     // A signed-out read. Profiles are closed to signed-out visitors, so
     // "permission denied" (42501) means we reached the database and it's locked.
+    // A normal GET, not a HEAD request: HEAD replies carry no error code.
     supabase
       .from('profiles')
-      .select('id', { head: true, count: 'exact' })
+      .select('id')
+      .limit(1)
       .then(({ error }) => setDb(!error || error.code === '42501' ? 'ok' : 'error'));
   }, []);
 

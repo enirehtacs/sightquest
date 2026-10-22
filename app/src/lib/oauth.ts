@@ -29,8 +29,22 @@ export async function finishSignIn(url: string) {
   return true;
 }
 
+/** Is this provider switched on in Supabase? (Public endpoint; no secrets.) */
+async function providerEnabled(provider: 'apple' | 'google') {
+  try {
+    const res = await fetch(`${process.env.EXPO_PUBLIC_SUPABASE_URL}/auth/v1/settings`, {
+      headers: { apikey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '' },
+    });
+    const json = (await res.json()) as { external?: Record<string, boolean> };
+    return json.external?.[provider] !== false;
+  } catch {
+    return true; // Can't tell: let Supabase answer.
+  }
+}
+
 export async function signInWithProvider(provider: 'apple' | 'google') {
   const redirectTo = authRedirectUrl();
+  if (!(await providerEnabled(provider))) throw new Error('provider is not enabled');
 
   if (Platform.OS === 'web') {
     // The browser leaves for Apple/Google and comes back to /auth/callback.

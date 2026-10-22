@@ -78,7 +78,7 @@ export function Sheet({ visible, onClose, title, children }: Props) {
         }}
       >
         <View style={{ alignSelf: 'center', width: 36, height: 4, borderRadius: 999, backgroundColor: c.ln }} />
-        {title && <Txt variant="h2">{title}</Txt>}
+        {title ? <Txt variant="h2">{title}</Txt> : null}
         {children}
       </Animated.View>
     </Modal>

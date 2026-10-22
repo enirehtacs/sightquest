@@ -1,5 +1,6 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { router } from 'expo-router';
 import { Platform } from 'react-native';
 
 import { PREVIEW_PROFILE } from '@/data/seed';
@@ -46,8 +47,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [preview] = useState(detectPreview);
   const [ready, setReady] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState<MyProfile | null>(preview ? PREVIEW_PROFILE : null);
-  const [pledged, setPledged] = useState<boolean | null>(preview ? true : null);
+  // What we loaded, and for whom. Only shown while that person is signed in.
+  const [loaded, setLoaded] = useState<{ uid: string; profile: MyProfile | null; pledged: boolean | null } | null>(null);
 
   const uid = session?.user.id ?? (preview ? 'preview' : null);
 
@@ -56,33 +57,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(data.session);
       setReady(true);
     });
-    const { data } = supabase.auth.onAuthStateChange((_event, s) => {
+    const { data } = supabase.auth.onAuthStateChange((event, s) => {
       setSession(s);
       setReady(true);
+      // Came back from a "Forgot your password?" email: let them set a new one.
+      if (event === 'PASSWORD_RECOVERY') setTimeout(() => router.replace('/settings/password'), 50);
     });
     return () => data.subscription.unsubscribe();
   }, []);
 
   const userId = session?.user.id;
 
-  const load = useCallback(async () => {
-    if (!userId) return;
-    const [p, pl] = await Promise.all([getMyProfile(userId), hasPledged(userId)]);
-    setProfile(p);
-    setPledged(pl);
-  }, [userId]);
+  const fetchFor = useCallback(
+    (id: string) =>
+      Promise.all([getMyProfile(id), hasPledged(id)])
+        .then(([p, pl]) => ({ uid: id, profile: p as MyProfile | null, pledged: pl as boolean | null }))
+        .catch(() => ({ uid: id, profile: null, pledged: false })),
+    [],
+  );
 
   useEffect(() => {
-    if (!userId) {
-      if (!preview) {
-        setProfile(null);
-        setPledged(null);
-      }
-      return;
-    }
-    setPledged(null);
-    load().catch(() => setPledged(false));
-  }, [userId, load, preview]);
+    if (!userId) return;
+    let live = true;
+    fetchFor(userId).then((l) => live && setLoaded(l));
+    return () => {
+      live = false;
+    };
+  }, [userId, fetchFor]);
+
+  const load = useCallback(async () => {
+    if (userId) setLoaded(await fetchFor(userId));
+  }, [userId, fetchFor]);
+
+  const mine = userId && loaded?.uid === userId ? loaded : null;
+  const profile = mine ? mine.profile : preview && !userId ? PREVIEW_PROFILE : null;
+  const pledged = mine ? mine.pledged : preview && !userId ? true : null;
+
+  const setProfile = useCallback(
+    (p: MyProfile) => setLoaded((l) => (l && l.uid === p.id ? { ...l, profile: p } : l)),
+    [],
+  );
+  const setPledged = useCallback(
+    (v: boolean) => setLoaded((l) => (l ? { ...l, pledged: v } : l)),
+    [],
+  );
 
   const value = useMemo<AuthValue>(
     () => ({
@@ -104,7 +122,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
       preview: preview && !session,
     }),
-    [ready, session, uid, profile, pledged, load, preview],
+    [ready, session, uid, profile, pledged, setProfile, setPledged, load, preview],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

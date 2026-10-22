@@ -2,7 +2,7 @@
 // screens never look empty before routes exist. Phase 2 replaces the routes
 // here with real rows from the `routes` table.
 
-import type { MyProfile } from '@/lib/profiles';
+import type { MyProfile, PublicProfile } from '@/lib/profiles';
 
 export type SampleRoute = {
   title: string;
@@ -103,4 +103,18 @@ export const PREVIEW_PROFILE: MyProfile = {
   live_delay: true,
   blur_sleep: true,
   hide_home_city: false,
+};
+
+/** Dev preview mode only: a creator to look at without signing in. */
+export const PREVIEW_CREATOR: PublicProfile = {
+  id: 'preview-creator',
+  username: 'nomadgoblin',
+  display_name: 'Mai Tran',
+  avatar_url: null,
+  bio: 'Ex-accountant. Now I count mountains and noodle stalls.',
+  home_base: 'Hanoi',
+  home_country: 'Vietnam',
+  links: { tiktok: '@nomadgoblin', instagram: '@nomadgoblin', youtube: '@nomadgoblin', alltrails: 'nomadgoblin', strava: 'nomadgoblin' },
+  follower_count: 3,
+  following_count: 1,
 };

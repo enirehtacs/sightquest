@@ -81,6 +81,9 @@ export function placeLine(p: { home_base: string | null; home_country: string | 
   return (city || p.home_country || '').trim();
 }
 
+/** Public link to a profile (the web app). */
+export const PROFILE_URL = 'https://sightquest-app.vercel.app/u/';
+
 export const USERNAME_RE = /^[a-z0-9._]{3,20}$/;
 export const CHANGE_EVERY_DAYS = 30;
 

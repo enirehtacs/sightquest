@@ -78,6 +78,12 @@ let failed = 0;
   await check('a linked post on today', `insert into post_links (route_id, day_id, platform, url) values ($1, $2, 'tiktok', 'https://www.tiktok.com/@me/video/1')`, [ROUTE, D2], works);
   await check('a link that isn’t IG, TikTok or YouTube is refused', `insert into post_links (route_id, platform, url) values ($1, 'tiktok', 'https://evil.example/x')`, [ROUTE], refused);
 
+  await check('adding a country fills in the continent', `update routes set country_codes = '{SG}' where id = $1`, [ROUTE], rows(1));
+  await check('the route works out its month, continent, ways of getting around and distance', `select went_month, continent, modes, distance_km from routes where id = $1`, [ROUTE], (r) => {
+    const x = r && r.rows[0];
+    return x && x.went_month >= 1 && x.continent === 'Asia' && x.modes.includes('boat') && x.modes.includes('walk') && Number(x.distance_km) > 1;
+  });
+
   console.log('\nOther people can’t write');
   for (const [who, uid] of [['follower', FOLLOWER], ['stranger', STRANGER]]) {
     await as(uid);

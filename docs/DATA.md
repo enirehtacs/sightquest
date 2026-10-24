@@ -98,7 +98,7 @@ Also: you're not blocked, and if `live_delay` is on, the day's `date` is before 
 **`update_confirms`**: `update_id`, `user_id` (unique).
 
 **`sowo_ratings`**: `route_id`, `user_id`, `answer` ('comfortable'|'stay_alert'|'wouldnt_solo'|'didnt_solo').
-- Insert only if `sowo_eligible` AND the user has completed this route (their own route, or a steal of it marked complete).
+- Insert only if `sowo_eligible` AND the user has completed this route (their own route, or a remix of it marked complete).
 - Score = comfortable ÷ (all answers except didnt_solo).
 - **Approved** when ≥ 80% and count ≥ 5.
 - Individual ratings are never readable by anyone except the rater.

@@ -114,7 +114,7 @@ Works like AllTrails.
 - **Updates · {n}**: "Latest 3 days ago · {k} heads-ups", with a **+2** badge for new ones. Opens Reports. **+ Update** opens Report.
 - **Campfire · {n}**: the 2 latest comments plus an input. **See all** opens Comments.
 
-**Sticky CTA**: **Steal it** opens Steal.
+**Sticky CTA**: **Remix this route** opens Remix. (Renamed from "Steal it" on 2026-10-24: the app says *remix* everywhere. The database keeps its old column names, `stolen_from_route_id` and `steal_count`.)
 
 Header actions: back, **Save** (bookmark, fills when saved; choose the list Next trip or Someday), **Share** (opens Share).
 
@@ -122,10 +122,10 @@ Header actions: back, **Save** (bookmark, fills when saved; choose the list Next
 
 ## 5. Route actions
 
-### Steal — `Steal.dc.html`
-- Shows "STOLEN {n} TIMES".
+### Remix — `Steal.dc.html`
+- Shows "REMIXED {n} TIMES".
 - Fields: name your version; when are you going; pick the days you want (checkboxes, "{k} OF 9").
-- Creates a draft route with `stolen_from_route_id` set. The new route shows "Stolen from @creator", and the creator gets a notification.
+- Creates a draft route with `stolen_from_route_id` set. The new route shows "Remixed from @creator", and the creator gets a notification.
 - Copies days, legs, spots and must-knows. **Never copies** moments, photos or exact dates.
 
 ### Campfire — `Comments.dc.html`, `CommentsNudge.dc.html`
@@ -231,7 +231,7 @@ Plus **custom categories**: the creator adds their own label (e.g. "Tet holiday"
 ### Friends — `Following.dc.html`, `CollectionShared.dc.html`
 - **Your people**: an avatar row, plus **Find more**.
 - **Shared with you**: routes friends sent you, with their note ("we HAVE to do this in March"). **See all** opens CollectionShared.
-- Feed of friends' activity: ● LIVE day updates, new routes, steals with their note, fresh checks (updates).
+- Feed of friends' activity: ● LIVE day updates, new routes, remixes with their note, fresh checks (updates).
 
 ### Creator profile — `Profile.dc.html`
 - Same layout as your own profile, plus **Follow** and the notify bell.
@@ -265,7 +265,7 @@ Plus **custom categories**: the creator adds their own label (e.g. "Tet holiday"
   - Moments
   - Spots tagged
   - Highest point
-  - Routes stolen
+  - Routes remixed
   - Live streak
   - Boat legs
   - Updates posted
@@ -280,7 +280,7 @@ Plus **custom categories**: the creator adds their own label (e.g. "Tet holiday"
   - First day trip
   - Border crosser
   - Off the map
-  - First steal
+  - First remix
   - Lone wolf
   - Live from day 1
   - Above the clouds (spot over 3,000 m)
@@ -288,7 +288,7 @@ Plus **custom categories**: the creator adds their own label (e.g. "Tet holiday"
   - Co-pilot
   - Night mover (leg after midnight)
   - Full house
-- Personal bests: Longest route, Longest trip, Highest point, Longest day on the road, Most countries in one trip, Posting streak, Most stolen.
+- Personal bests: Longest route, Longest trip, Highest point, Longest day on the road, Most countries in one trip, Posting streak, Most remixed.
 - Badge definitions live in the DB and are edited in admin. Mix tiered and one-off badges together in the grid, earned first.
 
 ---

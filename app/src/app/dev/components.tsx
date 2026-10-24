@@ -144,7 +144,7 @@ function Gallery() {
       <Section label="Buttons">
         <Row>
           <Button label="Save route" icon="save" onPress={() => toast('Saved to your routes')} />
-          <Button label="Steal it" variant="ghost" icon="steal" onPress={() => toast('Copied to your drafts')} />
+          <Button label="Remix this route" variant="ghost" icon="remix" onPress={() => toast('Copied to your drafts')} />
           <Button label="Delete" variant="danger" onPress={() => toast('Nothing deleted, it’s a demo')} />
         </Row>
         <Row>

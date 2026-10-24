@@ -130,18 +130,18 @@ export default function RouteScreen() {
           <Pressable
             accessibilityRole="button"
             onPress={() => toast('Route replays are coming soon.')}
-            style={({ pressed }) => ({ flex: 2, height: 48, borderRadius: 999, backgroundColor: c.ac, flexDirection: 'row', gap: 8, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.8 : 1 })}
+            style={({ pressed }) => ({ flex: 1.4, height: 48, borderRadius: 999, backgroundColor: c.ac, flexDirection: 'row', gap: 8, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.8 : 1 })}
           >
             <Icon name="play" size={18} color="on" filled />
             <Text style={{ fontFamily: fonts.bold, fontSize: 16, color: c.on }}>Play route</Text>
           </Pressable>
           <Pressable
             accessibilityRole="button"
-            onPress={() => toast(mine ? 'This one’s yours already.' : 'Stealing routes is coming soon.')}
-            style={({ pressed }) => ({ flex: 1.3, height: 48, borderRadius: 999, borderWidth: 1, borderColor: c.ln, backgroundColor: c.sf, flexDirection: 'row', gap: 6, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.8 : 1 })}
+            onPress={() => toast(mine ? 'This one’s yours already.' : 'Remixing routes is coming soon.')}
+            style={({ pressed }) => ({ flex: 1.6, height: 48, borderRadius: 999, borderWidth: 1, borderColor: c.ln, backgroundColor: c.sf, flexDirection: 'row', gap: 6, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.8 : 1 })}
           >
-            <Icon name="steal" size={18} strokeWidth={2} />
-            <Text style={{ fontFamily: fonts.bold, fontSize: 16, color: c.tx }}>Steal it</Text>
+            <Icon name="remix" size={18} strokeWidth={2} />
+            <Text numberOfLines={1} style={{ fontFamily: fonts.bold, fontSize: 15, color: c.tx }}>Remix this route</Text>
           </Pressable>
         </View>
       }

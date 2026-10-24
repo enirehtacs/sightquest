@@ -46,11 +46,11 @@ export function useSaves() {
     if (list) next.set(t.id, list);
     else next.delete(t.id);
     setSaved(next);
-    if (preview) return toast('Preview mode: nothing is saved.');
+    if (preview) return toast(list ? 'Saved (preview mode: not stored)' : 'Removed (preview mode)');
     try {
       if (list) await saveRoute(uid, t.id, list);
       else await unsaveRoute(uid, t.id);
-      toast(list ? `Saved to ${LIST_LABEL[list]}.` : 'Removed from your saves.');
+      toast(list ? 'Saved' : 'Removed from your saves.');
     } catch {
       const undo = new Map(next);
       if (before) undo.set(t.id, before);
@@ -68,7 +68,7 @@ export function useSaves() {
 function SaveSheet({ title, visible, current, onPick, onClose }: { title: string; visible: boolean; current?: SaveList; onPick: (l: SaveList | null) => void; onClose: () => void }) {
   const { c } = useTheme();
   return (
-    <Sheet visible={visible} onClose={onClose} title="Save to">
+    <Sheet visible={visible} onClose={onClose} title={current ? 'Saved' : 'Save to'}>
       <Txt variant="small" numberOfLines={1} style={{ marginTop: -6 }}>{title}</Txt>
       <View style={{ gap: 8 }}>
         {LISTS.map((l) => {

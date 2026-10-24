@@ -148,6 +148,8 @@ let failed = 0;
   console.log('\nSaves and route views');
   await as(FOLLOWER);
   await check('follower saves the followers-only route to Next trip', `insert into saves (user_id, route_id, list) values ($1, $2, 'next_trip')`, [FOLLOWER, R.fol], works);
+  await check('saving it again is a duplicate (the app then moves it)', `insert into saves (user_id, route_id, list) values ($1, $2, 'someday')`, [FOLLOWER, R.fol], (r, e) => !!e && e.code === '23505');
+  await check('an upsert is refused (saves only lets you change the list)', `insert into saves (user_id, route_id, list) values ($1, $2, 'someday') on conflict (user_id, route_id) do update set user_id = excluded.user_id, route_id = excluded.route_id, list = excluded.list`, [FOLLOWER, R.fol], refused);
   await check('…and moves it to Someday', `update saves set list = 'someday' where user_id = $1 and route_id = $2`, [FOLLOWER, R.fol], rows(1));
   await check('follower can’t save for someone else', `insert into saves (user_id, route_id) values ($1, $2)`, [STRANGER, R.pub], refused);
   await check('opening a route records a view', `select record_route_view($1)`, [R.fol], works);

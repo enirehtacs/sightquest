@@ -10,7 +10,7 @@ import { alpha, fonts, useTheme, type Colors } from '@/theme';
 // Welcome — design/prototype/Welcome.dc.html. Four cards, swipe or Next, Skip.
 // Never mention the year recap or badges here.
 const SLIDES: [string, string, string, string[]][] = [
-  ['1 OF 4 · EXPLORE', 'Routes real people actually took.', 'Not ads, not listicles. Day-by-day routes from travellers, chill to epic.', ['Search by place, vibe, effort and month', 'Save the ones you love for someday', 'Steal a route and make it your own']],
+  ['1 OF 4 · EXPLORE', 'Routes real people actually took.', 'Not ads, not listicles. Day-by-day routes from travellers, chill to epic.', ['Search by place, vibe, effort and month', 'Save the ones you love for someday', 'Remix a route and make it your own']],
   ['2 OF 4 · BUILD', 'Build your trip one day at a time.', 'Add each day live as you go, or after the trip from your photos.', ['Live sharing is off until you turn it on', 'Exact dates stay private, people only see the month', 'Works offline when there’s no signal']],
   ['3 OF 4 · HELP EACH OTHER', 'We’re all here to travel better.', 'Every route gets better when people who went pitch in.', ['Ask and answer on Campfire', 'Post updates when something changed', 'Fill in the Must-know so the next person doesn’t have to ask']],
   ['4 OF 4 · GO FURTHER', 'Take on a sidequest.', 'Every week we drop a new dare. Do it, post it, inspire someone else to go.', ['Done it before? Ages ago still counts', 'See how the whole community took on the same dare', 'The best stories get featured on Explore']],

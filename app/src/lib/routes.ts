@@ -263,9 +263,14 @@ export async function mySaveMap(uid: string): Promise<Map<string, SaveList>> {
   return new Map(rows.map((r) => [r.route_id, r.list]));
 }
 
+/** Save a route, or move it to the other list if it's already saved. */
 export async function saveRoute(uid: string, routeId: string, list: SaveList) {
-  const { error } = await supabase.from('saves').upsert({ user_id: uid, route_id: routeId, list }, { onConflict: 'user_id,route_id' });
-  if (error) throw error;
+  // Not an upsert: saves only lets you change `list`, and an upsert rewrites every column.
+  const { error } = await supabase.from('saves').insert({ user_id: uid, route_id: routeId, list });
+  if (!error) return;
+  if (error.code !== '23505') throw error;
+  const { error: moveError } = await supabase.from('saves').update({ list }).eq('user_id', uid).eq('route_id', routeId);
+  if (moveError) throw moveError;
 }
 
 export async function unsaveRoute(uid: string, routeId: string) {

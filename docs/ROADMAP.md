@@ -54,7 +54,7 @@ Each phase ends with a "done when" checklist. Don't start the next phase until e
 - [ ] A stranger never sees today's day when delay is on.
 
 ## Phase 4 — Community
-- Campfire (with the kindness nudge and creator replies), Updates + Post an update, +1s, Steal, Share (image card), Friends feed + Shared with you, Inbox + push notifications, SOWO ratings + score trigger, Report → moderation queue, image-safety scan.
+- Campfire (with the kindness nudge and creator replies), Updates + Post an update, +1s, Remix (was "Steal"), Share (image card), Friends feed + Shared with you, Inbox + push notifications, SOWO ratings + score trigger, Report → moderation queue, image-safety scan.
 
 **Done when**
 - [ ] Only builders can reply in Campfire.

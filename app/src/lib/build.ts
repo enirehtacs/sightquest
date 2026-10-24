@@ -1,7 +1,7 @@
 import * as Crypto from 'expo-crypto';
 
 import { enqueue, type DayRow, type LegRow, type MomentRow, type Op, type SpotRow } from './queue';
-import { getRoute, type RouteDetail } from './routes';
+import { getRoute, type PostLink, type RouteDetail } from './routes';
 import { supabase } from './supabase';
 
 // Building routes (Phase 3). Creating a route needs signal; days, moments and
@@ -97,25 +97,20 @@ export type RoutePrivate = { start_date: string | null; end_date: string | null;
 
 export type BuildData = RouteDetail & {
   priv: RoutePrivate | null;
-  posts: PostLink[];
   /** The route row's own settings, which route_cards doesn't carry. */
   blur_sleep: boolean;
 };
 
-export type PostLink = { id: string; day_id: string | null; platform: 'instagram' | 'tiktok' | 'youtube'; url: string; caption: string | null };
-
 export async function getBuild(id: string): Promise<BuildData | null> {
-  const [detail, priv, posts, row] = await Promise.all([
+  const [detail, priv, row] = await Promise.all([
     getRoute(id),
     supabase.rpc('route_private', { p_route: id }),
-    supabase.from('post_links').select('id, day_id, platform, url, caption').eq('route_id', id).order('created_at'),
     supabase.from('routes').select('blur_sleep').eq('id', id).maybeSingle(),
   ]);
   if (!detail) return null;
   return {
     ...detail,
     priv: (priv.data as RoutePrivate | null) ?? null,
-    posts: (posts.data ?? []) as PostLink[],
     blur_sleep: (row.data as { blur_sleep: boolean } | null)?.blur_sleep ?? true,
   };
 }
@@ -175,6 +170,8 @@ export function postPlatform(url: string): PostLink['platform'] | null {
   if (/^https:\/\/([a-z0-9-]+\.)*(youtube\.com|youtu\.be)\//i.test(u)) return 'youtube';
   return null;
 }
+
+export type { PostLink };
 
 export async function addPost(routeId: string, uid: string, url: string, dayId: string | null, caption: string | null) {
   const platform = postPlatform(url);

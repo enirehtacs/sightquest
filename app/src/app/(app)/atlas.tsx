@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Icon, MonoLabel, Txt, useToast } from '@/components';
+import { Icon, MonoLabel, Txt } from '@/components';
 import { Map, MapButtons, type LngLat, type MapHandle, type MapPin } from '@/components/map';
 import { Nudge } from '@/features/route/cards';
 import { useAuth } from '@/lib/auth';
@@ -18,7 +18,6 @@ export default function Atlas() {
   const { uid, profile, preview } = useAuth();
   const { c } = useTheme();
   const insets = useSafeAreaInsets();
-  const toast = useToast();
   const map = useRef<MapHandle>(null);
   const [trips, setTrips] = useState<RouteCard[] | null>(null);
   const [open, setOpen] = useState<string | null>(null);
@@ -120,7 +119,7 @@ export default function Atlas() {
         <View style={{ position: 'absolute', left: space.gutter, right: space.gutter, bottom: insets.bottom + 24 }}>
           <Nudge
             text={mine ? 'Your trips draw themselves here, one line each. Post your first route and watch the map fill up.' : `@${user} hasn’t shared a trip with you yet.`}
-            action={mine ? { label: 'Build a route', onPress: () => toast('Building routes is coming soon.') } : { label: 'Back to the profile', onPress: back }}
+            action={mine ? { label: 'Build a route', onPress: () => router.push('/build/new') } : { label: 'Back to the profile', onPress: back }}
           />
         </View>
       ) : !t ? (

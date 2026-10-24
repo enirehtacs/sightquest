@@ -88,11 +88,11 @@ const toHit = (f: Feature): PlaceHit => ({
 });
 
 /** Town, beach, trailhead…: suggestions as you type, nearest to `near` first. */
-export async function searchPlaces(q: string, near?: { lat: number; lng: number } | null): Promise<PlaceHit[]> {
+export async function searchPlaces(q: string, near?: { lat: number; lng: number } | null, types = 'place,locality,neighborhood,district,region,country'): Promise<PlaceHit[]> {
   const text = q.trim();
   if (text.length < 2 || !MAPBOX_TOKEN) return [];
   const prox = near ? `&proximity=${near.lng},${near.lat}` : '';
-  const url = `https://api.mapbox.com/search/geocode/v6/forward?q=${encodeURIComponent(text)}&autocomplete=true&limit=5&types=place,locality,neighborhood,district,region,country${prox}&access_token=${MAPBOX_TOKEN}`;
+  const url = `https://api.mapbox.com/search/geocode/v6/forward?q=${encodeURIComponent(text)}&autocomplete=true&limit=5&types=${types}${prox}&access_token=${MAPBOX_TOKEN}`;
   try {
     const json = await (await fetch(url)).json();
     return ((json?.features ?? []) as Feature[]).map(toHit).filter((h) => h.name);

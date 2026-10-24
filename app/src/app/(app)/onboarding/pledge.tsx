@@ -117,7 +117,7 @@ export default function Pledge() {
     try {
       if (!preview) await takePledge(uid);
       setPledged(true);
-      router.replace('/onboarding/location');
+      router.replace('/onboarding/about');
     } catch {
       toast('Couldn’t save that. Check your connection and try again.');
       setSaving(false);

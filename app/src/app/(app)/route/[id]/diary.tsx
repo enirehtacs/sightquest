@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
@@ -7,6 +8,7 @@ import { Button, Icon, MonoLabel, Screen, Txt, useToast } from '@/components';
 import { Map, MapButtons, type LngLat, type MapHandle, type MapPin } from '@/components/map';
 import { Nudge } from '@/features/route/cards';
 import { clock, toneOf } from '@/lib/routeFormat';
+import { photoUrls } from '@/lib/photos';
 import { getRoute, type Moment, type RouteDetail } from '@/lib/routes';
 import { fonts, space, useTheme } from '@/theme';
 
@@ -23,6 +25,7 @@ export default function Diary() {
   const [by, setBy] = useState<'place' | 'day'>('place');
   const [focus, setFocus] = useState<Focus>(null);
   const [idx, setIdx] = useState(0);
+  const [urls, setUrls] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (!id) return;
@@ -31,6 +34,8 @@ export default function Diary() {
       .then((d) => {
         if (!live) return;
         setData(d);
+        const paths = d?.moments.flatMap((x) => x.photo_paths) ?? [];
+        if (paths.length) photoUrls(paths).then((u) => live && setUrls(u)).catch(() => {});
         // Opened from a moment: start on that moment's place.
         const m = d?.moments.find((x) => x.id === moment);
         if (m && d) {
@@ -235,6 +240,7 @@ export default function Diary() {
             {cur && (
               <View style={{ borderRadius: 18, overflow: 'hidden', backgroundColor: c.sf, borderWidth: 1, borderColor: c.ln }}>
                 <View style={{ height: 128, backgroundColor: c[`ph${toneOf(cur.id)}` as const] }}>
+                  {urls[cur.photo_paths[0]] ? <Image source={{ uri: urls[cur.photo_paths[0]] }} style={{ position: 'absolute', inset: 0 }} contentFit="cover" /> : null}
                   {cur.tag ? <Tag text={cur.tag} style={{ left: 10 }} /> : null}
                   <Tag text={`${pos + 1} / ${seq.length}`} style={{ right: 10 }} />
                 </View>

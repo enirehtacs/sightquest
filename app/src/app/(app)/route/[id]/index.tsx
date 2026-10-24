@@ -6,11 +6,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Avatar, Button, Icon, MonoLabel, Screen, Tabs, Txt, useToast } from '@/components';
 import { Map, MapButtons, type LngLat, type MapHandle, type MapPin } from '@/components/map';
 import { Nudge } from '@/features/route/cards';
-import { Itinerary, MomentsGrid, MomentViewer, MustKnowGrid, SowoPill, SowoPopup, SpotsGrid, TunesPopup } from '@/features/route/RouteParts';
+import { Itinerary, MomentsGrid, MomentViewer, MustKnowGrid, PostsGrid, SowoPill, SowoPopup, SpotsGrid, TunesPopup } from '@/features/route/RouteParts';
 import { useSaves } from '@/features/route/useSaves';
 import { useAuth } from '@/lib/auth';
 import { follow, getFollow, unfollow } from '@/lib/profiles';
 import { EFFORT_NAMES, fromToLine, MON, toneOf, WEATHER } from '@/lib/routeFormat';
+import { photoUrls } from '@/lib/photos';
 import { getRoute, recordView, type RouteDetail } from '@/lib/routes';
 import { fonts, radius, space, useTheme } from '@/theme';
 
@@ -34,6 +35,7 @@ export default function RouteScreen() {
   const [tunes, setTunes] = useState(false);
   const [moment, setMoment] = useState(-1);
   const [following, setFollowing] = useState<boolean | null>(null);
+  const [urls, setUrls] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (!id) return;
@@ -43,6 +45,8 @@ export default function RouteScreen() {
         if (!live) return;
         setData(d);
         if (d) recordView(id).catch(() => {});
+        const paths = d?.moments.flatMap((m) => m.photo_paths) ?? [];
+        if (paths.length && !preview) photoUrls(paths).then((u) => live && setUrls(u)).catch(() => {});
         if (d && uid && !preview && d.card.owner_id !== uid) getFollow(uid, d.card.owner_id).then((f) => live && setFollowing(f.following)).catch(() => {});
       })
       .catch(() => live && setData(null));
@@ -213,6 +217,7 @@ export default function RouteScreen() {
               <Txt variant="small" numberOfLines={1}>{fromToLine(r)}</Txt>
             </View>
           </Pressable>
+          {mine && <Button label="Edit route" variant="ghost" size="sm" onPress={() => router.push({ pathname: '/build/[id]', params: { id: r.id } })} />}
           {!mine && following !== null && (
             <Pressable
               accessibilityRole="button"
@@ -329,13 +334,15 @@ export default function RouteScreen() {
         (data.moments.length ? (
           <MomentsGrid
             moments={data.moments}
+            urls={urls}
             onOpen={setMoment}
             onSeeAll={() => router.push({ pathname: '/route/[id]/diary', params: { id: r.id } })}
           />
         ) : (
           <TabNudge text="No moments on this route yet. They show up here as photos with a story." />
         ))}
-      {tab === 'posts' && (
+      {tab === 'posts' && data.posts.length > 0 && <PostsGrid posts={data.posts} days={data.days} handle={r.owner_username ?? ''} />}
+      {tab === 'posts' && data.posts.length === 0 && (
         <View style={{ paddingTop: 14 }}>
           <Nudge
             text={`Posts that @${r.owner_username} links to this route show up here. They open in TikTok, Instagram or YouTube, so the views go to the creator.`}
@@ -363,7 +370,7 @@ export default function RouteScreen() {
 
       <SowoPopup route={r} visible={sowo} onClose={() => setSowo(false)} />
       {data.tunes && <TunesPopup tunes={data.tunes} ownerAvatarTone={2} visible={tunes} onClose={() => setTunes(false)} />}
-      {moment >= 0 && <MomentViewer routeId={r.id} moments={data.moments} index={moment} onIndex={setMoment} onClose={() => setMoment(-1)} />}
+      {moment >= 0 && <MomentViewer routeId={r.id} moments={data.moments} urls={urls} index={moment} onIndex={setMoment} onClose={() => setMoment(-1)} />}
       {saves.sheet}
     </Screen>
   );

@@ -127,6 +127,8 @@ export type TripTunes = {
   preview_tracks: { title: string; artist: string; length: string }[];
 };
 
+export type PostLink = { id: string; day_id: string | null; platform: 'instagram' | 'tiktok' | 'youtube'; url: string; caption: string | null };
+
 export type Builder = { user_id: string; role: 'owner' | 'co'; username: string | null; avatar_url: string | null };
 
 export type RouteDetail = {
@@ -137,6 +139,7 @@ export type RouteDetail = {
   mustKnows: MustKnow[];
   tunes: TripTunes | null;
   builders: Builder[];
+  posts: PostLink[];
 };
 
 const DAY_COLS = 'id, day_number, place_name, lat, lng, weather, note, legs(id, sort, mode, from_name, to_name, duration_text, note)';
@@ -151,9 +154,9 @@ function must<T>(r: { data: T | null; error: { message: string } | null }): T {
 /** Everything the Route screen shows, or null if you can't see it. */
 export async function getRoute(id: string): Promise<RouteDetail | null> {
   const snap = await previewSnapshot();
-  if (snap) return snap.routes[id] ?? null;
+  if (snap) return snap.routes[id] ? { ...snap.routes[id], posts: snap.routes[id].posts ?? [] } : null;
 
-  const [card, days, moments, spots, mustKnows, tunes, builders] = await Promise.all([
+  const [card, days, moments, spots, mustKnows, tunes, builders, posts] = await Promise.all([
     supabase.from('route_cards').select('*').eq('id', id).maybeSingle(),
     supabase.from('days').select(DAY_COLS).eq('route_id', id).order('day_number'),
     supabase.from('moments').select(MOMENT_COLS).eq('route_id', id),
@@ -161,6 +164,7 @@ export async function getRoute(id: string): Promise<RouteDetail | null> {
     supabase.from('must_knows').select('*').eq('route_id', id).order('sort'),
     supabase.from('trip_tunes').select('*').eq('route_id', id).maybeSingle(),
     supabase.from('route_builders').select('user_id, role').eq('route_id', id).eq('status', 'accepted'),
+    supabase.from('post_links').select('id, day_id, platform, url, caption').eq('route_id', id).order('created_at'),
   ]);
   const c = must(card) as RouteCard | null;
   if (!c) return null;
@@ -185,6 +189,7 @@ export async function getRoute(id: string): Promise<RouteDetail | null> {
       const p = (people ?? []).find((q) => q.id === x.user_id);
       return { ...x, username: p?.username ?? null, avatar_url: p?.avatar_url ?? null };
     }),
+    posts: (posts.data ?? []) as PostLink[],
   };
 }
 

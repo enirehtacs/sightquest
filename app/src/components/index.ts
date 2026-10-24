@@ -3,6 +3,7 @@ export { BottomNav, type NavKey } from './BottomNav';
 export { Button } from './Button';
 export { Card } from './Card';
 export { Chip } from './Chip';
+export { DateField, prettyDate } from './DateField';
 export { Field } from './Field';
 export { Globe } from './Globe';
 export { Icon, ICONS, type IconName } from './Icon';

@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, Share, Text, View } from 'react-native';
 
-import { Avatar, Button, Chip, Icon, MonoLabel, RouteThumb, SocialLinks, Tabs, Txt, useToast } from '@/components';
+import { Avatar, Button, Chip, Icon, MonoLabel, RouteThumb, SocialLinks, Tabs, Txt } from '@/components';
 import { Nudge, openRoute } from '@/features/route/cards';
 import { LIST_LABEL } from '@/features/route/useSaves';
 import type { Links } from '@/lib/profiles';
@@ -35,10 +35,8 @@ const ROUTE_URL = 'https://sightquest-app.vercel.app/route/';
 
 export function ProfileBody({ owner, name, username, place, bio, avatarUrl, links, actions, routes, saved = [] }: Props) {
   const { c } = useTheme();
-  const toast = useToast();
   const [tab, setTab] = useState<TabKey>('routes');
   const [list, setList] = useState<'all' | 'next_trip' | 'someday'>('all');
-  const soon = (what: string) => () => toast(`${what} is coming soon.`);
 
   const tabs: { key: TabKey; label: string }[] = owner
     ? [
@@ -131,7 +129,7 @@ export function ProfileBody({ owner, name, username, place, bio, avatarUrl, link
         ) : routes.length === 0 ? (
           <Nudge
             text={owner ? 'Your routes live here. Start with a weekend you loved.' : `@${username} hasn’t shared a route with you yet. Follow them to see their followers-only routes.`}
-            action={owner ? { label: 'Build a route', onPress: soon('Building routes') } : undefined}
+            action={owner ? { label: 'Build a route', onPress: () => router.push('/build/new') } : undefined}
           />
         ) : (
           <View style={{ gap: 10 }}>
@@ -141,7 +139,7 @@ export function ProfileBody({ owner, name, username, place, bio, avatarUrl, link
                   <Pressable
                     accessibilityRole="button"
                     accessibilityLabel={`In progress: ${r.title}`}
-                    onPress={() => openRoute(r.id)}
+                    onPress={() => router.push({ pathname: '/build/[id]', params: { id: r.id } })}
                     style={{ flexDirection: 'row', gap: 12, alignItems: 'center', backgroundColor: c.sf, borderWidth: 1, borderColor: c.act, borderRadius: radius.card, paddingVertical: 12, paddingHorizontal: 14 }}
                   >
                     <RouteThumb line={r.line} style={{ width: 44, height: 44, borderRadius: 12 }} inset={{ top: 8, right: 8, bottom: 8, left: 8 }} />
@@ -165,7 +163,7 @@ export function ProfileBody({ owner, name, username, place, bio, avatarUrl, link
                       />
                     </View>
                     <View style={{ flex: 1 }}>
-                      <Button label="Tags & moments" variant="ghost" size="sm" block onPress={soon('Editing routes')} />
+                      <Button label="Tags & moments" variant="ghost" size="sm" block onPress={() => router.push({ pathname: '/build/[id]', params: { id: r.id } })} />
                     </View>
                   </View>
                 </View>
@@ -176,7 +174,7 @@ export function ProfileBody({ owner, name, username, place, bio, avatarUrl, link
                   key={r.id}
                   accessibilityRole="button"
                   accessibilityLabel={`Draft: ${r.title}`}
-                  onPress={() => openRoute(r.id)}
+                  onPress={() => router.push({ pathname: '/build/[id]', params: { id: r.id } })}
                   style={{ flexDirection: 'row', gap: 12, alignItems: 'center', backgroundColor: c.sf, borderWidth: 1, borderStyle: 'dashed', borderColor: c.ln, borderRadius: radius.card, paddingVertical: 12, paddingHorizontal: 14 }}
                 >
                   <View style={{ width: 44, height: 44, borderRadius: 12, borderWidth: 1, borderStyle: 'dashed', borderColor: c.mu }} />
@@ -273,7 +271,7 @@ export function ProfileBody({ owner, name, username, place, bio, avatarUrl, link
       {tab === 'achievements' && (
         <Nudge
           text={owner ? 'Badges and personal bests show up here as you post routes, days and moments.' : `@${username}’s badges and personal bests show up here.`}
-          action={owner ? { label: 'Build a route', onPress: soon('Building routes') } : { label: 'See their routes', onPress: () => setTab('routes') }}
+          action={owner ? { label: 'Build a route', onPress: () => router.push('/build/new') } : { label: 'See their routes', onPress: () => setTab('routes') }}
         />
       )}
     </View>

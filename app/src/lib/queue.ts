@@ -142,6 +142,8 @@ export async function flush() {
     await save();
     emit();
   }
+  // More arrived while sending: keep going.
+  if (!offline && ops.some((o) => !o.error)) setTimeout(flush, 0);
 }
 
 /** Save it on the phone, then try to send it straight away. */

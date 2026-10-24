@@ -6,6 +6,7 @@ import { Linking, Platform, Pressable, Text, View } from 'react-native';
 
 import { Button, Icon, MonoLabel, Screen, Sheet, Tabs, Toggle, Txt, useToast } from '@/components';
 import { useAuth } from '@/lib/auth';
+import { getSowoEligible, setSowoEligible } from '@/lib/build';
 import { myBlockedAccounts, updateMyProfile, type MyProfile, type ProfilePatch } from '@/lib/profiles';
 import { fonts, radius, useTheme, type AppearancePref } from '@/theme';
 
@@ -25,6 +26,7 @@ export default function Settings() {
   const [blocked, setBlocked] = useState<number | null>(null);
   const [liveSheet, setLiveSheet] = useState(false);
   const [confirmOut, setConfirmOut] = useState(false);
+  const [sowo, setSowo] = useState<boolean | null>(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -33,7 +35,8 @@ export default function Settings() {
         .catch(() => setLoc('Off'));
       if (!preview) myBlockedAccounts().then((b) => setBlocked(b.length)).catch(() => setBlocked(null));
       else setBlocked(0);
-    }, [preview]),
+      if (!preview && uid) getSowoEligible(uid).then(setSowo).catch(() => {});
+    }, [preview, uid]),
   );
 
   if (!profile || !uid) return <Screen>{null}</Screen>;
@@ -91,6 +94,22 @@ export default function Settings() {
         <SwitchRow label="Blur where I sleep" sub="Overnight stops show as a 2 km area" on={profile.blur_sleep} onToggle={() => patch({ blur_sleep: !profile.blur_sleep })} />
         <SwitchRow label="Hide my home city" sub="Your profile shows the country only" on={profile.hide_home_city} onToggle={() => patch({ hide_home_city: !profile.hide_home_city })} />
         <Row label="Exact trip dates" value="Only me" sub="Others see the month you went, and Day 1, Day 2…" />
+        <SwitchRow
+          label="I’m a woman (for SOWO)"
+          sub="Private. Lets you rate how a route felt solo when you finish it. Never shown on your profile."
+          on={!!sowo}
+          onToggle={async () => {
+            const next = !sowo;
+            setSowo(next);
+            if (preview) return;
+            try {
+              await setSowoEligible(uid, next);
+            } catch {
+              setSowo(!next);
+              toast('Couldn’t save that. Try again?');
+            }
+          }}
+        />
         <Row label="Blocked accounts" value={blocked === null ? '' : String(blocked)} onPress={() => router.push('/settings/blocked')} />
       </Group>
 

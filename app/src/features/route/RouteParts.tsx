@@ -1,10 +1,11 @@
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Linking, Pressable, Text, View } from 'react-native';
 
 import { CloseX, Icon, MonoLabel, Popup, Txt } from '@/components';
 import { clock, LEG_MODE, MUST_KNOW, SPOT_KIND, toneOf } from '@/lib/routeFormat';
-import type { Day, Moment, MustKnow, RouteCard, Spot, TripTunes } from '@/lib/routes';
+import type { Day, Moment, MustKnow, PostLink, RouteCard, Spot, TripTunes } from '@/lib/routes';
 import { fonts, radius, useTheme } from '@/theme';
 
 // The pieces of the Route screen (design/prototype/Route.dc.html, SPEC section 4).
@@ -111,7 +112,7 @@ export function SpotsGrid({ spots, onPick }: { spots: Spot[]; onPick: (s: Spot) 
 }
 
 // ── Moments ───────────────────────────────────────────────────────
-export function MomentsGrid({ moments, onOpen, onSeeAll }: { moments: Moment[]; onOpen: (i: number) => void; onSeeAll: () => void }) {
+export function MomentsGrid({ moments, urls, onOpen, onSeeAll }: { moments: Moment[]; urls: Record<string, string>; onOpen: (i: number) => void; onSeeAll: () => void }) {
   const { c } = useTheme();
   return (
     <View style={{ gap: 10, paddingTop: 14 }}>
@@ -130,10 +131,14 @@ export function MomentsGrid({ moments, onOpen, onSeeAll }: { moments: Moment[]; 
               padding: 10,
               justifyContent: 'flex-end',
               backgroundColor: c[`ph${toneOf(m.id)}` as const],
+              overflow: 'hidden',
               opacity: pressed ? 0.85 : 1,
             })}
           >
-            <MonoLabel size={10} bold color="tx" numberOfLines={2}>{m.tag ?? `DAY ${m.day_number}`}</MonoLabel>
+            {urls[m.photo_paths[0]] ? <Image source={{ uri: urls[m.photo_paths[0]] }} style={{ position: 'absolute', inset: 0 }} contentFit="cover" /> : null}
+            <View style={{ alignSelf: 'flex-start', backgroundColor: c.scrim, borderRadius: 999, paddingHorizontal: 6, paddingVertical: 2 }}>
+              <MonoLabel size={10} bold color="tx" numberOfLines={2}>{m.tag ?? `DAY ${m.day_number}`}</MonoLabel>
+            </View>
           </Pressable>
         ))}
       </View>
@@ -280,7 +285,7 @@ export function TunesPopup({ tunes, ownerAvatarTone, visible, onClose }: { tunes
 }
 
 // ── Moment viewer ─────────────────────────────────────────────────
-export function MomentViewer({ routeId, moments, index, onIndex, onClose }: { routeId: string; moments: Moment[]; index: number; onIndex: (i: number) => void; onClose: () => void }) {
+export function MomentViewer({ routeId, moments, urls = {}, index, onIndex, onClose }: { routeId: string; moments: Moment[]; urls?: Record<string, string>; index: number; onIndex: (i: number) => void; onClose: () => void }) {
   const { c } = useTheme();
   const m = moments[index];
   if (!m) return null;
@@ -296,6 +301,7 @@ export function MomentViewer({ routeId, moments, index, onIndex, onClose }: { ro
         <CloseX onPress={onClose} />
       </View>
       <View style={{ height: 280, borderRadius: radius.card, overflow: 'hidden', backgroundColor: c[`ph${toneOf(m.id)}` as const], justifyContent: 'center' }}>
+        {urls[m.photo_paths[0]] ? <Image source={{ uri: urls[m.photo_paths[0]] }} style={{ position: 'absolute', inset: 0 }} contentFit="cover" /> : null}
         {m.tag ? (
           <View style={{ position: 'absolute', top: 10, left: 10, backgroundColor: c.scrim, borderRadius: 999, paddingHorizontal: 8, paddingVertical: 4 }}>
             <MonoLabel size={10} bold color="tx">{m.tag}</MonoLabel>
@@ -338,3 +344,64 @@ export function MomentViewer({ routeId, moments, index, onIndex, onClose }: { ro
   );
 }
 
+
+const PLATFORM_NAME: Record<PostLink['platform'], string> = { instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube' };
+
+/** Posts tab: linked TikTok, Instagram and YouTube posts. Tapping previews, then opens the post in its own app. */
+export function PostsGrid({ posts, days, handle }: { posts: PostLink[]; days: Day[]; handle: string }) {
+  const { c } = useTheme();
+  const [open, setOpen] = useState<PostLink | null>(null);
+  const [all, setAll] = useState(false);
+  const shown = all ? posts : posts.slice(0, 6);
+  const dayOf = (p: PostLink) => days.find((d) => d.id === p.day_id);
+  return (
+    <View style={{ gap: 10, paddingTop: 14 }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+        {shown.map((p) => (
+          <Pressable
+            key={p.id}
+            accessibilityRole="button"
+            accessibilityLabel={`Preview ${PLATFORM_NAME[p.platform]} post${p.caption ? `: ${p.caption}` : ''}`}
+            onPress={() => setOpen(p)}
+            style={{ flexBasis: '31%', flexGrow: 1, gap: 6 }}
+          >
+            <View style={{ height: 150, borderRadius: radius.cardSm, overflow: 'hidden', backgroundColor: c[`ph${toneOf(p.id)}` as const], alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{ position: 'absolute', top: 8, left: 8, backgroundColor: c.scrim, borderRadius: 999, paddingHorizontal: 7, paddingVertical: 3 }}>
+                <MonoLabel size={10} bold color="tx">{PLATFORM_NAME[p.platform].toUpperCase()}</MonoLabel>
+              </View>
+              <View style={{ width: 38, height: 38, borderRadius: 999, backgroundColor: c.scrim, alignItems: 'center', justifyContent: 'center' }}>
+                <Icon name="play" size={16} filled />
+              </View>
+            </View>
+            <Txt numberOfLines={2} style={{ fontFamily: fonts.semibold, fontSize: 12, lineHeight: 16 }}>{p.caption ?? (dayOf(p) ? `Day ${dayOf(p)!.day_number}` : 'Whole route')}</Txt>
+          </Pressable>
+        ))}
+      </View>
+      {posts.length > 6 && <OutlineButton label={all ? 'Show less' : `See all ${posts.length} posts`} onPress={() => setAll(!all)} />}
+      <Popup visible={!!open} onClose={() => setOpen(null)} label="Linked post">
+        {open && (
+          <>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+              <View style={{ flex: 1 }}>
+                <Txt style={{ fontFamily: fonts.bold, fontSize: 14 }}>@{handle}</Txt>
+                <Txt variant="small">{dayOf(open) ? `Day ${dayOf(open)!.day_number} · ${dayOf(open)!.place_name}` : 'Whole route'}</Txt>
+              </View>
+              <MonoLabel bold>{PLATFORM_NAME[open.platform].toUpperCase()}</MonoLabel>
+              <CloseX onPress={() => setOpen(null)} />
+            </View>
+            {open.caption ? <Txt style={{ fontFamily: fonts.bold, fontSize: 16 }}>{open.caption}</Txt> : null}
+            <Pressable
+              accessibilityRole="link"
+              onPress={() => Linking.openURL(open.url)}
+              style={({ pressed }) => ({ height: 48, borderRadius: 999, backgroundColor: c.ac, flexDirection: 'row', gap: 8, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.85 : 1 })}
+            >
+              <Text style={{ fontFamily: fonts.bold, fontSize: 16, color: c.on }}>Watch on {PLATFORM_NAME[open.platform]}</Text>
+              <Icon name="external" size={16} color="on" strokeWidth={2.2} />
+            </Pressable>
+            <Txt variant="small" style={{ textAlign: 'center' }}>Opens {PLATFORM_NAME[open.platform]}. Views and likes go to @{handle}.</Txt>
+          </>
+        )}
+      </Popup>
+    </View>
+  );
+}

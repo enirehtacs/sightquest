@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 
 import { Avatar, BottomNav, Icon, MonoLabel, Screen, Txt, useToast } from '@/components';
-import { BigRouteCard, MiniRouteCard, Nudge, openRoute, RouteRow, SectionHead } from '@/features/route/cards';
+import { BigRouteCard, MiniRouteCard, Nudge, RouteRow, SectionHead } from '@/features/route/cards';
 import { useNav } from '@/features/nav/useNav';
 import { useAuth } from '@/lib/auth';
 import { geocode } from '@/lib/places';
@@ -116,7 +116,7 @@ export default function Explore() {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={`Building now: ${r.title}`}
-            onPress={() => openRoute(r.id)}
+            onPress={() => router.push({ pathname: '/build/[id]', params: { id: r.id } })}
             style={({ pressed }) => ({ gap: 10, paddingHorizontal: 14, paddingVertical: 12, paddingRight: 120, opacity: pressed ? 0.85 : 1 })}
           >
             <MonoLabel size={10} bold color="act">● BUILDING NOW</MonoLabel>
@@ -138,7 +138,7 @@ export default function Explore() {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={`Add day ${r.day_count + 1} to ${r.title}`}
-            onPress={() => toast('Adding days is coming soon.')}
+            onPress={() => router.push({ pathname: '/build/[id]', params: { id: r.id, add: '1' } })}
             style={{ position: 'absolute', right: 14, bottom: 14, height: 36, paddingHorizontal: 14, borderRadius: 999, backgroundColor: c.ac, alignItems: 'center', justifyContent: 'center' }}
           >
             <Text style={{ fontFamily: fonts.bold, fontSize: 13, color: c.on }}>+ Add day</Text>

@@ -13,7 +13,7 @@ import { allCoords, pad, projector, type LngLat, type MapProps } from './types';
  * Shown in Expo Go (real Mapbox needs a development build, Phase 7) and
  * whenever there's no Mapbox token.
  */
-export function MapFallback({ lines = [], pins = [], fitTo, padding, onPress, style, accessibilityLabel, ref }: MapProps) {
+export function MapFallback({ lines = [], pins = [], fitTo, padding, onPress, onPressCoord, style, accessibilityLabel, ref }: MapProps) {
   const { c } = useTheme();
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [view, setView] = useState<{ zoom: number; center?: LngLat; frame?: LngLat[] }>({ zoom: 1 });
@@ -44,7 +44,15 @@ export function MapFallback({ lines = [], pins = [], fitTo, padding, onPress, st
     >
       {size.w > 0 && (
         <>
-          <Pressable onPress={onPress} disabled={!onPress} style={{ position: 'absolute', inset: 0 }} accessible={false}>
+          <Pressable
+            onPress={(e) => {
+              onPress?.();
+              onPressCoord?.(project.invert(e.nativeEvent.locationX, e.nativeEvent.locationY));
+            }}
+            disabled={!onPress && !onPressCoord}
+            style={{ position: 'absolute', inset: 0 }}
+            accessible={false}
+          >
             <Svg width={size.w} height={size.h}>
               <Rect x={0} y={0} width={size.w} height={size.h} fill={c.land} />
               {contours.map((d, i) => (

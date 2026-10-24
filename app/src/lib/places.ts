@@ -71,3 +71,44 @@ export async function whereAmI(ask = false): Promise<Here> {
     return { status: 'denied', place: null };
   }
 }
+
+export type PlaceHit = { name: string; region: string; lat: number; lng: number; countryCode: string | null };
+
+type Feature = {
+  geometry: { coordinates: [number, number] };
+  properties: { name?: string; place_formatted?: string; context?: { country?: { country_code?: string } } };
+};
+
+const toHit = (f: Feature): PlaceHit => ({
+  name: f.properties.name ?? '',
+  region: f.properties.place_formatted ?? '',
+  lng: f.geometry.coordinates[0],
+  lat: f.geometry.coordinates[1],
+  countryCode: f.properties.context?.country?.country_code?.toUpperCase() ?? null,
+});
+
+/** Town, beach, trailhead…: suggestions as you type, nearest to `near` first. */
+export async function searchPlaces(q: string, near?: { lat: number; lng: number } | null): Promise<PlaceHit[]> {
+  const text = q.trim();
+  if (text.length < 2 || !MAPBOX_TOKEN) return [];
+  const prox = near ? `&proximity=${near.lng},${near.lat}` : '';
+  const url = `https://api.mapbox.com/search/geocode/v6/forward?q=${encodeURIComponent(text)}&autocomplete=true&limit=5&types=place,locality,neighborhood,district,region,country${prox}&access_token=${MAPBOX_TOKEN}`;
+  try {
+    const json = await (await fetch(url)).json();
+    return ((json?.features ?? []) as Feature[]).map(toHit).filter((h) => h.name);
+  } catch {
+    return [];
+  }
+}
+
+/** The place (and country) at a point: for dropped pins and photo days. */
+export async function placeAt(lat: number, lng: number): Promise<PlaceHit | null> {
+  if (!MAPBOX_TOKEN) return null;
+  try {
+    const url = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${lng}&latitude=${lat}&types=place,locality,neighborhood&limit=1&access_token=${MAPBOX_TOKEN}`;
+    const f = ((await (await fetch(url)).json())?.features ?? [])[0] as Feature | undefined;
+    return f ? { ...toHit(f), lat, lng } : null;
+  } catch {
+    return null;
+  }
+}

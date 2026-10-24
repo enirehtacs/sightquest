@@ -46,7 +46,7 @@ export function Map(props: MapProps) {
   return <NativeMap mb={MB} {...props} />;
 }
 
-function NativeMap({ mb, lines = [], pins = [], fitTo, padding, onPress, style, accessibilityLabel, ref }: MapProps & { mb: Rnmb }) {
+function NativeMap({ mb, lines = [], pins = [], fitTo, padding, onPress, onPressCoord, style, accessibilityLabel, ref }: MapProps & { mb: Rnmb }) {
   const { c } = useTheme();
   const camera = useRef<CameraRef>(null);
   const view = useRef<MapViewRef>(null);
@@ -86,7 +86,10 @@ function NativeMap({ mb, lines = [], pins = [], fitTo, padding, onPress, style, 
       pitchEnabled={false}
       attributionPosition={{ bottom: 8, right: 8 }}
       logoPosition={{ bottom: 8, left: 8 }}
-      onPress={onPress}
+      onPress={(f: { geometry?: { coordinates?: LngLat } }) => {
+        onPress?.();
+        if (f?.geometry?.coordinates) onPressCoord?.(f.geometry.coordinates);
+      }}
     >
       <Camera
         ref={camera}

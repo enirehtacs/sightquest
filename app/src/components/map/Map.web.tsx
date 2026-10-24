@@ -52,7 +52,10 @@ function MapboxWeb(props: MapProps) {
     });
     m.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right');
     m.touchZoomRotate.disableRotation();
-    m.on('click', () => latest.current.onPress?.());
+    m.on('click', (e) => {
+      latest.current.onPress?.();
+      latest.current.onPressCoord?.([e.lngLat.lng, e.lngLat.lat]);
+    });
     map.current = m;
     return () => {
       m.remove();

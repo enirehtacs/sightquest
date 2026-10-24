@@ -51,6 +51,8 @@ export type MapProps = {
   /** Mouse-wheel zoom on web. Off for maps inside a scrolling page. */
   scrollZoom?: boolean;
   onPress?: () => void;
+  /** Where on the map was tapped (for "Drop a pin"). */
+  onPressCoord?: (coord: LngLat) => void;
   style?: StyleProp<ViewStyle>;
   accessibilityLabel?: string;
   ref?: Ref<MapHandle>;
@@ -100,5 +102,8 @@ export function projector(coords: LngLat[], w: number, h: number, p: Padding, zo
   const cy = center ? mercY(center[1]) : (y0 + y1) / 2;
   const ox = p.left + iw / 2;
   const oy = p.top + ih / 2;
-  return (c: LngLat): [number, number] => [ox + ((c[0] * Math.PI) / 180 - cx) * k, oy - (mercY(c[1]) - cy) * k];
+  const fn = (c: LngLat): [number, number] => [ox + ((c[0] * Math.PI) / 180 - cx) * k, oy - (mercY(c[1]) - cy) * k];
+  /** Pixels back to [lng, lat]. */
+  fn.invert = (x: number, y: number): LngLat => [(((x - ox) / k + cx) * 180) / Math.PI, (Math.atan(Math.exp(cy - (y - oy) / k)) * 360) / Math.PI - 90];
+  return fn;
 }

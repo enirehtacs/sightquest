@@ -99,7 +99,7 @@ Each phase ends with a "done when" checklist. Don't start the next phase until e
 
 ## Decisions Vivi still needs to make
 Claude Code: ask about these when you reach the phase that needs them. Don't guess.
-1. **Where users declare "I'm a woman" for SOWO** (Phase 3). Suggestion: an optional private question the first time they mark a route complete, which they can change in Settings → Privacy.
+1. ~~**Where users declare "I'm a woman" for SOWO** (Phase 3).~~ **Decided 2026-10-24: during sign-up**, as an optional private question in onboarding. It can also be changed in Settings → Privacy (for people who signed up before it existed).
 2. **Minimum ratings before SOWO shows** (Phase 4). The spec says 5; confirm.
 3. **Pro price** (monthly and yearly, SGD/USD) (Phase 8).
 4. **Domain and support email** (Phase 0/6), e.g. sightquest.app. Check the name is free first.

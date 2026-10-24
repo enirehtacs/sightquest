@@ -51,7 +51,7 @@ Each phase ends with a "done when" checklist. Don't start the next phase until e
 **Done when**
 - [ ] Vivi builds a real 3-day route from her own photos on her phone.
 - [ ] With airplane mode on she adds a day, and it syncs later.
-- [ ] A stranger never sees today's day when delay is on.
+- [x] A stranger never sees today's day when delay is on. *(`supabase/tests/building_rls.js`: a route built the way the app builds it, shared with everyone and delay on; the stranger and the follower see yesterday's day only, not today's day, legs, moments or linked posts. Passes against the live database, 2026-10-25.)*
 
 ## Phase 4 — Community
 - Campfire (with the kindness nudge and creator replies), Updates + Post an update, +1s, Remix (was "Steal"), Share (image card), Friends feed + Shared with you, Inbox + push notifications, SOWO ratings + score trigger, Report → moderation queue, image-safety scan.
